@@ -1,0 +1,524 @@
+# Probability
+
+
+Probability and randomness are very difficult to define without using
+circular logic, but easy to recognise.
+
+In loose terms, probability is a measure of one's confidence that an
+event will occur.
+
+*  What is the probability that it will rain tomorrow?
+*  What is the probability that I will pass my statistics exam?
+*  What is the probability that the train will be late?
+*  What is the probability that a particular stock price will increase?
+*  What is the probability that I will roll 3 sixes in a row?
+
+Some of the questions above have well-defined and objective answers,
+some do not.  Probability and randomness are subtle concepts and there
+are different interpretations of probability statements.
+
+In this course, we will interpret probability as the long-run relative
+frequency of an event occurring.  For example, suppose a fair coin is
+flipped, then the probability of getting a head can be interpreted as
+the relative frequency of getting a heads over a very large number of
+trials.  This will be close to one-half if the coin is truly fair.
+
+(An alternative interpretation is subjective probability.  This is a
+measure of an individual person's belief that an event will occur. We
+will not consider subjective probability in this paper, but it is used
+in more advanced courses and is becoming the dominant methodology in
+certain scientific areas including climate change and astrophysics).
+
+To start thinking about probability, we need some basic
+terminology.
+
+## Random variables
+
+A *variable* is a characteristic that changes or varies over time
+and/or for different individuals or objects under consideration
+
+Examples:
+
+* In a survey of university students, height, gender, income and age will all vary from person to person.
+* The number obtained when rolling a die will vary with each roll.
+* The price of ANZ shares will vary over time.
+* whether the All blacks in or not in a game will change from match to match
+
+A *random variable* (usually denoted with a capital letter, usually
+$X$) is a variable whose value is determined by the measuring the
+outcome of a random process.  For example:
+
+* $X$ = Number of defects on a randomly selected piece of furniture
+* $X$ = Number of girls in a randomly selected family with 3 children
+* $X$ = Number obtained when rolling a die
+* $X$ = The height of a randomly selected AUT student
+* $X$ = Time taken to respond to a randomly selected call to 111
+
+(the above definition is somewhat circular---it uses randomness to
+define random---but giving a watertight definition requires several
+years of postgraduate study in pure mathematics even to state.  We
+will use terminology somewhat loosely in this course).
+
+## The language of probability
+
+An *experiment* is any process that produces an observation or
+outcome.  The set of all possible outcomes of an experiment is called
+the *sample space*.
+
+If the experiment is tossing a coin, the sample space will be the set
+$\{\mathrm{head}, \mathrm{tail}\}$.  If it is throwing two dice, the
+sample space will ordered pairs $(a,b)$ where $a,b$ are members of the
+set $\{1,2,3,4,5,6\}$.  Continuous variables are more problematic.  We
+usually take the sample space to be the real numbers, or sometimes the
+computer representation of the real numbers.
+
+An *event* is a set of outcomes of the experiment, or a subset of the
+sample space.  For example, if the experiment is tossing a six-sided
+die, then an event might be "obtaining an even number", that is, the
+result being in the set $\{2,4,6\}$.  The simplest events are just
+single points of the sample space.
+
+### Example: three coloured balls in a bag
+
+A box contains three balls—one red, one green, and one blue.  Consider
+an experiment that consists of withdrawing a ball from the box, noting
+its colour, replacing it, and then withdrawing a second ball.
+
+Here the sample space will be, with obvious notation,
+
+RR, RG, RB, GR, GG, GB, BR, BG, BB
+
+(it might be easier to see what is going on by arranging the elements more logically:
+
+RR, RG, RB
+
+GR, GG, GB
+
+BR, BG, BB
+
+
+See how the elements of each row have the same first colour, and the
+elements of each column have the same colour.  This makes it easier to
+check that you have written the sample space out correctly.
+
+## Set theory
+
+We are going to need a little set theory; see figure \@ref(fig:venn)
+which defines set intersection, set union, set complement and
+symmetric difference.  
+
+```{r venn, fig.cap='Two sets, $A$ and $B$ on a Venn diagram together with red areas marking set union ($A\\cup B$), set intersection ($A\\cap B$), complement of A ($\\overline{A}$) and symmetric difference ($A\\Delta B$)', echo=FALSE, message=FALSE, warning=FALSE}
+knitr::include_graphics("intersection_union.png")
+```
+
+The *empty set* (written $\varnothing$) is the set with no elements.
+Thus the set of billionaire statistics lecturers is the empty set (but
+I'm working on it).
+
+The *union* of $A$ and $B$ (written $A\cup B$) is the set of elements
+that are in either $A$ or in $B$, or in both.  Sometimes we say that
+the union is ``A or B''; but note that the English language is
+somewhat imprecise here: if I say to my daughter that she can have an
+ice cream or a drink, I mean that she has to choose one or the other.
+She can't have both.
+
+The *intersection* of $A$ and $B$ (written $A\cap B$) is the set of
+elements that are in both $A$ and in $B$.  Thus if $A$ is the set of
+all European cities, and $B$ is the set of all cities with a
+population of more than 3 million, then $A\cap B$ is the set of all
+European cities with a population of more than 3 million.  If two sets
+have empty intersection (that is, $A\cap B=\varnothing$), we say that
+$A$ and $B$ are *disjoint*.  Thus if $A$ is the set of billionaire
+philanthropist playboy vigilantes, and $B$ is the set of AUT
+statistics lecturers, then if a person is a member of set $A$ then he
+will not be a member of set $B$; and conversely.  The sets are
+disjoint^[Yup, definitely disjoint.  Absolutely empty intersection
+there.  Yes sir.  No way these two sets could have any common members.
+Ask my butler.].
+
+The *complement* of event $A$ (written $\overline{A}$; sometimes in
+books you will see $A'$ or $A^c$), is the set consisting of all
+elements which are not in $A$.  For example, if we are sampling people
+in the street, we could define $A$ to be the event that the person is
+a smoker.  Then the complement, $\overline{A}$ would be that the
+person is not a smoker.
+
+The *symmetric difference* of $A$ and $B$ (written $A\Delta B$) is
+$\left(A\cup B\right)\cap\overline{A\cap B}$.  It is the set of all in
+$A$ but not $B$, or in $B$ but not $A$.  This is what I mean when I
+say to my daughter that she may have an ice cream or a drink.  I ought
+to say to her: "you've been a good girl today, you can choose any
+member of the set comprising the symmetric difference of the sets $A$
+(the set of having an ice-cream) and $B$ (the set of having a drink)".
+But note that this _obliges_ her to choose one or the other; she is
+not at liberty to decline my offer.  She cannot have neither.
+
+## Basic properties of probability
+
+Here we will cover some basic facts about probability which are
+intuitively obvious but might be phrased in unfamiliar wording.
+
+### Probability of the sample space
+
+If we have a set $A$ then the number of elements in $A$ is written
+$n(A)$.  The *probability* of an event $A$ is denoted $p(A)$, or
+sometimes $Pr(A)$.  If events corresponding to single elements of $S$
+are equally likely, we _define_ the probability of $A$ to be
+$\frac{n(A)}{n(S)}$.  We have that $p(A)$ is between zero and 1,
+written $0\leq p(A)\leq 1$.  The probability of the sample space $S$
+is $\frac{n(S)}{n(S)}=1$; we would write $p(S) = 1$.
+
+### Probability of set union and the principle of inclusion-exclusion
+
+It is one of the axioms of probability that $p(A\cup B)\leq
+p(A)+p(B)$.  If two events $A$ and $B$ are disjoint, we have that
+$p(A\cup B) = p(A) +p(B)$.  If $A$ and $B$ are not disjoint, the
+situation is more complicated because we are double-counting elements
+in $A\cap B$. We can also deduce that
+
+\[
+p(A\cup B)=p(A)+p(B)-p(A\cap B)
+\]
+
+which is known as the principle of inclusion-exclusion.  If we have
+three sets the principle becomes more complicated still and we have
+
+\[
+p(A\cup B\cup C)=p(A)+p(B)+p(C)-p(A\cap B)-p(A\cap C)-p(B\cap C)+p(A\cap B\cap C)
+\]
+
+
+### probability of set complement
+
+The *complement* of event $A$, denoted $\overline{A}$ (sometimes in
+books you will see $A'$ or $A^c$), is the set consisting of all
+outcomes in the sample space which are not in $A$.  For example, if we
+are sampling people in the street, we could define $A$ to be the event
+that the person is a smoker.  Then the complement, $\overline{A}$
+would be that the person is not a smoker.  Because $A$ and
+$\overline{A}$ are disjoint, we have that
+
+\[
+p(A) + p(\overline{A})=p(A\cup\overline{A})=p(S)=1.
+\]
+
+Therefore
+
+\[
+p(\overline{A}) = 1 - p(A)
+\]
+
+In words, this says "the probability of the complement of $A$ is one
+minus the probability of $A$".  Thus if $p(A)=0.35$ then the
+probability of being a non-smoker is 1-0.35, or 0,65.  This makes
+sense intuitively.
+
+## de Morgan's laws
+
+de Morgan's laws are  the intuitively obvious set equations:
+
+\[
+\overline{A\cup B} = \overline{A}\cap\overline{B}
+\]
+
+and
+
+\[
+\overline{A\cap B} = \overline{A}\cup\overline{B}
+\]
+
+
+Take the first one as an example.  This says that the probability of
+being "neither $A$ nor $B$" is equal to the probability of being "not
+$A$" and "not $B$".
+
+
+## Conditional probability
+
+Quite often, two events are interdependent in the sense that one
+conveys information about the other.  For example if $A$ is the event
+"I have a glass of wine with my dinner" and $B$ is the event "my wife
+Lesley has a glass of wine with her dinner", then knowing that $A$ has
+occurred changes the probability that $B$ occurs (because if we open a
+bottle of wine then we both have some).  We might have $p(A)=0.2$ and
+$p(B)=0.1$.
+
+But if Lesley has wine, then it is almost certain that I will have
+some too.  We express this in probability language using the concepts
+of conditional probability.  We might ask what the probability that I
+have wine is, _given_ that Lesley has wine; this would be written
+$p(A|B)$ (and in words is "the probability of $A$ given $B$").  We
+might have $p(A|B)=0.9$.  So the probability of me having wine, given
+that Lesley is having wine, is 90\%.
+
+The conditional probability law states that
+
+\[
+p(A|B)=\frac{p(A\cap B)}{p(B)}
+\]
+
+(to verify this, look at figure \@ref(fig:venn)).
+
+Quite often, events do not have any connection with one another, and
+we have that $p(A) = p(A|B)$. In words, this means that the
+probability of $A$ occurring is equal to the probability of $A$
+occurring, given that $B$ has occurred.  If this is the case we say
+that $A$ and $B$ are *independent*.  If two events are independent
+then we have
+
+\[
+p(A) = p(A|B)=\frac{p(A\cap B)}{p(B)}
+\]
+
+so we can deduce that independent events satisfy $p(A\cap B)=p(A)p(B)$
+which can serve as an alternative definition of independence.
+
+## Example: rolling two dice
+
+Consider an experiment which consists of rolling two dice and
+observing the number on the uppermost face.  All of the outcomes of
+this experiment form the *sample space*:
+
+\begin{align*}
+S = \{	& (1, 1), (1, 2), (1, 3), (1, 4), (1, 5), (1, 6), \\
+	& (2, 1), (2, 2), (2, 3), (2, 4), (2, 5), (2, 6), \\
+	& (3, 1), (3, 2), (3, 3), (3, 4), (3, 5), (3, 6), \\
+	& (4, 1), (4, 2), (4, 3), (4, 4), (4, 5), (4, 6), \\
+	& (5, 1), (5, 2), (5, 3), (5, 4), (5, 5), (5, 6), \\
+	& (6, 1), (6, 2), (6, 3), (6, 4), (6, 5), (6, 6)\}
+\end{align*}
+
+In the above, note how the order of the numbers matter: we are
+treating $(1,2)$ as a different result from $(2,1)$.   
+
+Define events $A$ and $C$ as follows:
+
+* event $A$: first number is 4 or 5
+* event $B$: sum is 9 or greater (that is, if the throw is $(a,b)$ then $a+b\geq 9$)
+* event $C$: first number is strictly less than or equal to the second number
+
+Using the fact that $p(A) = n(A)/n(S)$ (and we know that $n(S)=6\times
+6=36$), we can see that
+
+* $A=\left\{(4,1),(4,2),(4,3),(4,4),(4,5),(4,6),(5,1),(5,2),(5,3),(5,4),(5,5),(5,6)\right\}$, so therefore $n(A) = 12$ and therefore $p(A)=n(A)/n(S)=12/36=1/3$.
+* $B=\left\{(3,6),(4,5),(4,6),(5,4),(5,5),(5,6),(6,3),(6,4),(6,5),(6,6)\right\}$, so therefore $p(B) = 10/36=5/18$
+* $C=\left\{(1,2),(1,3),(1,4),(1,5),(2,3),(2,4),(2,5),(2,6),(3,4),(3,5),(3,6),(4,5),(4,6),(5,6)\right\}$, so therefore $p(C) = 14/36=7/18$
+
+
+We can find probabilities for the intersection and union easily too.
+For example, if we wish to find $A\cap B$, then this is elements that
+are in set $A$ and set $B$.  Thus we have to find throws that have the
+first number 4 or 5, and also whose sum is $\geq 9$.  This would be
+the set $\left\{(4,5),(4,6),(5,4),(5,5),(5,6)\right\}$, so $p(A\cap
+B)=5/36$.
+
+### Example question 1
+
+Question: Find $p(A|B)$.
+
+Answer: from the conditional probability formula, $p(A|B) =
+\frac{p(A\cap B)}{p(B)} = \frac{5/36}{5/18}=\frac{1}{2}$.
+
+### Example question 2
+
+
+Question:  find $p(A\cup B)$.
+
+Answer: From the principle of inclusion-exclusion, we have
+
+\[
+p(A\cup B)=p(A)+p(B)-p(A\cap B) = 
+\frac{1}{3}+\frac{5}{18}-\frac{5}{36}=\frac{17}{36}
+\]
+
+### Example question 3
+
+Question: Are events $A$ and $B$ independent?
+
+Answer: independent events are characterised by $p(A\cap B)=p(A)p(B)$.
+
+We have $p(A\cap B)=\frac{5}{36}$ but $p(A)p(B)=\frac{1}{3}\times\frac{5}{18}=\frac{5}{56}$ so the events are not independent.
+
+### Example question 4
+
+Question: Calculate $p(A\cup B\cup C)$.
+
+Answer: exercise for the reader.
+
+
+## Example: grades
+
+Suppose we have a class of students who take a statistics course and a
+physics course.  The pass rate for the statistics course is 60\% and
+the pass rate for the physics course is 70\%.  We also know that 50\%
+of students pass both physics and statistics.  This is shown in the
+form of a Venn diagram in figure \@ref(fig:statisticsphysics).
+
+```{r statisticsphysics,fig.cap="Pass rates for statistics and physics.  The areas of the regions are accurately presented", echo=FALSE,message=FALSE,warning=FALSE}
+library("VennDiagram")
+venn.plot <- draw.pairwise.venn(60, 70, 50, c("statistics", "physics"))
+grid.draw(venn.plot)
+```
+
+
+### Example question 1
+
+Question:  what is the probability of passing either physics or statistics or both?
+
+Answer: we seek $p(S\cup P)$.  By the principle of
+inclusion-exclusion, we have $p(S\cup P)=p(S)+p(S)=p(S\cap
+P)=0.6+0.7-0.5=0.8$.  Students have an 80\% probability of passing at
+least one paper.
+
+### Example question 2
+
+Question:  what is the probability of failing both?
+
+Answer: we seek $p(S'\cap P')$.  by de Morgan, this is equal to
+$1-p(S\cup P)$=1-0.8=0.2$.  Students have a 20\% probability of
+failing both.
+
+### Example question 3
+
+Question:  A student is known to have passed physics.  What is the probability that they pass statisics?
+
+Answer: We seek $p(S|P)$.  By the formula for conditional probability,
+we have $p(S|P)=\frac{p(S\cap P)}{p(P)}=\frac{0.5}{0.7}=\frac{5}{7}$.
+Thus a student who passes physics has a probability of $5/7$ of
+passing statistics.
+
+
+### Example question 3
+
+Question:  Are the events "passing statistics" and "passing physics" independent?
+
+Answer: If $S$ and $P$ are independent, we have $p(S\cap P)=p(S)\times
+p(P)$.  We are told that $p(S\cap P)=0.5$, but $p(S)\times
+p(P)=0.6\times 0.7=0.42$ which is different.  The events are not
+dependent.
+
+
+
+## Tree diagrams
+
+Tree diagrams can be used to depict a series of events. They are
+particularly useful when computing probabilities associated with a
+series of events.
+
+* Each node represents an event. 
+* Branches are used to indicate connections between events.
+* The probability of each event is written along the branch. 
+* The probabilities on all branches stemming from the same event must sum to one.
+* Joint probabilities can be found by multiplying along the branches and are often written at the end of a sequence of branches. 
+* All of the joint probabilities should sum to one.
+
+
+## Example of a tree diagram: testing for a disease
+
+It is known that 0.5\% of the population have a particular disease.
+Of those that have the disease, 99\% will test positive for the
+disease.  Of those that do not have the disease, 2\% test positive for
+the disease.  We can represent this information as a tree diagram, as
+seen in figure \@ref(fig:tree).  This defines event $D$ as a randomly
+chosen person has the disease, and Event $E$ as that person has a
+positive test.
+
+```{r tree, out.width="6in",fig.cap='A tree diagram showing diagnosis of a disease', echo=FALSE, message=FALSE, warning=FALSE}
+knitr::include_graphics("week03_treeDiagram.png")
+```
+
+Observe that this test is a "good" test: if you have the disease, the
+test probably detects this; and if you do not have the disease, the
+test probably says that you are clear.
+
+
+### Example 1
+Question: what is the probability that a person chosen at random has the disease?
+
+Answer: from the data, $P(D) =0.005 = 0.5\%$
+
+### Example 2
+
+Question: what is the probability that a person chosen at random
+received a positive test?
+
+Answer: There are two possibilities for receiving a positive test.
+Either you have the Disease and test positive, positive or you do not
+have the disease and test positive (this is known as a "false positive").
+
+These two possibilities are $D \cap E$ and $D' \cap E$, which are
+disjoint.  Using the law of conditional probability we have $P(D \cap
+E) = P(E|D) P(D) = 0.00495$ and $P(D' \cap E) = P(E|D') P(D') =
+0.0199$.
+
+Thus $p(E)=p(D\cap E)+p(D' \cap E) = 0.00495+0.0199=0.02485$, or a
+little under $2.5\%$.
+
+Note carefully that the majority of people with a positive test are
+actually free of the disease.  Think about this and ask yourself what
+medical implications such analysis might have.  Some diseases involve
+painful and potentially lethal treatment, and the treatment is
+pointless unless you actually have the disease.
+
+### Example 3
+
+Question: Are events D and E independent? Justify your answer.
+
+Answer: $D$ and $E$ are independent if $P(E \cap D)=P(E)P(D)$.  We
+have that $P(E \cap D) = 0.00495$ but $P(E)P(D) = 0.024855\times
+0.005=0.00012$ approximately, so the events are not independent.
+Observe that the test is useful *because* events $E$ and $D$ are not
+independent.
+
+## Probability distributions  (discrete)
+
+(recall the definition of random variable given at the beginning of
+this chapter).  Random variables may be discrete or continuous
+depending on the type of values they may attain.  We will consider
+discrete random variables first and deal with continuous random
+variables later.  Suppose $X$ is a random variable that may take one
+of $n$ values $x_1,x_2,\ldots,x_n$.  If the probability that $X$ takes
+the value $x_1$ is $p_1$, we write $p(X=x_1)=p_1$.  Similarly,
+$p(X=x_2)=p_2$, and so on up to $p(X=x_n)=p_n$.  Other notation might
+be $p(x_1)$ for $p(X=x_1)$.
+
+For example, we might ask a series of people which of red, green, or
+blue is their favourite colour.  The random variable $X$ is their
+answer, and we have three possible values for $X$: red ($x_1$), green
+($x_2$) and blue ($x_3)$.  The probability that they say red is
+$p(X=x_1)$ which is $p_1$, the probability that they say green is
+$p(X=x_2)$ which is $p_2$, and the probability that they say blue
+$p(X=x_3)$ which is $p_3$.  We can further say that $p_1+p_2+p_3=1$
+because every person has to answer with one or another colour.
+
+## Numerical random  variables
+
+Very often, the values that a random variable $X$ may take are numbers
+that may be added or subtracted.  For example, we may measure the
+height or weight of a sequence of people (or their income, distance
+they commute to work, the length of their hair, their age, their blood
+pressure, etc etc etc).
+
+We may calculate the expected value $\mathbb{E}(X)$ using the formula
+
+\[
+\mathbb{E}(X)=\sum_{i=1}^n x_ip(X=x_i)
+\]
+
+The expected value of $X$ (also called the expectation of $X$) is the
+long-run average of the amount represented by $X$.  It is easiest to
+think of $X$ as an amount of money, as in the following example.
+Suppose you play a fruit machine (a gambling device common in pubs in
+the UK).  The random variable $X$ is in this case the amount of money
+given by the machine as a prize. Random variable $X$ may take three
+values: $\$ 0$ with probability 0.9, $\$ 1$ with probability 0.09 and
+$\$ 10$ with probability 0.01.  We would write $x_1=\$ 0, x_2=\$ 1,
+x_3=\$ 10$ and we would have
+
+\[
+\mathbb{E}(X) = x_1*p(X=x_1)+x_2*p(X=x_2)+x_3*p(X=x_3)=\$ 0*0.9 + \$1*0.09 + \$10*0.01 = \$0+\$0.09+\$0.01=\$0.10
+\]
+
+Thus you would expect to win $\$0.10$ per play or 10 cents.
+
+
