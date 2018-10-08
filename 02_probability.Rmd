@@ -108,7 +108,7 @@ which defines set intersection, set union, set complement and
 symmetric difference.  
 
 ```{r venn, fig.cap='Two sets, $A$ and $B$ on a Venn diagram together with red areas marking set union ($A\\cup B$), set intersection ($A\\cap B$), complement of A ($\\overline{A}$) and symmetric difference ($A\\Delta B$)', echo=FALSE, message=FALSE, warning=FALSE}
-knitr::include_graphics("intersection_union.png")
+knitr::include_graphics("stat601/intersection_union.pdf")
 ```
 
 The *empty set* (written $\varnothing$) is the set with no elements.

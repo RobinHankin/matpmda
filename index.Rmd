@@ -49,4 +49,4 @@ issues page.
 
 
 
-\includegraphics{orn}
+\includegraphics{stat601/ornamental20}
