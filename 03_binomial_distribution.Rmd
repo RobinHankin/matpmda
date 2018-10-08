@@ -1,0 +1,493 @@
+# The Binomial distribution
+
+This week we will be discussing the binomial distribution, which has
+many and varied applications throughout statistics.
+
+
+## Bernoulli trials 
+
+A *Bernoulli trial* is the simplest random variable: it amounts to an
+experiment with two possible outcomes, conventionally named
+``success'' and ``failure''.
+
+### Examples of Bernoulli trials
+
+
+The standard example is tossing a coin, with heads recorded as a
+success and tails as a failure; but there are loads of examples:
+    
+*  Throwing a six-sided die and six = success, any other result =  failure
+*  A patient has a disease and the patient surviving = success,  dies = failure
+*  Observe the weather on a particular day, rain = failure, not raining=success
+*  Catch a beetle and if it is longer than 2cm this is success,  otherwise failure
+*  In a club, Ask someone to dance.  s/he says ``yes'' = success, ``no'' = failure
+
+
+Each one of these has a probability of success, usually written $p$.
+Of course, the probability of a (fair) coin landing heads has
+$p=\frac{1}{2}$ and the probability of a die landing ``6'' has
+$p=\frac{1}{6}$.  For some of the other examples above, the
+probability is harder to specify but we could take a good guess.
+
+## Simulating Bernoulli trials
+
+We can simulate a series of Bernoulli variables using the
+```rbinom()``` function of R.  Remember that you can type
+```?rbinom``` at the R prompt to get help on this function.  The
+following command shows how to simulate 100 trials with probability
+0.5:
+    
+```{r}
+rbinom(100,1,0.5)
+```
+
+The R output is coded in terms of ``0'' for a failure and ``1'' for a
+success (in the ```rbinom()``` command, the _arguments_ are the three
+numbers 100,1,0.5.  The 100 means to simulate 100 trials, the ``1''
+means to toss the coin once, and the 0.5 gives the probability of
+success).  See how about half the trials are successes.
+
+
+We can do the same thing again:
+
+```{r}
+rbinom(100,1,0.5)
+```
+
+See how the results are different because R is providing random
+numbers.  We can vary the probability of success by changing the third
+argument:
+    
+```{r}
+rbinom(100,1,0.1)
+```
+
+See how there are much fewer successes because the probability of
+success is now only 0.1, or 10\%.  We can make the probability higher:
+
+```{r}
+rbinom(100,1,0.9)
+```
+
+And now most of the trials are successes. As stated above, the first
+argument is the number of trials, and we can play with this by
+changing it to, say, 200:
+
+```{r}
+rbinom(200,1,0.5)
+```
+
+This corresponds to giving a fair coin to each of 200 undergraduates,
+telling each of them to toss the coin once, and write down whether the
+coin landed heads or tails (but of course there are other
+interpretations\ldots).  We might have a weather diary in which we
+write down whether it is raining or not for each of 200 days; we might
+catch 200 birds and write down whether the bird is male or female, and
+so on.
+
+## Multiple Bernoulli Trials: Binomial Distribution
+
+It is possible to be a bit more efficient and tell the 200
+undergraduates to toss the coin more than once each.  For example, we
+might ask them to toss the coin 5 times.  To do this, we need to
+change the second argument from 1 to 5:
+    
+```{r}
+rbinom(100,5,0.5)
+```
+
+The R output now shows the number of successes (heads) that each
+undergraduate obtained in his or her 5 coin tosses.  Most undergrads
+score 2 or 3 heads, but some have as many as 5 and some have zero.  We
+would call this ``the binomial distribution with size 5 and
+probability 0.5'' as there are five trials (coin tosses) and the
+probability of each one being a success is 0.5.  This can also be
+written $\mathrm{Bin}(5,0.5)$.
+
+## Changing the parameters
+    
+
+It is possible to change the probability of success.  Suppose we give
+the undergraduates a biased coin with a 90\% probability of landing
+heads.  To simulate this, we need to change the third argument to 0.9,
+or 90\%:
+    
+```{r}
+rbinom(100,5,0.9)
+```
+
+Now most of the students have 5 out of 5 successes, which is not
+surprising because of the high probability of success.
+
+
+## Tabulating results of random simulations
+
+It is possible to make a table of the results using the ```table()```
+function in R.  To simulate 100 students each tossing a coin 5 times
+with probability of heads = 0.5, we can use the following:
+
+```{r}
+set.seed(0)
+x <- (rbinom(100,5,0.5))
+table(x)
+```
+
+(the ```set.seed()``` command ensures reproducible result).  Thus, out
+of 100 students, 2 scored 0 heads out of 5 tosses, 11 scored 1 head,
+39 scored 2 heads, and so on.
+
+## Increaing the number of trials
+
+We can try the same thing with a larger number of students:
+
+```{r}
+x <- rbinom(1000,5,0.5)
+table(x)
+```
+
+Now 27 students out of 1000 have zero heads out of 5 tosses, 167 have
+one head, and so on.
+
+
+## Plotting the results
+
+It is possible to plot this table in R; see figure
+  \@ref(fig:binomialplot).  Remember that you may type ```?plot``` at
+  the R prompt to get help.
+
+```{r binomialplot,fig.cap="Tabulated observations from the binomial distribution", echo=FALSE,message=FALSE,warning=FALSE}
+plot(table(x))
+```
+
+## Mathematics of the binomial distribution
+
+
+Let $X$ be a binomial random variable with $n$ trials and probability
+of success $p$.  There is a formula for the probability of scoring
+each number of heads.
+
+It is:
+
+
+\[
+P(X = r) = \frac{n!}{r!(n-r)!}p^r(1-p)^{n-r} \qquad r = 0, 1, \ldots, n
+\]
+
+where
+
+* $n$ is the number of trials
+* $r$ the number of successes we want the probability of occurring
+* $p$ is the probability that an individual trial is a success
+
+
+Here, "$n!$" is pronounced "$n$ factorial" and is the number of
+ways of arranging $n$ objects.  It is given by $n!=1\times 2\times
+3\times\cdots\times n$; you multiply all the whole numbers up to $n$
+together.  Thus $6!=1\times 2\times 3\times 4\times 5\times 6=720$.
+You may see this formula written slightly differently in the
+literature:
+
+\[
+{n\choose r} p^r\left(1-p\right)^{n-r}
+\]
+
+where $n\choose r$ is pronounced ``n choose r'' and
+means $\frac{n!}{r!(n-r)!}$.
+
+
+Let $X$ be a binomial random variable representing the number of
+successes from $n$ trials.  Suppose we want to calculate the
+probability that a student obtains $r=2$ successes from $n=5$ trials,
+each with probability~$p=0.3$ of success.  Then we get:
+    
+\[P(X = 2) = \frac{5!}{2!(5-2)!}0.3^2(1-0.3)^{5-2}\]
+    
+```{r}
+factorial(5)/(factorial(2)*factorial(3)) *  0.3^2 * (1-0.3)^(5-2)
+```
+
+which means a probability of a little over 30\%.  We can calculate
+this more simply using the ```dbinom()``` function:
+    
+    
+```{r}
+dbinom(2,5,0.3)
+```
+    
+which gives the same answer.
+
+## Cumulative Distribution Function
+
+Sometimes we will want to compute the probability that a binomial
+random variable is less than or equal to some value. To do this we can
+use the (cumulative) distribution function or cdf.
+
+The formula is:
+
+\[
+P(X \leq r) = 
+\sum_{i=0}^r
+\frac{n!}{i!(n-i)!}p^i(1-p)^{n-i} \qquad r = 0, 1, \ldots, n
+\]
+
+
+Suppose we want to calculate the probability that a student obtains
+$r=2$ or fewer successes from $n=5$ trials, each with
+probability~$p=0.3$ of success.
+
+    
+\[P(X \leq 2) = \sum_{i=0}^2\frac{5!}{i!(5-i)!}0.3^i(1-0.3)^{5-i}\]
+
+Then we get:
+    
+```{r}
+factorial(5)/(factorial(0)*factorial(5)) * 0.3^0 * (1-0.3)^(5-0) +
+factorial(5)/(factorial(1)*factorial(4)) * 0.3^1 * (1-0.3)^(5-1) +
+factorial(5)/(factorial(2)*factorial(3)) * 0.3^2 * (1-0.3)^(5-2)
+```
+
+This is equivalent to 
+
+```{r}
+dbinom(0,5,0.3) + dbinom(1,5,0.3) + dbinom(2,5,0.3)
+```
+
+These three probabilities can be computed in one line:
+
+```{r}
+dbinom(0:2,5,0.3)
+```
+
+We can add these three probabilities to obtain the same answer as above
+
+```{r}
+sum(dbinom(0:2,5,0.3))
+```
+
+
+Or, more simply:
+    
+    
+```{r}
+pbinom(2,5,0.3)
+```
+    
+which gives the same answer.
+
+## The binomial Distribution in R
+
+
+A random distribution (here the binomial) has four R functions
+
+associated with it:
+
+* ```dbinom()``` Probability mass function, $P(X = x)$
+* ```pbinom()``` Cumulative distribution function, $P(X \leq x)$
+* ```rbinom()``` Random sample from the binomial distribution
+* ```qbinom()``` Quantile function
+
+
+### Example 
+
+Consider Bin(10,0.3), that is the binomial distribution with $n=10$
+and $p=0.3$.
+
+Then we can use the four functions in turn:
+
+```{r}
+dbinom(5,10,0.3)   # probability that we observe r=5 successes
+pbinom(4,10,0.3)   # probability that we observe r<=4 successes
+rbinom(20,10,0.3)  # 20 random observations from Bin(10,0.3)
+qbinom(0.99,10,0.3) # 99th percentile of Bin(10,0.3)
+```
+
+## Numerical Verification
+
+It is always a good idea to try and verify theoretical results using
+random sampling.  We will take one million observations (that is, one
+million undergraduates tossing a coin 5 times and recording the number
+of heads:
+
+
+```{r}
+table(rbinom(1000000,5,0.3))
+```
+
+
+So, out of a million observations we have exactly 309665 students with
+two heads, a proportion of 0.309665, not too far from the exact value
+of 0.3087 (the slight difference is caused by random variation). 
+
+
+We can see all the probabilities in one line using the colon construction:
+  
+```{r}
+dbinom(0:5,5,0.3)
+```
+
+and we should check that these probabilities add to one:
+  
+```{r}
+sum(dbinom(0:5,5,0.3))
+```
+
+Using this, we can check any binomial distribution:
+
+```{r}
+sum(dbinom(0:115,115,0.324324))
+```
+
+
+## Expected Value and Variance
+
+You will recall the discussion about variance and standard deviation
+from  week 2.  The Binomial distribution has probability mass function
+
+\[\frac{n!}{r!(n-r)!}p^r(1-p)^{n-r}\]
+
+* mean value of the binomial distribution  $E[X] = np$
+* variance of the binomial distribution  $\text{Var}[X] = np(1-p)$
+* standard deviation of the binomial distribution $\text{Std}[X] =\sqrt{np(1-p)}$.
+
+### Example
+
+We can verify these formulas directly using random sampling.
+Consider~$n=7$ trials with probability~$p=0.3$ of success.  The
+formulas give a mean of $7\times 0.3=2.1$ and a standard deviation of
+$\sqrt{7\times 0.3\times 0.7}\simeq 1.21$.  Compare these with the
+values obtained from numerical sampling:
+
+```{r}
+mean(rbinom(1e6,7,0.3))
+var(rbinom(1e6,7,0.3))
+```
+
+The numerical answers are close to the theoretical values in both
+cases.
+
+## More trials and further R functions
+
+So far we have used~ 5 trials per observation (we say that the *size*
+of the distribution is 5), but there is no reason why we cannot use
+more.  We can try, for example, 10 trials:
+
+
+```{r}
+rbinom(100,10,0.4)
+```
+
+this would be Bin(10,0.4).  We could try higher numbers, say 30:
+
+    
+```{r}
+rbinom(100,30,0.4)
+```
+
+for a Bin(30,0.4) distribution.  We can plot the density of the
+binomial distribution with size 30 and probability 0.4 using the
+```dbinom()``` function directly:
+
+```{r binplot,fig.cap="The binomial distribution", echo=FALSE,message=FALSE,warning=FALSE}
+plot(0:30,dbinom(0:30,30,0.4),type='h')
+```
+
+Suppose we ask a slightly different question.  We might be looking at
+a Bin(30,0.4) distribution and wonder what the probability of
+obtaining 15 or more successes, i.e. $P(X \geq 15)$.  We can calculate
+the probability of obtaining 15,16,17,\ldots successes using the
+```dbinom()``` command:
+
+
+```{r}
+dbinom(15:30,30,0.4)
+```
+
+Rather than adding these up with a calculator we can use R to do the addition:
+    
+    
+```{r}
+sum(dbinom(15:30,30,0.4))
+```
+
+Giving us an answer of about 17.5\%.  We can also use the cdf command
+directly. Notice that $P(X \geq 15) = 1 - P(X \leq 14)$.
+
+```{r}
+1-pbinom(14,30,0.4)
+```
+
+
+We can verify this numerically:
+    
+```{r}
+sum(rbinom(1e6,30,0.4) >= 15)/1e6
+```
+
+showing close agreement between numerical and theoretical values.
+
+## Example
+
+
+
+Question: Suppose a scientist catches 10 fish of a particular species,
+and it is known that these fish have a 30\% probability of being
+female at this time of year.
+
+What type of random variable can be used to model this
+scenario?
+
+Answer: A binomial random variable with size 10 and probability of
+``success'' 0.3.  We can write $X \sim \operatorname{Bin}(10, 0.3)$.
+
+Question:  What is the probability that exactly 5 are female?
+
+Solution:
+
+```{r}
+dbinom(5,10,0.3)
+```
+
+Question: What is the probability that 6 or fewer fish are female?
+ 
+```{r}
+pbinom(6,10,0.3)
+```
+What is the probability that at least one fish of each gender is caught?
+
+We need $P(1 \leq X \leq 9) = 1 - P(X = 0) - P(X = 10) = 0.972$.
+
+
+```{r}
+sum(dbinom(1:9,10,0.3))
+1-dbinom(0, 10, 0.3)-dbinom(10, 10, 0.3)
+```
+
+
+What is the expected value and standard deviation for number of female fish caught?
+
+$E[X] = np = 10 \times 0.3 = 3$
+
+$\text{Std}[X] = \sqrt{np(1-p)} = \sqrt{10 \times 0.3 \times 0.7} = 1.449138$
+
+```{r}
+10*0.3
+10*0.3*(1-0.3)
+```
+
+Numerically verify the answers to the questions above.
+
+```{r}
+#P(X = 5)
+sum(rbinom(1e6,10,0.3)==5)/1e6
+
+#P(X <=6)
+sum(rbinom(1e6,10,0.3)<=6)/1e6
+
+#P(1 <= X <=9)
+x <- rbinom(1e6,10,0.3)
+sum((x>0) & (x<10))/1e6
+
+#E[X] and Std[X]
+mean(rbinom(1e6,10,0.3))
+sd(rbinom(1e6,10,0.3))
+```
