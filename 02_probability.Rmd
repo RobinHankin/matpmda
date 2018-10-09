@@ -424,7 +424,7 @@ chosen person has the disease, and Event $E$ as that person has a
 positive test.
 
 ```{r tree, out.width="6in",fig.cap='A tree diagram showing diagnosis of a disease', echo=FALSE, message=FALSE, warning=FALSE}
-knitr::include_graphics("week03_treeDiagram.png")
+knitr::include_graphics("tree_diagram.pdf")
 ```
 
 Observe that this test is a "good" test: if you have the disease, the
