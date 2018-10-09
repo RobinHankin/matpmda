@@ -1,3 +1,8 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+---
 # The Binomial distribution
 
 This week we will be discussing the binomial distribution, which has
@@ -7,8 +12,10 @@ many and varied applications throughout statistics.
 ## Bernoulli trials 
 
 A *Bernoulli trial* is the simplest random variable: it amounts to an
-experiment with two possible outcomes, conventionally named
-``success'' and ``failure''.
+experiment with two possible outcomes, conventionally named "success"
+and "failure".  Although these are standard words, there is no
+associated value judgement and success is not necessarily more
+desirable than failure. 
 
 ### Examples of Bernoulli trials
 
@@ -16,11 +23,12 @@ experiment with two possible outcomes, conventionally named
 The standard example is tossing a coin, with heads recorded as a
 success and tails as a failure; but there are loads of examples:
     
-*  Throwing a six-sided die and six = success, any other result =  failure
 *  A patient has a disease and the patient surviving = success,  dies = failure
+*  A baby is born; male = success, female = failure
 *  Observe the weather on a particular day, rain = failure, not raining=success
+*  Throwing a six-sided die and six = success, any other result =  failure
 *  Catch a beetle and if it is longer than 2cm this is success,  otherwise failure
-*  In a club, Ask someone to dance.  s/he says ``yes'' = success, ``no'' = failure
+*  In a club, ask someone to dance.  s/he says "yes" = success, "no" = failure
 
 
 Each one of these has a probability of success, usually written $p$.
@@ -41,11 +49,11 @@ following command shows how to simulate 100 trials with probability
 rbinom(100,1,0.5)
 ```
 
-The R output is coded in terms of ``0'' for a failure and ``1'' for a
-success (in the ```rbinom()``` command, the _arguments_ are the three
-numbers 100,1,0.5.  The 100 means to simulate 100 trials, the ``1''
-means to toss the coin once, and the 0.5 gives the probability of
-success).  See how about half the trials are successes.
+In the above, the R output is coded in terms of "0" for a failure and
+"1" for a success (in the ```rbinom()``` command, the _arguments_ are
+the three numbers 100,1,0.5.  The 100 means to simulate 100 trials,
+the "1" means to toss the coin once, and the 0.5 gives the probability
+of success).  See how about half the trials are successes.
 
 
 We can do the same thing again:
@@ -198,7 +206,7 @@ means $\frac{n!}{r!(n-r)!}$.
 Let $X$ be a binomial random variable representing the number of
 successes from $n$ trials.  Suppose we want to calculate the
 probability that a student obtains $r=2$ successes from $n=5$ trials,
-each with probability~$p=0.3$ of success.  Then we get:
+each with probability $p=0.3$ of success.  Then we get:
     
 \[P(X = 2) = \frac{5!}{2!(5-2)!}0.3^2(1-0.3)^{5-2}\]
     
@@ -233,7 +241,7 @@ P(X \leq r) =
 
 Suppose we want to calculate the probability that a student obtains
 $r=2$ or fewer successes from $n=5$ trials, each with
-probability~$p=0.3$ of success.
+probability $p=0.3$ of success.
 
     
 \[P(X \leq 2) = \sum_{i=0}^2\frac{5!}{i!(5-i)!}0.3^i(1-0.3)^{5-i}\]
@@ -352,7 +360,7 @@ from  week 2.  The Binomial distribution has probability mass function
 ### Example
 
 We can verify these formulas directly using random sampling.
-Consider~$n=7$ trials with probability~$p=0.3$ of success.  The
+Consider $n=7$ trials with probability $p=0.3$ of success.  The
 formulas give a mean of $7\times 0.3=2.1$ and a standard deviation of
 $\sqrt{7\times 0.3\times 0.7}\simeq 1.21$.  Compare these with the
 values obtained from numerical sampling:
@@ -367,7 +375,7 @@ cases.
 
 ## More trials and further R functions
 
-So far we have used~ 5 trials per observation (we say that the *size*
+So far we have used 5 trials per observation (we say that the *size*
 of the distribution is 5), but there is no reason why we cannot use
 more.  We can try, for example, 10 trials:
 
