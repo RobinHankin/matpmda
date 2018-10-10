@@ -57,9 +57,8 @@ plot(0:100,dbinom(0:100,100,0.3),type='h')
 Suppose $X$ is a Normally distributed random variable with mean $\mu$
 and standard deviation $\sigma$.  Recall that the variance is the
 square of the standard deviation; the standard deviation is the square
-root of the variance.
+root of the variance.  We can write
 
-We can write
 \[X \sim N(\mu, \sigma)\]
 
 * The expected value of $X$ is $E[X] = \mu$.
@@ -163,7 +162,7 @@ for(i in -4:4){
 There are four functions in R that are useful for understanding the Normal distribution.  These are:
 
 * ```rnorm()``` gives random samples from the Normal distribution.
-* ```dnorm()``` gives the density of the Normal (that is, the vertical coordinate of the Bell curve
+* ```dnorm()``` gives the density of the Normal (that is, the vertical coordinate of the Bell curve)
 * ```pnorm()``` gives the area to the right of the Normal
 * ```qnorm()``` the quantile function (see below).
 
@@ -201,10 +200,30 @@ are always informative; see figure \@ref(fig:normplot) for an example.
 plot(rnorm(1000))
 ```
 
-### Histogram of the Normal Distribution
-
-It is possible to produce a histogram using ```hist()``` as in  see figure \ref@(fig:normhist).
+It is possible to produce a histogram using ```hist()``` as in figure
+\@ref(fig:normhist).
 
 ```{r normhist,fig.cap="Histogram of random observations from the standard normal distribution.  See how most of the observations are between $-2$ and $+2$ but there are occasional outliers", echo=TRUE,message=FALSE,warning=FALSE}
 hist(rnorm(10000), col='lightblue')
 ```
+
+## Density: ```dnorm()```
+
+Function ```dnorm(x)``` gives the density of the standard Normal
+distribution at ```x```.  Thus
+
+```{r}
+dnorm(0)
+dnorm(1)
+dnorm(3)
+dnorm(-3)
+```
+
+It is easier to see this by plotting the curve:
+
+```{r normdensityplot,fig.cap="Density function of the standard normal distribution", echo=TRUE,message=FALSE,warning=FALSE}
+x <- seq(from=-4,to=4,len=100)
+plot(x,dnorm(x))
+```
+
+
