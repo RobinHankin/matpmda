@@ -1,0 +1,210 @@
+# The Normal Distribution
+
+
+In this chapter we are going to look at a continuous distribution
+called the Normal distribution. The Normal distribution has many
+applications.  
+
+The Normal distribution occurs in a wide range of contexts from
+astronomy to zoology.  Its importance and some of its mathematical
+properties were discovered and investigated in the 18th century by
+German mathematician Carl Friedrich Gauss.  The curve of the Normal
+distribution is nice and smooth, and has a characteristic shape
+sometimes referred to as a "bell curve".  Statisticians call this the
+*Gaussian* or *normal* distribution.
+
+```{r annotatednorm1,fig.cap="The normal (Gaussian) distribution showing mean and standard deviation.", echo=FALSE,message=FALSE,warning=FALSE}
+x <- seq(from=-4,to=4,len=1000)
+plot(x,dnorm(x),type="l",lwd=6,main="Gaussian distribution")
+abline(v=0,lwd=3)
+text(0,0.05,'mean',pos=4)
+abline(v=1,lwd=1)
+points(1,dnorm(1),cex=4)
+text(1,dnorm(1),"  steepest point",pos=4)
+arrows(0,0.15,1,0.15,code=3)
+text(0.5,0.15,'standard',pos=3)
+text(0.5,0.15,'deviation',pos=1)
+```
+
+Figure \@ref(fig:manynorm) shows
+some normal distributions with varying mean values (the curve moves
+left and right) and widths (the curve becomes wider or narrower).
+
+```{r manynorm,fig.cap="A selection of normal (Gaussian) distributions with different means and standard deviations.  See how the mean value shifts the distribution to the left or the right, and the standard deviation makes the distribution wider or narrower", echo=TRUE,message=FALSE,warning=FALSE}
+x <- seq(from = -4,to=4,len=100)
+plot(x,dnorm(x),lwd=3,type='l',col='black',ylim=c(0,1))
+grid()
+points(x,dnorm(x,mean=1,sd=1),type='l',lwd=3,col='red')
+points(x,dnorm(x,mean=1,sd=2),lwd=3,type='l',col='blue')
+points(x,dnorm(x,mean=-2,sd=0.5),lwd=3,type='l',col='green')
+legend("topright",lwd=3,col=c("black","red","blue","green"),
+       legend=c("mean=0, sd=1","mean=1,sd=1","mean=1,sd=2","mean=-2,sd=0.5"))
+```
+
+## The normal distribution and the Binomial Distribution
+
+The Normal distribution is closely related to the Binomial
+distribution (see previous week).  Consider again the Binomial
+distribution, but with a large value of $n$, say $n=100$, and $p=0.4$.
+This distribution is plotted in Figure \@ref(fig:bignorm).
+
+```{r binomialnormalplot,fig.cap="A histogram showing the distribution of the bin(100,0.3)", echo=TRUE,message=FALSE,warning=FALSE}
+plot(0:100,dbinom(0:100,100,0.3),type='h')
+```
+
+## Properties of the Normal Distribution
+
+Suppose $X$ is a Normally distributed random variable with mean $\mu$
+and standard deviation $\sigma$.  Recall that the variance is the
+square of the standard deviation; the standard deviation is the square
+root of the variance.
+
+We can write
+\[X \sim N(\mu, \sigma)\]
+
+* The expected value of $X$ is $E[X] = \mu$.
+* The standard deviation of $X$ is $\sigma$.
+* The variance of $X$ is $\sigma^2$.
+
+(note that notation is sometimes ambiguous and the second argument
+might refer to standard deviation or variance).
+
+## The Density Function of the Normal Distribution
+
+The *probability density function* (abbreviated "PDF") of the Normal
+distribution is given by
+
+\[
+f(x) = \frac{1}{\sqrt{2\pi\sigma^2}}\exp\left[-\frac{\left(x-\mu\right)^2}{2\sigma^2}\right]
+\]
+
+where
+
+*  $x$ is the horizontal distance on the graph, the x-axis or _independent_ variable}
+*  $\exp(\cdot)$ is the exponential function, sometimes written $e^x$.
+*  $\pi=3.1416\ldots$ is the ratio of a circle's diameter to its radius
+*  $\sigma$ is the standard deviation; $\sigma^2$ is the square of the standard deviation, or the variance
+*  $\mu$ is the mean of the distribution
+
+## The standard Normal Distribution
+
+The standard Normal distribution has $\sigma=1$ and $\mu=0$ so the
+density becomes
+
+
+\[
+\frac{1}{\sqrt{2\pi}}\exp\left[\frac{x^2}{2\sigma^2}\right].
+\]
+
+If $Z$ is distributed as a standard Normal random variable, then we
+can write $Z \sim N(0,1)$.  Note that R can calculate this for you, as
+discussed below.  From the formula you can deduce a number of facts
+about the standard Normal distribution:
+  
+
+* It is symmetrical about $x=0$ because $x^2=(-x)^2$.
+* It has a unique maximum at $x=0$ because $e^{-x}<1$ whenever $x>0$.
+* It is infinitely wide because $e^x=0$ can never happen; the curve does not touch the x axis.
+
+
+## Relationship between Normal and Standard Normal
+
+Suppose $X \sim N(\mu, \sigma^2)$ and $Z \sim N(0,1)$.
+
+The random variable $X$ can be converted to a standard Normal random
+variable as follows:
+
+\[
+Z = \frac{X - \mu}{\sigma}
+\]
+
+Then we would have
+\[
+P(X \leq x) = P( Z \leq \frac{x - \mu}{\sigma})  = P( Z \leq z)
+\]
+
+In the "old days", before R, statisticians had to use a book of tables
+to compute the probabilities. Rather than carrying around a table for
+every single combination of $\mu$ and $\sigma$, they would use tables
+for the standard Normal distribution and convert their $X$ to a $Z$ as
+shown above.
+
+ 
+## Probability and the Normal Distribution
+
+Basic facts: 
+
+* Area under the pdf $f(x)$ is equal to 1
+* Symmetric:  area to left of mean $\mu$ = 0.5 = area to right of mean $\mu$ 
+* To compute $P(X \leq x)$ find the area to the left of $x$.
+* Because $X$ is a continuous random variable, $P(X=x)=0$.  That is, the probability of $X$ being exactly equal to any particular value is zero.
+
+```{r annotatednorm2,fig.cap="The normal (Gaussian) distribution showing mean and standard deviation.", echo=FALSE,message=FALSE,warning=FALSE}
+mu  <-  0
+sigma <- 1
+x = seq(from=-4, to=4, by=0.001)
+plot(x, dnorm(x, mu, sigma), type="l", lwd=3, ylab="f(x)", yaxt="n", xaxt="n")
+axis(side=1, at=-3:3, labels=c(  expression(mu ~-3*sigma),  expression(mu ~-2 *sigma),  expression(mu~-1 *sigma),  expression(mu),  expression(mu ~+1 *sigma),  expression(mu ~+2 *sigma),  expression(mu ~+3 *sigma) ))
+Fx = pnorm(-4:4, mu, sigma)
+cols = c("black", "lightblue", "mediumblue", "darkblue","darkblue", "mediumblue",  "lightblue","black")
+colText = c("black", "black", "white", "white", "white", "white", "black", "black")
+
+for(i in -4:4){
+  j <- i+1
+  k <- 5
+  ijvals <- seq(i, j, 0.001)
+  polygon(x=c(i,ijvals , j), y= c(0, dnorm(ijvals, 0, 1), 0), col=cols[i+k], border="white")
+  text((i+0.5), 0.05, labels=round(diff(Fx)[i+k],digits=3), col=colText[i+k])
+}
+```
+
+## Four R Functions for the Normal distribution
+
+There are four functions in R that are useful for understanding the Normal distribution.  These are:
+
+* ```rnorm()``` gives random samples from the Normal distribution.
+* ```dnorm()``` gives the density of the Normal (that is, the vertical coordinate of the Bell curve
+* ```pnorm()``` gives the area to the right of the Normal
+* ```qnorm()``` the quantile function (see below).
+
+You can get help on these at the R prompt by typing ```?dnorm```
+
+
+###  Random samples from the Normal: ```rnorm()```
+
+
+The R system can furnish random variables easily.  You can get random
+samples from a Normal distribution using ```rnorm()```
+  
+```{r}
+rnorm(10)    # standard Normal
+```
+
+The "10" means to generate 10 observations.  From the help page we can
+see that the default values of mean and standard deviation are 0 and 1
+respectively.  We call the default values the ``standard Normal'',
+sometimes written $N(0,1)$, with the (0,1) meaning that the mean is
+zero and the standard deviation is 1.  It is easy to change the mean
+and standard deviation.  Suppose we wanted 20 samples from a Normal
+distribution with a mean of 10 and a standard deviation of 0.03:
+
+```{r}
+rnorm(20,mean=10,sd=0.03)
+```
+
+In the above, we specified the mean and standard deviation explicitly,
+but naming them is optional.  We could have said
+```rnorm(20,10,0.03)``` and obtained the same result.  Graphical plots
+are always informative; see figure \@ref(fig:normplot) for an example.
+
+```{r normplot,fig.cap="1000 Random observations from the standard normal distribution.  See how most of the observations are between $-2$ and $+2$ but there are occasional outliers", echo=TRUE,message=FALSE,warning=FALSE}
+plot(rnorm(1000))
+```
+
+### Histogram of the Normal Distribution
+
+It is possible to produce a histogram using ```hist()``` as in  see figure \ref@(fig:normhist).
+
+```{r normhist,fig.cap="Histogram of random observations from the standard normal distribution.  See how most of the observations are between $-2$ and $+2$ but there are occasional outliers", echo=TRUE,message=FALSE,warning=FALSE}
+hist(rnorm(10000), col='lightblue')
+```
