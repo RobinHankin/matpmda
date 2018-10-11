@@ -26,9 +26,9 @@ text(0.5,0.15,'standard',pos=3)
 text(0.5,0.15,'deviation',pos=1)
 ```
 
-Figure \@ref(fig:manynorm) shows
-some normal distributions with varying mean values (the curve moves
-left and right) and widths (the curve becomes wider or narrower).
+Figure \@ref(fig:manynorm) shows some normal distributions with
+varying mean values (the curve moves left and right) and widths (the
+curve becomes wider or narrower).
 
 ```{r manynorm,fig.cap="A selection of normal (Gaussian) distributions with different means and standard deviations.  See how the mean value shifts the distribution to the left or the right, and the standard deviation makes the distribution wider or narrower", echo=TRUE,message=FALSE,warning=FALSE}
 x <- seq(from = -4,to=4,len=100)
@@ -189,21 +189,27 @@ distribution with a mean of 10 and a standard deviation of 0.03:
 rnorm(20,mean=10,sd=0.03)
 ```
 
-In the above, we specified the mean and standard deviation explicitly,
-but naming them is optional.  We could have said
+In the figure above, we specified the mean and standard deviation
+explicitly, but naming them is optional.  We could have said
 ```rnorm(20,10,0.03)``` and obtained the same result.  Graphical plots
-are always informative; see figure \@ref(fig:normplot) for an example.
+are always informative; see the figure below for an example.
 
-```{r normplot,fig.cap="1000 Random observations from the standard normal distribution.  See how most of the observations are between $-2$ and $+2$ but there are occasional outliers", echo=TRUE,message=FALSE,warning=FALSE}
-plot(rnorm(1000))
+```{r}
+plot(rnorm(1000),main="1000 random normal observations")
 ```
 
-It is possible to produce a histogram using ```hist()``` as in figure
-\@ref(fig:normhist).
+In the figure above, most of the observations are between $-2$ and
+$+2$ but there are occasional outliers.  It is possible to produce a
+histogram using ```hist()``` as in the figure below:
 
-```{r normhist,fig.cap="Histogram of random observations from the standard normal distribution.  See how most of the observations are between $-2$ and $+2$ but there are occasional outliers", echo=TRUE,message=FALSE,warning=FALSE}
-hist(rnorm(10000), col='lightblue')
+
+```{r}
+hist(rnorm(10000), col='lightblue',main="histogram of normal observations")
 ```
+
+The figure above shows a histogram of random observations from the
+standard normal distribution.  See how most of the observations are
+between $-2$ and $+2$ but there are occasional outliers.
 
 ## Density: ```dnorm()```
 
@@ -221,30 +227,28 @@ It is easier to see this by plotting the curve:
 
 ```{r},
 x <- seq(from=-4,to=4,len=100)
-plot(x,dnorm(x)main="Density function of the standard normal distribution")
+plot(x,dnorm(x),main="Density function of the standard normal distribution")
 ```
 
 
 ## The cumulative distribution function, ```pnorm()```
+If $X\sim N(0,1)$, we quite often need to find the probability that
+$X$ is less than a particular value, as in the figure below:
 
-```{r normcumulativeplot, fig.cap="The cumulative density function is the probability that a random variable falls to the left of a particular value, here 1.3", echo=TRUE,message=FALSE,warning=FALSE}
+```{r}
 x <- seq(from=-3,to=3,len=100)
-plot(x,dnorm(x),type="l")
+plot(x,dnorm(x),type="l",main="The cumulative density function")
 x <- x[x<1.3]
 polygon(x=c(x,rev(x)),y=dnorm(c(x+1e100,rev(x))),border=NA,col="gray")
 ```
 
-If $X\sim N(0,1)$, we quite often need to find the probability that
-$X$ is less than a particular value, as in figure
-\@ref(fig:normcumulativeplot).  This is calculated by the
-```pnorm()``` command in R.  This shows a value of 1.3 and the
-probability that $X\leq 1.3$ is given by the gray area.  To give a
-numerical value we can say
+The figure above shows the probability that $X\leq 1.3$ is given by
+the gray area.  To give a numerical value that $X\leq x$ we use the
+```pnorm()``` command in R:
 
 ```{r}
 pnorm(1.3)
 ```
-
 
 ```{r,echo=FALSE}
 set.seed(0)
@@ -256,7 +260,42 @@ such results numerically by random sampling:
 ```{r}
 table(rnorm(1e6) < 1.3)
 ```
-
-
 Thus 903503 out of one million (```1e6```) samples are less than 1.3.
+
+The four normal functions all take a ```mean``` and ```sd``` argument,
+so we can specify these in our call.  Suppose we ask what the
+probability that a $N(5,2.2)$ Gaussian random variable is less than 6.1:
+
+```{r}
+pnorm(6.1,mean=5,sd=2.2)
+```
+
+To get the probability that $X$ is *above* a particular value, we need
+to take one minus the probability that is is below.  Again if $X\sim
+N(5,2.2)$, suppose we seek the probability that $X$ is *greater* than
+4.3:
+
+```{r}
+1-pnorm(4.3,mean=5,sd=2.2)
+```
+
+If we want the probability that a Gaussian random variable lies
+*between* two values, we need to subtract one value from another.
+Suppose we have $X\sim N(10,2.2)$ and we want the probability that $X$
+lies between say 11.2 and 11.9:
+
+```{r}
+pnorm(11.9,10,2.2)-pnorm(11.2,10,2.2)
+```
+
+Verifying this numerically needs a little more work:
+
+```{r}
+x <- rnorm(1e6,10,2.2)
+table((x>11.2) & (x<11.9))
+```
+
+
+
+## The quantile function ```qnorm()```
 
