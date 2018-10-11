@@ -2,16 +2,18 @@
 
 
 In this chapter we are going to look at a continuous distribution
-called the Normal distribution. The Normal distribution has many
-applications.  
+called the Normal, or Gaussian, distribution.  The Normal distribution
+has many applications and occurs throughout science, medicine, and
+commerce from astronomy to zoology.  Its importance and some of its
+mathematical properties were discovered and investigated in the 18th
+century by German mathematician Carl Friedrich Gauss.  The curve of
+the Normal distribution is nice and smooth, and has a characteristic
+shape sometimes referred to as a "bell curve".
 
-The Normal distribution occurs in a wide range of contexts from
-astronomy to zoology.  Its importance and some of its mathematical
-properties were discovered and investigated in the 18th century by
-German mathematician Carl Friedrich Gauss.  The curve of the Normal
-distribution is nice and smooth, and has a characteristic shape
-sometimes referred to as a "bell curve".  Statisticians call this the
-*Gaussian* or *normal* distribution.
+Figure \@ref(fig:annotatednorm1) shows a generic normal distribution
+showing the mean value as the maximum of the curve, and defining the
+standard deviation to be the distance from the mean to the steepest
+point.  The standard deviation is a measure of the "width" of a distribution.
 
 ```{r annotatednorm1,fig.cap="The normal (Gaussian) distribution showing mean and standard deviation.", echo=FALSE,message=FALSE,warning=FALSE}
 x <- seq(from=-4,to=4,len=1000)
@@ -30,7 +32,7 @@ Figure \@ref(fig:manynorm) shows some normal distributions with
 varying mean values (the curve moves left and right) and widths (the
 curve becomes wider or narrower).
 
-```{r manynorm,fig.cap="A selection of normal (Gaussian) distributions with different means and standard deviations.  See how the mean value shifts the distribution to the left or the right, and the standard deviation makes the distribution wider or narrower", echo=TRUE,message=FALSE,warning=FALSE}
+```{r manynorm,fig.cap="A selection of normal (Gaussian) distributions with different means and standard deviations.  See how the mean value shifts the distribution to the left or the right, and the standard deviation makes the distribution wider or narrower", echo=FALSE,message=FALSE,warning=FALSE}
 x <- seq(from = -4,to=4,len=100)
 plot(x,dnorm(x),lwd=3,type='l',col='black',ylim=c(0,1))
 grid()
@@ -41,16 +43,6 @@ legend("topright",lwd=3,col=c("black","red","blue","green"),
        legend=c("mean=0, sd=1","mean=1,sd=1","mean=1,sd=2","mean=-2,sd=0.5"))
 ```
 
-## The normal distribution and the Binomial Distribution
-
-The Normal distribution is closely related to the Binomial
-distribution (see previous week).  Consider again the Binomial
-distribution, but with a large value of $n$, say $n=100$, and $p=0.4$.
-This distribution is plotted in Figure \@ref(fig:bignorm).
-
-```{r binomialnormalplot,fig.cap="A histogram showing the distribution of the bin(100,0.3)", echo=TRUE,message=FALSE,warning=FALSE}
-plot(0:100,dbinom(0:100,100,0.3),type='h')
-```
 
 ## Properties of the Normal Distribution
 
@@ -299,3 +291,89 @@ table((x>11.2) & (x<11.9))
 
 ## The quantile function ```qnorm()```
 
+The quantile function ```qnorm()``` inverts the cumulative
+distribution function.  Suppose we have a standard normal variable and
+wish to find the point $x$ which is exceeded with a probability of
+5\%.  This would mean that $P(X\leq x) = 0.9$.  To find this point we
+use ```qnorm()```:
+
+```{r}
+qnorm(0.95)
+```
+
+Thus the probability that a standard normal variable $X$ is less than
+about $1.64$ is is 95\%, and so the probability that $X>1.64$ is about
+5\%.  It is important to be able to check such findings:
+
+```{r}
+pnorm(1.644854)
+```
+
+Or indeed numerically:
+
+```{r}
+table(rnorm(1e6) < qnorm(0.95))/1e6
+```
+
+showing close agreement with the expected 5\% / 95\% split.  Remember
+that ```qnorm()``` takes ```mean``` and ```sd``` arguments which can
+be used to override the default values of 0 and 1.  It is possible to
+graph the quantile function:
+
+```{r}
+p <- seq(from=0.01,to=0.99,len=100)
+plot(p,qnorm(p))
+```
+
+
+## The normal distribution and the Binomial Distribution
+
+The Normal distribution is closely related to the Binomial
+distribution (see previous week).  Consider again the Binomial
+distribution, but with a large value of $n$, say $n=100$, and $p=0.4$.
+This distribution is plotted in Figure \@ref(fig:binomialnormalplot)
+from which we can see that this binomial distribution is very closely
+approximated by a normal distribution.
+
+```{r binomialnormalplot,fig.cap="A histogram showing the distribution of the bin(100,0.3)", echo=TRUE,message=FALSE,warning=FALSE}
+plot(0:100,dbinom(0:100,100,0.3),type='h')
+```
+
+In general, the binomial distribution for large $n$ is closely
+approximated by a normal distribution.
+
+
+
+### Mean and standard deviation of the binomial distribution
+
+if $X\sim\operatorname{Bin}(n,p)$ then the expected value of $X$ is
+given by $E(X)=np$ and the standard deviation $\operatorname{sd}(X)$
+is given by $\sqrt{np(1-p)}$.  Sometimes textbooks will write $q=1-p$
+(that is, $q$ is the probability of failure) and the standard
+deviation is then $\sqrt{npq}$.  The variance, being the square of the
+standard deviation, is $npq$.  We can verify these statements
+numerically.  Suppose we havve $n=10$ and $p=0.3$.  Then
+$E(X)=np=10\times 0.3=3$, and $\operatorname{sd}(X)=\sqrt{10\times
+0.3\times 0.7}=1.45$.  To check these values we use ```rbinom()```:
+
+
+```{r}
+mean(rbinom(1e6,10,0.3))
+sd(rbinom(1e6,10,0.3))
+```
+
+showing close agreement.  The figure below shows the cumulative
+distribution function for $\operatorname{Bin}(20,0.3)$ and that of
+$N(6,2.05)$ on the same axes:
+
+```{r}
+x <- seq(from=-3,to=10,len=100)
+plot(x,pnorm(x,6,sqrt(20*0.3*0.7)),type="l",ylab="cumulative probability")
+points(x,pbinom(x,20,0.3),type="l",col="red")
+legend("topleft",lty=1,col=c("red","black"),legend=c("binomial","normal"))
+```
+
+In the figure above, we can see how the normal and binomial differ:
+the normal distribution is continuous but the binomial is discrete
+(which is why the CDF has jumps).  But the two distributions are
+broadly the same.  The agreement becomes closer if $n$ becomes larger.
