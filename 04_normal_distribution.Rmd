@@ -168,9 +168,7 @@ There are four functions in R that are useful for understanding the Normal distr
 
 You can get help on these at the R prompt by typing ```?dnorm```
 
-
 ###  Random samples from the Normal: ```rnorm()```
-
 
 The R system can furnish random variables easily.  You can get random
 samples from a Normal distribution using ```rnorm()```
@@ -221,9 +219,44 @@ dnorm(-3)
 
 It is easier to see this by plotting the curve:
 
-```{r normdensityplot,fig.cap="Density function of the standard normal distribution", echo=TRUE,message=FALSE,warning=FALSE}
+```{r},
 x <- seq(from=-4,to=4,len=100)
-plot(x,dnorm(x))
+plot(x,dnorm(x)main="Density function of the standard normal distribution")
 ```
 
+
+## The cumulative distribution function, ```pnorm()```
+
+```{r normcumulativeplot, fig.cap="The cumulative density function is the probability that a random variable falls to the left of a particular value, here 1.3", echo=TRUE,message=FALSE,warning=FALSE}
+x <- seq(from=-3,to=3,len=100)
+plot(x,dnorm(x),type="l")
+x <- x[x<1.3]
+polygon(x=c(x,rev(x)),y=dnorm(c(x+1e100,rev(x))),border=NA,col="gray")
+```
+
+If $X\sim N(0,1)$, we quite often need to find the probability that
+$X$ is less than a particular value, as in figure
+\@ref(fig:normcumulativeplot).  This is calculated by the
+```pnorm()``` command in R.  This shows a value of 1.3 and the
+probability that $X\leq 1.3$ is given by the gray area.  To give a
+numerical value we can say
+
+```{r}
+pnorm(1.3)
+```
+
+
+```{r,echo=FALSE}
+set.seed(0)
+```
+
+so the probability is about 90\%.  It is always a good idea to verify
+such results numerically by random sampling:
+
+```{r}
+table(rnorm(1e6) < 1.3)
+```
+
+
+Thus 903503 out of one million (```1e6```) samples are less than 1.3.
 
