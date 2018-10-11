@@ -88,7 +88,8 @@ Here the sample space will be, with obvious notation,
 
 RR, RG, RB, GR, GG, GB, BR, BG, BB
 
-(it might be easier to see what is going on by arranging the elements more logically:
+It might be easier to see what is going on by arranging the elements
+more logically:
 
 RR, RG, RB
 
