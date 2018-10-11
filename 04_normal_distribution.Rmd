@@ -225,7 +225,7 @@ dnorm(-3)
 
 It is easier to see this by plotting the curve:
 
-```{r},
+```{r}
 x <- seq(from=-4,to=4,len=100)
 plot(x,dnorm(x),main="Density function of the standard normal distribution")
 ```
