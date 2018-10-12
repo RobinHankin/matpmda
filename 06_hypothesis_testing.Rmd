@@ -1,4 +1,4 @@
-# Hypothesis Testing
+1# Hypothesis Testing
 
 As we discussed earlier, we often want to use a sample to make
 inferences about the population from which the sample was drawn.  The
@@ -124,8 +124,8 @@ alternative hypothesis $H_1$.
 ## Critical region and test statistics
 
 One useful concept is that of *test statistic*.  A test statistic is
-an observable (the best example is "sample mean") that has a
-distribution under the null.
+an observable quantity (the best example is "sample mean") that has a
+known distribution under the null.
 
 An alternative approach to assessing whether or not our data are
 consistent with the null hypothesis is to use a *critical region*.
@@ -133,4 +133,15 @@ The critical region, also called the "rejection region", is that set
 of values of a test statistic for which we would reject the null.  If
 the test statistic is in the critical region, then we reject $H_0$.
 
+Figure \@ref(fig:criticalregion) shows the concept diagramatically.
+We can see that, if the null is true, the probability of the test
+statistic falling in to the rejection region is 0.05, or 5\%.
 
+```{r criticalregion,fig.cap="The critical region shown in red", echo=FALSE,message=FALSE,warning=FALSE}
+x <- seq(from=-4,to=4,len=100)
+plot(x,dnorm(x),type="n",main="The critical region",xlab="sample mean",ylab="null")
+xx <- seq(from=qnorm(0.95),to=4,len=100)
+polygon(c(xx,rev(xx)),c(dnorm(xx),xx*0),col="red",border="blue")
+points(x,dnorm(x),type="l",lwd=1)
+legend("topright",col=c("red","black"),lwd=c(11,1),legend=c("critical region","Null distribution"))
+```
