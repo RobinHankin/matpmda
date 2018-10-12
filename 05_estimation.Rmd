@@ -106,7 +106,7 @@ the ```sd()``` function, which estimates the standard deviation:
 
 ```{r}
 sd(kiwi)
-
+```
 
 So the standard error of the mean is 
 
