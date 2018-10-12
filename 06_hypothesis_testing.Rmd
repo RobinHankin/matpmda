@@ -18,7 +18,7 @@ times and find that it lands heads 60 times.  Is this evidence for the
 coin being biased? 
 
 The way to proceed is to think about what happens if the coin is
-actually fair.  If the coin actually was fair, then~$\p=\frac{1}{2}$.
+actually fair.  If the coin actually was fair, then~$p=\frac{1}{2}$.
 We call the statement that the coin is fair the *Null Hypothesis*.  We
 write $H_0$ or sometimes $H_\mathrm{NULL}$ for short.  In speech
 sometimes we abbreviate to "the null".  The null hypothesis is always
