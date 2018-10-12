@@ -45,18 +45,16 @@ These 10 numbers are drawn from a standard Gaussian distribution, with
 mean 0 and standard deviation 1.  Now we calculate the sample mean of
 these numbers:
   
-<<>>=
+```{r}
 mean(x)
-@  
-
+```
 
 Here we are using the sample mean as an estimate of the population
 mean.  We know that the *population* mean $\mu$ is zero but due to
 random variability the sample mean is incorrect; in this case it is
-about 0.36 units higher than the population mean of zero.
-
-What happens if we repeat this experiment?  We can try the process
-again repeatedly, using a single line of R coding:
+about 0.36 units higher than the population mean of zero.  What
+happens if we repeat this experiment?  We can try the process again
+repeatedly, using a single line of R coding:
   
 ```{r}
 mean(rnorm(10))
@@ -64,17 +62,16 @@ mean(rnorm(10))
 mean(rnorm(10))
 ```
 
+See how the sample mean varies randomly.
 
 ## The Sampling distribution
 
 As we saw in the previous example, each time we sample from the Normal
 distribution using ```rnorm(10)``` we get a different mean.  The
 distribution of these means is called the *sampling distribution*.
-
-
 The command ```replicate()``` is useful for repeating a command a
 certain number of times.  For example, we can draw 5 samples of size
-10 from $N(7,1)$::
+10 from $N(7,1)$:
 
 ```{r}
 xbar <- replicate(5, mean(rnorm(10,mean=7)))
