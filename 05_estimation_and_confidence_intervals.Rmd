@@ -1,0 +1,92 @@
+# Estimation and confidence intervals
+
+Earlier in the course we considered the idea of taking a random sample
+from a population. Often we want to use our sample to gain information
+about the population. We will extend that idea in this chapter.
+
+If $X_1, X_2, \ldots, X_n$ are independent random variables having a
+common probability distribution, then they form a *sample* from that
+distribution.  We have discussed computing some *sample statistics*
+sample, such as the sample mean and sample variance.  But observe
+carefully that the sample statistics differ from sample to sample,
+even if the underlying distribution is unchanged:
+
+```{r}
+mean(rnorm(10))
+mean(rnorm(10))
+mean(rnorm(10))
+```
+
+In the above, observe that the standard Gaussian has a mean of exactly
+zero, but the sample mean (the average of 10 random observations) has
+random variability.
+
+
+## Sample Statistics vs Population Parameters
+
+
+Suppose we have observations $x_1,x_2,\ldots x_n$ drawn from a
+Gaussian distribution $N(\mu,\sigma)$.  We would like to determine the
+value of $\mu$ and $\sigma$ from the observations.  We can calculate
+the sample mean of the observations, usually denoted $\overline{x}$
+but this does not allow us to pin down the value of $\mu$ exactly,
+because we have random variability which is adding noise.
+
+Consider again the Gaussian distribution. }Let $X \sim N(0,1)$ and
+suppose we take a sample of size 10 from this distribution:
+
+```{r}
+set.seed(0)
+x <- rnorm(10)
+x
+```
+
+These 10 numbers are drawn from a standard Gaussian distribution, with
+mean 0 and standard deviation 1.  Now we calculate the sample mean of
+these numbers:
+  
+<<>>=
+mean(x)
+@  
+
+
+Here we are using the sample mean as an estimate of the population
+mean.  We know that the *population* mean $\mu$ is zero but due to
+random variability the sample mean is incorrect; in this case it is
+about 0.36 units higher than the population mean of zero.
+
+What happens if we repeat this experiment?  We can try the process
+again repeatedly, using a single line of R coding:
+  
+```{r}
+mean(rnorm(10))
+mean(rnorm(10))
+mean(rnorm(10))
+```
+
+
+## The Sampling distribution
+
+As we saw in the previous example, each time we sample from the Normal
+distribution using ```rnorm(10)``` we get a different mean.  The
+distribution of these means is called the *sampling distribution*.
+
+
+The command ```replicate()``` is useful for repeating a command a
+certain number of times.  For example, we can draw 5 samples of size
+10 from $N(7,1)$::
+
+```{r}
+xbar <- replicate(5, mean(rnorm(10,mean=7)))
+xbar
+```
+
+Above, see how the population mean is 7 but the sample mean varies
+randomly, sometimes overestimating and sometimes underestimating.  In
+practice, of course, we only have a single sample and we will not know
+whether the sample mean is an overestimate or an underestimate.
+
+```{r}
+hist(replicate(1e5, mean(rnorm(10,mean=7))),main="sample mean of 10 observations")
+```
+
