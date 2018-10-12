@@ -1,0 +1,136 @@
+# Hypothesis Testing
+
+As we discussed earlier, we often want to use a sample to make
+inferences about the population from which the sample was drawn.  The
+following notation is commonly used when referring to samples and
+populations.  Here, we discuss how we can make inferences about a
+population by testing a hypothesis that we may have regarding a
+population parameter, such as a mean $\mu$ or proportion $\pi$.  We
+will begin with an overview of the hypothesis testing and then will
+explore this in more detail in remainder of this chapter.
+
+Hypothesis testing is best understood through an example.  Suppose you
+are given a coin and are wondering if the coin is biased towards
+heads, that is, the probability of the coin landing heads is greater
+than one half.  Mathematically we would write $p>0.5$, where $p$ is
+the probability of the coin landing heads.  You toss the coin 100
+times and find that it lands heads 60 times.  Is this evidence for the
+coin being biased? 
+
+The way to proceed is to think about what happens if the coin is
+actually fair.  If the coin actually was fair, then~$\p=\frac{1}{2}$.
+We call the statement that the coin is fair the *Null Hypothesis*.  We
+write $H_0$ or sometimes $H_\mathrm{NULL}$ for short.  In speech
+sometimes we abbreviate to "the null".  The null hypothesis is always
+the *absence* of the effect we are investigating.  In this case, we
+are investigating whether the coin is biased towards heads, so the
+null is that the coin is not biased, and is fair.  In mathematical
+notation we would say
+
+\[
+H_0\colon\operatorname{Prob}(H)=\frac{1}{2}
+\]
+
+Since we are interested in whether the coin is biased towards heads, the alternative hypothesis is:
+
+\[
+H_1\colon\operatorname{Prob}(H) > \frac{1}{2}
+\]
+
+
+But the null does not mean that 100 tosses results in exactly 50
+heads.  We can use R to conduct a computer simulation of this
+situation.  Suppose we give 90 undergraduates a coin and tell them to
+toss it 100 times and write down the number of heads.  In R this is
+easy to simulate:
+
+```{r}
+set.seed(0)
+rbinom(90,100,0.5)
+```
+
+In the above simulations, the probability of heads is exactly 0.5 (the
+null hypothesis is true).  But the simulation shows that we actually
+observe a range of heads.  Remember that originally we actually
+observed 60 heads; this is our data.  If the null is true, we get 60
+or 61 heads out of 100 tosses from time to time, so logically our
+observation of 60 is not inconsistent with the null.
+
+Note that it is mathematically *possible* for $p=0.5$ but nevertheless
+observe 100 heads out of 100 tosses.  But if we did observe 100 heads,
+we would conclude that the probability of a head was considerably more
+than 0.5.
+
+The way to think about it is to ask: If $p$ was actually equal to 0.5,
+what is the probability that we observe 60 or more heads out of 100
+tosses?  This is easily answered:
+  
+```{r}
+sum(dbinom(60:100,100,0.5))
+```
+
+So, if the null is true the probability of observing~$x=60$ heads or
+more is about 2.8\%, which is quite a small probability.  The fact
+that this probability is small indicates that there is evidence
+against the null being true.  The value of 2.8\% is known as a
+*p-value*.  The p-value is the probability, if the null is true, of
+obtaining our observation or one more extreme.  In this case, the
+observation is 60 heads out of 100 tosses, and "more extreme" means
+"more than 60 heads".
+
+Note that *small* p-values constitute *strong* evidence against the
+null; the smaller the p-value, the stronger the evidence against
+$H_0$.  Conventionally, if the p-value is less than 5\% or 0.05 we say
+that we have *statistically significant* evidence against the null.
+In other words, if $p<0.05$ we *reject* the null and conclude that the
+probability of the coin landing heads is greater than 0.5.
+
+Hypothesis testing using p-values is a standard procedure with
+standard steps.  Here is a summary of the coin example:
+  
+* Formulate a null hypothesis is that the coin is fair; write  $H_0\colon p=0.5$.
+* Collect some data (in this case 60 heads out of 100 tosses)
+* Calculate the p-value
+* Compare the p-value to the standard value of 0.05
+* If the p-value is less than 0.05, *reject* the null hypothesis
+* If the p-value is not less than 0.05, make no conclusion.
+
+
+Note that the opposite of "reject" is not "accept": in statistics, we
+*never* accept a null hypothesis.  In this case, we can be sure that
+$p$ is not *exactly* equal to 0.5.
+
+
+
+## Notes about p-value
+
+The Null hypothesis is a statement about the nature of a
+population. It is often stated in terms of a population parameter such
+as the mean or standard deviation of a Gaussian distribution.
+
+The alternative hypothesis is denoted by $H_1$ or $H_A$. The null
+hypothesis will be rejected if it appears to be inconsistent with the
+sample data and will not be rejected otherwise.
+
+It is often a sound strategy to memorize the definition of p-value:
+
+The p-value is the probability, if the null hypothesis is true, of
+obtaining the observation or an observation more extreme.
+
+What "more extreme" means depends on the situation, the null, and the
+alternative hypothesis $H_1$.
+
+
+## Critical region and test statistics
+
+One useful concept is that of *test statistic*.  A test statistic is
+an observable (the best example is "sample mean") that has a
+distribution under the null.
+
+An alternative approach to assessing whether or not our data are
+consistent with the null hypothesis is to use a *critical region*.
+The critical region, also called the "rejection region", is that set
+of values of a test statistic for which we would reject the null.  If
+the test statistic is in the critical region, then we reject $H_0$.
+
+
