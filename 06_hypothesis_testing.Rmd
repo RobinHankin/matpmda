@@ -1,4 +1,4 @@
-1# Hypothesis Testing
+# Hypothesis Testing
 
 As we discussed earlier, we often want to use a sample to make
 inferences about the population from which the sample was drawn.  The
@@ -105,7 +105,7 @@ $p$ is not *exactly* equal to 0.5.
 ## Notes about p-value
 
 The Null hypothesis is a statement about the nature of a
-population. It is often stated in terms of a population parameter such
+population.  It is often stated in terms of a population parameter such
 as the mean or standard deviation of a Gaussian distribution.
 
 The alternative hypothesis is denoted by $H_1$ or $H_A$. The null
@@ -143,5 +143,53 @@ plot(x,dnorm(x),type="n",main="The critical region",xlab="sample mean",ylab="nul
 xx <- seq(from=qnorm(0.95),to=4,len=100)
 polygon(c(xx,rev(xx)),c(dnorm(xx),xx*0),col="red",border="blue")
 points(x,dnorm(x),type="l",lwd=1)
+legend("topright",col=c("red","black"),lwd=c(11,1),legend=c("critical region","Null distribution"))
+```
+
+
+## One-sided vs two-sided tests
+
+Suppose we are testing a null that the population mean $\mu$ is a
+particular value, $\mu_0$, so $H_0\colon \mu=\mu_0$.  We calculate the
+sample mean~$\overline{x}$ and compare this with~$\mu_0$.  The idea is that
+there are three types of change in a mean value that we might be
+investigating:
+
+* The population mean is known to be *larger* than the $\mu_0$, and
+this case the difference $\overline{x}-\mu_0$ will be *positive*.  We
+wish to find out whether or not the increase is significant and write
+$H_1\colon \mu > \mu_0$.
+
+* The population mean is known to be *smaller* than the null, and
+this case the difference $\overline{x}-\mu_0$ will be *negative*.  We
+wish to find out whether or not the decrease is significant and write
+$H_1\colon \mu < \mu_0$.
+
+* The mean might be larger or smaller than the null, and in this case
+we do not know whether $\overline{x}-\mu_0$ is positive or negative.
+We are seeking evidence that the difference, whether an increase or
+a decrease, is significant and write  $H_1\colon \mu \neq \mu_0$.
+
+
+The first two cases are called *one-tailed tests* or *one-sided tests*
+and the third is called a *two-tailed test*.  These are shown in
+figures \@ref(fig:onesidedtest) and \@ref(fig:twosidedtest).  We will
+see examples of both types of test soon.
+
+```{r onesidedtest,fig.cap="Critical region for a one-sided test", echo=FALSE,message=FALSE,warning=FALSE}
+x <- seq(from=-4,to=4,by=0.05)
+plot(x, dnorm(x),type="l", ylab="Density", xlab="", xaxt="n",main="One-sided test")
+jj <- x[x>qnorm(0.95)]
+polygon(x=c(jj,rev(jj)), y=c(dnorm(jj),jj*0),col="red")
+legend("topright",col=c("red","black"),lwd=c(11,1),legend=c("critical region","Null distribution"))
+```
+
+```{r twosidedtest,fig.cap="Critical region for a two-sided test", echo=FALSE,message=FALSE,warning=FALSE}
+x <- seq(from=-4,to=4,by=0.05)
+plot(x, dnorm(x),type="l", ylab="Density", xlab="", xaxt="n",main="Two-sided test")
+jj <- x[x>qnorm(0.975)]
+polygon(x=c(jj,rev(jj)), y=c(dnorm(jj),jj*0),col="red")
+jj <- -jj 
+polygon(x=c(jj,rev(jj)), y=c(dnorm(jj),jj*0),col="red")
 legend("topright",col=c("red","black"),lwd=c(11,1),legend=c("critical region","Null distribution"))
 ```
