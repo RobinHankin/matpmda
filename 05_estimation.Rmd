@@ -1,7 +1,7 @@
-# Estimation and confidence intervals
+# Estimation
 
 Earlier in the course we considered the idea of taking a random sample
-from a population. Often we want to use our sample to gain information
+from a population.  Often we want to use our sample to gain information
 about the population. We will extend that idea in this chapter.
 
 If $X_1, X_2, \ldots, X_n$ are independent random variables having a
