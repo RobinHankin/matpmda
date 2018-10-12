@@ -21,9 +21,7 @@ In the above, observe that the standard Gaussian has a mean of exactly
 zero, but the sample mean (the average of 10 random observations) has
 random variability.
 
-
 ## Sample Statistics vs Population Parameters
-
 
 Suppose we have observations $x_1,x_2,\ldots x_n$ drawn from a
 Gaussian distribution $N(\mu,\sigma)$.  We would like to determine the
@@ -32,46 +30,15 @@ the sample mean of the observations, usually denoted $\overline{x}$
 but this does not allow us to pin down the value of $\mu$ exactly,
 because we have random variability which is adding noise.
 
-Consider again the Gaussian distribution. }Let $X \sim N(0,1)$ and
-suppose we take a sample of size 10 from this distribution:
-
-```{r}
-set.seed(0)
-x <- rnorm(10)
-x
-```
-
-These 10 numbers are drawn from a standard Gaussian distribution, with
-mean 0 and standard deviation 1.  Now we calculate the sample mean of
-these numbers:
-  
-```{r}
-mean(x)
-```
-
-Here we are using the sample mean as an estimate of the population
-mean.  We know that the *population* mean $\mu$ is zero but due to
-random variability the sample mean is incorrect; in this case it is
-about 0.36 units higher than the population mean of zero.  What
-happens if we repeat this experiment?  We can try the process again
-repeatedly, using a single line of R coding:
-  
-```{r}
-mean(rnorm(10))
-mean(rnorm(10))
-mean(rnorm(10))
-```
-
-See how the sample mean varies randomly.
 
 ## The Sampling distribution
 
-As we saw in the previous example, each time we sample from the Normal
-distribution using ```rnorm(10)``` we get a different mean.  The
-distribution of these means is called the *sampling distribution*.
-The command ```replicate()``` is useful for repeating a command a
-certain number of times.  For example, we can draw 5 samples of size
-10 from $N(7,1)$:
+As we saw above, each time we sample from the Normal distribution
+using ```rnorm(10)``` we get a different sample mean, even the though
+the population mean is 0.  The distribution of these sample means is
+called the *sampling distribution*.  The command ```replicate()``` is
+useful for repeating a command a certain number of times.  For
+example, we can draw 5 samples of size 10 from $N(7,1)$:
 
 ```{r}
 xbar <- replicate(5, mean(rnorm(10,mean=7)))
@@ -86,4 +53,69 @@ whether the sample mean is an overestimate or an underestimate.
 ```{r}
 hist(replicate(1e5, mean(rnorm(10,mean=7))),main="sample mean of 10 observations")
 ```
+
+It turns out that the sample mean of $n$ independent observations
+drawn from $N(\mu,\sigma)$ is distributed as a Gaussian with mean
+$\mu$ and standard deviation $\frac{\sigma}{\sqrt{n}}$.  Symbolically:
+
+If $x_1,\ldots,x_n\sim N(\mu,\sigma)$, then
+$\overline{x}=\frac{1}{n}\sum_{i=1}^n x_i\sim
+N\left(\mu,\frac{\sigma}{\sqrt{n}}\right)$.
+
+
+Note how the sample mean has the correct mean of $\mu$ (the statistian
+says that the sample mean is *unbiased* for the population mean).
+Also see how taking more observations---that is, making $n$
+larger---results in a smaller uncertainty in the estimate of $\mu$.
+
+The quantity $\sigma/\sqrt{n}$ is known as the *standard* *error* *of*
+*the* *mean*, SEM for short, or sometimes SE$[\bar{X}]$.  This shows
+us how reliable our estimated mean value is.  If the SEM is small,
+then our estimated mean is quite accurate, if it is large then our
+estimated mean has a large uncertainty.
+
+
+## Example
+
+%In real life, we do not know the population mean, so we have to
+%estimate it from the data.
+
+A zoologist is interested in the weights of a sample of 30 kiwis. 
+She knows that the population standard deviation is $\sigma=0.22$.
+Suppose we have a sample of 30 kiwibird weights, in kilograms:
+  
+```{r}
+kiwi <-  c(0.57, 1.02, 0.87, 1.21, 0.69, 0.99, 1.09, 0.59,  
+           0.96, 0.51, 1.36, 1.07, 0.55, 0.87, 1.24, 0.91, 
+           1.22, 1.01, 1.07, 0.81, 0.98, 1.03, 0.99, 1.17, 
+           1.07, 1.18, 0.95, 1, 0.9, 1.06)
+```
+
+Then we can calculate the sample mean:
+  
+```{r}
+mean(kiwi)
+```
+
+So the estimate of the mean weight of a kiwi bird is about 0.96kg.
+But how accurate is this estimate?  The true mean might be 0.93kg or
+1.01kg or some other value.  To find the error in this estimate we use
+the standard erro of the mean, given by the formula $\sigma/\sqrt{n}$;
+here $n=30$ is the number of observations, and $\sigma$ is given by
+the ```sd()``` function, which estimates the standard deviation:
+
+```{r}
+sd(kiwi)
+
+
+So the standard error of the mean is 
+
+```{r}
+SEM <- sigma/sqrt(30)
+SEM
+```
+
+and this shows us that the SEM is about 0.04kg.  This is the
+uncertainty of our estimate, caused by random variability.
+
 
