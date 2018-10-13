@@ -200,6 +200,19 @@ legend("topleft",col=c("red","black"),lwd=c(11,1),legend=c("pvalue","Null distri
 The above hypothesis tests are straightforward to apply using builtin
 R functionality.
 
+## The Z test
+
+One way to consider the test statistic (here the sample mean) is to
+convert it to a quantity, conventionally called $Z$, which has a
+standard normal distribution if the null is true.  To do this, we need
+to subtract the null mean, and scale by dividing by the standard
+deviation:
+
+
+\[
+Z=\frac{\overline{x}-\mu}{\sigma}
+\]
+
 ##  Example:  Passing with excellence in NCEA
 
 Now suppose that we are interested in student pass rates at NCEA
