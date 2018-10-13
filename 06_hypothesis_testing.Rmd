@@ -143,7 +143,7 @@ plot(x,dnorm(x),type="n",main="The critical region",xlab="sample mean",ylab="nul
 xx <- seq(from=qnorm(0.95),to=4,len=100)
 polygon(c(xx,rev(xx)),c(dnorm(xx),xx*0),col="red",border="blue")
 points(x,dnorm(x),type="l",lwd=1)
-legend("topright",col=c("red","black"),lwd=c(11,1),legend=c("critical region","Null distribution"))
+legend("topleft",col=c("red","black"),lwd=c(11,1),legend=c("critical region","Null distribution"))
 ```
 
 
@@ -175,18 +175,18 @@ and the third is called a *two-tailed test*.  These are shown in
 figures \@ref(fig:onesidedpvalue) and \@ref(fig:twosidedpvalue).  We will
 see examples of both types of test soon.
 
-```{r onesidedtest,fig.cap="pvalue for a one-sided test", echo=FALSE,message=FALSE,warning=FALSE}
-x <- seq(from=-4,to=4,by=0.05)
+```{r onesidedpvalue,fig.cap="pvalue for a one-sided test", echo=FALSE,message=FALSE,warning=FALSE}
+x <- seq(from=-4,to=4,by=0.001)
 plot(x, dnorm(x),type="l", ylab="Density", xlab="", xaxt="n",main="One-sided test")
 jj <- x[x>qnorm(0.95)]
 polygon(x=c(jj,rev(jj)), y=c(dnorm(jj),jj*0),col="red")
 abline(v=qnorm(0.95))
 text(qnorm(0.95),0.1,"observation",pos=4)
-legend("topright",col=c("red","black"),lwd=c(11,1),legend=c("p-value","Null distribution"))
+legend("topleft",col=c("red","black"),lwd=c(11,1),legend=c("p-value","Null distribution"))
 ```
 
-```{r twosidedtest,fig.cap="pvalue for a two-sided test", echo=FALSE,message=FALSE,warning=FALSE}
-x <- seq(from=-4,to=4,by=0.05)
+```{r twosidedpvalue,fig.cap="pvalue for a two-sided test", echo=FALSE,message=FALSE,warning=FALSE}
+x <- seq(from=-4,to=4,by=0.001)
 plot(x, dnorm(x),type="l", ylab="Density", xlab="", xaxt="n",main="Two-sided test")
 jj <- x[x>qnorm(0.975)]
 polygon(x=c(jj,rev(jj)), y=c(dnorm(jj),jj*0),col="red")
@@ -194,7 +194,7 @@ jj <- -jj
 polygon(x=c(jj,rev(jj)), y=c(dnorm(jj),jj*0),col="red")
 abline(v=qnorm(0.975))
 text(qnorm(0.975),0.1,"observation",pos=4)
-legend("topright",col=c("red","black"),lwd=c(11,1),legend=c("pvalue","Null distribution"))
+legend("topleft",col=c("red","black"),lwd=c(11,1),legend=c("pvalue","Null distribution"))
 ```
 
 The above hypothesis tests are straightforward to apply using builtin
@@ -236,7 +236,7 @@ sum(dbinom(0:21,150,0.2))
 ```
 
 * _Step 6_.  Compare the pvalue of about 3.7\% with the 5\% standard
-  value.  Thi s is less than 5\% So we *reject* the null.
+  value.  This is less than 5\% So we *reject* the null.
  * _Step 7_.  Interpret: we have strong evidence that this particular
   school has a *lower* probability of passing with NCEA excellence
   than the national average of 0.2
@@ -259,7 +259,7 @@ Nationally, the weight of a kiwi bird is known to have a mean of 1kg.
 *Question*: Is there any evidence for this set of kiwi to differ from
 the national mean of 1kg?
 
-* *STEP 1*. State a null hypothesis.  Here we would say that the null is
+* _*STEP*_ *1*. State a null hypothesis.  Here we would say that the null is
   that the population mean of our kiwi is that of the national average, 1kg.
    Mathematically we write $H_0\colon
   \mu=1.0$, where $\mu$ is the mean weight of kiwi in the forest in question.
@@ -276,7 +276,7 @@ sd(kiwi)
   probability, if the null is true, of obtaining the observation or an
   observation more extreme".  Here "more extreme" means "further away
   from 1kg" and we have a two-sided test, see figure
-  \@ref(fig:twosidedtest).
+  \@ref(fig:twosidedpvalue).
 
 * *STEP 4*.  Calculate the null distribution of the test statistic.
   This has mean 1kg and standard deviation equal to the standard error
@@ -295,7 +295,8 @@ SEM
 2*(1-pnorm(mean(kiwi),mean=1,sd=SEM))
 ```
 
- * *STEP 6*.  Interpret: This p-value exceeds the 5\% requirement, so
+ * STEP 6.  Interpret: This p-value exceeds the 5\% requirement, so
    the result is *not significant*.  There is no evidence that the
    weights of these kiwi birds differ from the national average of
    1kg.
+
