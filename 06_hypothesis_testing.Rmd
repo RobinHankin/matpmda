@@ -147,7 +147,7 @@ legend("topright",col=c("red","black"),lwd=c(11,1),legend=c("critical region","N
 ```
 
 
-## One-sided vs two-sided tests
+## One-sided vs two-sided p-values
 
 Suppose we are testing a null that the population mean $\mu$ is a
 particular value, $\mu_0$, so $H_0\colon \mu=\mu_0$.  We calculate the
@@ -170,26 +170,132 @@ we do not know whether $\overline{x}-\mu_0$ is positive or negative.
 We are seeking evidence that the difference, whether an increase or
 a decrease, is significant and write  $H_1\colon \mu \neq \mu_0$.
 
-
 The first two cases are called *one-tailed tests* or *one-sided tests*
 and the third is called a *two-tailed test*.  These are shown in
-figures \@ref(fig:onesidedtest) and \@ref(fig:twosidedtest).  We will
+figures \@ref(fig:onesidedpvalue) and \@ref(fig:twosidedpvalue).  We will
 see examples of both types of test soon.
 
-```{r onesidedtest,fig.cap="Critical region for a one-sided test", echo=FALSE,message=FALSE,warning=FALSE}
+```{r onesidedtest,fig.cap="pvalue for a one-sided test", echo=FALSE,message=FALSE,warning=FALSE}
 x <- seq(from=-4,to=4,by=0.05)
 plot(x, dnorm(x),type="l", ylab="Density", xlab="", xaxt="n",main="One-sided test")
 jj <- x[x>qnorm(0.95)]
 polygon(x=c(jj,rev(jj)), y=c(dnorm(jj),jj*0),col="red")
-legend("topright",col=c("red","black"),lwd=c(11,1),legend=c("critical region","Null distribution"))
+abline(v=qnorm(0.95))
+text(qnorm(0.95),0.1,"observation",pos=4)
+legend("topright",col=c("red","black"),lwd=c(11,1),legend=c("p-value","Null distribution"))
 ```
 
-```{r twosidedtest,fig.cap="Critical region for a two-sided test", echo=FALSE,message=FALSE,warning=FALSE}
+```{r twosidedtest,fig.cap="pvalue for a two-sided test", echo=FALSE,message=FALSE,warning=FALSE}
 x <- seq(from=-4,to=4,by=0.05)
 plot(x, dnorm(x),type="l", ylab="Density", xlab="", xaxt="n",main="Two-sided test")
 jj <- x[x>qnorm(0.975)]
 polygon(x=c(jj,rev(jj)), y=c(dnorm(jj),jj*0),col="red")
 jj <- -jj 
 polygon(x=c(jj,rev(jj)), y=c(dnorm(jj),jj*0),col="red")
-legend("topright",col=c("red","black"),lwd=c(11,1),legend=c("critical region","Null distribution"))
+abline(v=qnorm(0.975))
+text(qnorm(0.975),0.1,"observation",pos=4)
+legend("topright",col=c("red","black"),lwd=c(11,1),legend=c("pvalue","Null distribution"))
 ```
+
+The above hypothesis tests are straightforward to apply using builtin
+R functionality.
+
+##  Example:  Passing with excellence in NCEA
+
+Now suppose that we are interested in student pass rates at NCEA
+level.  For a particular NCEA exam, we know that 20\% of New Zealand
+students pass the exam with an "excellence" grade.  We are interested
+in a particular school in which 150 students took the exam.  Of these
+150 students, 21 pass with excellence.
+
+*Question:* is there evidence for this school having a lower
+probability of passing with excellence than the national New Zealand
+rate?
+
+* _Step 1_.  Realize that passing with excellence is a Bernoulli random
+  variable, with success meaning "pass with excellence" and failure
+  meaning any other result.
+* _Step 2_. State a null hypothesis.  Here we would say that the null is
+  that this school has a probability of passing with excellence of the
+  national average, 20\% (or 0.2).  Mathematically we write $H_0\colon
+  p=0.2$, where $p$ is the probability for students in this school
+  passing with excellence.  The alternative hypothesis is $p<0.2$.
+* _Step 3_.  Realize that the null hypothesis implies that the number of
+  excellence students will be binomial with size 150 and probability
+  0.2.  So the number of students with excellence will be
+  $\sim\operatorname{Bin}(150,0.2)$.  The expected number of excellence
+  students will be $150\times 0.2=30$.
+* _Step 4_.  State the precise definition of *p-value*: "the
+  probability, if the null is true, of obtaining the observation or an
+  observation more extreme".  Here "more extreme" means that the
+  number of excellence students is lower than the observed number, 21.
+* _Step 5_. Use R to calculate the p value:
+
+```{r}
+sum(dbinom(0:21,150,0.2))
+```
+
+* _Step 6_.  Compare the pvalue of about 3.7\% with the 5\% standard
+  value.  Thi s is less than 5\% So we *reject* the null.
+ * _Step 7_.  Interpret: we have strong evidence that this particular
+  school has a *lower* probability of passing with NCEA excellence
+  than the national average of 0.2
+
+
+## Example: weights of kiwi birds.
+
+An ecologist catches kiwi birds in a particular forest and weighs
+them.  The data is as follows:
+
+```{r}
+kiwi <- 
+c(1.08, 1, 0.96, 0.84, 0.91, 1.21, 1.03, 1.08, 1.09, 1.04, 0.95, 
+0.87, 1.09, 1.09, 1.08, 0.93, 1.07, 1.16, 1.21, 0.94, 1.16, 0.92, 
+1.09, 1.01, 1.08, 1.07, 0.89, 1.02, 1.14, 0.9)
+```
+
+Nationally, the weight of a kiwi bird is known to have a mean of 1kg.
+
+*Question*: Is there any evidence for this set of kiwi to differ from
+the national mean of 1kg?
+
+* *STEP 1*. State a null hypothesis.  Here we would say that the null is
+  that the population mean of our kiwi is that of the national average, 1kg.
+   Mathematically we write $H_0\colon
+  \mu=1.0$, where $\mu$ is the mean weight of kiwi in the forest in question.
+  The alternative hypothesis is $\mu\neq 1.0$.
+* _STEP 2_.  Figure out the sample mean (which is our test statistic), 
+  and standard deviation:
+
+```{r}
+mean(kiwi)
+sd(kiwi)
+```
+
+* *STEP 3*.  State the precise definition of *p-value*: "the
+  probability, if the null is true, of obtaining the observation or an
+  observation more extreme".  Here "more extreme" means "further away
+  from 1kg" and we have a two-sided test, see figure
+  \@ref(fig:twosidedtest).
+
+* *STEP 4*.  Calculate the null distribution of the test statistic.
+  This has mean 1kg and standard deviation equal to the standard error
+  of the mean, $\frac{\sigma}{\sqrt{n}}$:
+
+```{r}
+SEM <- sd(kiwi)/sqrt(30)
+SEM
+```
+
+* *STEP 5*.  Calculate the p-value.  We can see that the p-value has
+  two pieces, and the area of one piece is just  ```1-pnorm(mean(kiwi),mean=1,sd=SEM)```
+  so the total p-value is twice this, or 
+
+```{r}
+2*(1-pnorm(mean(kiwi),mean=1,sd=SEM))
+```
+
+ * *STEP 6*.  Interpret: This p-value exceeds the 5\% requirement, so
+   the result is *not significant*.  There is no evidence that the
+   weights of these kiwi birds differ from the national average of
+   1kg.
