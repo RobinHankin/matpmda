@@ -313,3 +313,12 @@ SEM
    weights of these kiwi birds differ from the national average of
    1kg.
 
+Alternatively we could transform our sample mean to give a Z-score:
+
+```{r}
+Z <- (mean(kiwi)-1)/SEM
+2*(1-pnorm(Z))
+```
+
+which gives the same result.  We will need the Z score approach when
+we consider the Student t-test.
