@@ -144,7 +144,7 @@ is whether the two means are identical or not.
 Note that the *sample* means $\overline{x_A}$ and $\overline{x_B}$ are
 *both* subject to random variability and comparing two uncertain
 quantities is mathematically difficult.  Here the test statistic is
-the *difference in sample means $\overline{x_A}-\overline{x_B}$.  The
+the difference in sample means $\overline{x_A}-\overline{x_B}$.  The
 mathematical details are all taken care of in the R function
 ```t.test()```.
 
