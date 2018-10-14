@@ -1,0 +1,31 @@
+# Confidence intervals
+
+Rather than estimating a parameter with a single value, sometimes it
+is better to provide a range of values, which we are "fairly certain"
+will contain the parameter of interest.  When these intervals are
+constructed in a particular way, they are called *confidence
+intervals*.
+
+We want to give an upper and lower bound for the population mean; we
+specify that we want to be "95\% sure" that the true value is between
+our two bounds.  The technical details of the precise definition of
+confidence interval are not part of this course.  Some of the theory
+is given in the more advanced courses.
+
+## Confidence Intervals for the Population Mean with a Known Population Variance
+
+Suppose we have observations $x_1,\ldots x_n$ drawn from a Normal
+distribution $N(\mu,sigma)$, where the standard deviation $\sigma$ is
+known.  To obtain a 95\% confidence interval for a mean, with a known
+population variance, we can compute these bounds as follows.  We know
+that the sample mean is approximately normally distributed with mean
+$\mu$ and standard error $\sigma/\sqrt{n}$, i.e. $\bar{X} \sim N(\mu,
+\sigma/\sqrt{n})$.
+
+As shown in the following figure, for a standard normal random variable we know 
+that:
+
+\[P(-1.96 \leq Z \leq 1.96) = 0.95\]
+
+To verify this in R use: ```pnorm(1.96)-pnorm(-1.96)```
+
