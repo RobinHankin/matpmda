@@ -1,4 +1,4 @@
-# the Student t test 
+# The Student t test 
 
 In the previous chapter, we considered the null that the data was
 Gaussian, with a population mean equal to a particular value $\mu_0$.
@@ -26,18 +26,18 @@ using R function ```sd()``` and the formula
 $SEM=\frac{\sigma}{\sqrt{n}}$.  Since we have estimated $\sigma$ with
 the sample standard deviation $s$, the test statistic is no longer
 normally distributed.  The tails are fatter than the Gaussian and $T$
-has a *student t distribution*.
+has a *student $t$ distribution*.
 
-The Student t test (and the associated Student t distribution) has a
-complicated mathematical structure and is difficult to work with.
+The Student $t$-test (and the associated Student $t$ distribution) has
+a complicated mathematical structure and is difficult to work with.
 Fortunately the R language has functionality to carry out t tests.
 The structure of the t test is the same as the previous chapter: we
 define a null in the same way, define p-value in the same way, then
 compare the p-value with 5\% and accordingly reject, or fail to reject
-the null.  The only difference is that we use specialised t-test
+the null.  The only difference is that we use specialised $t$-test
 functionality (in R, this is ```t.test()```) to calculate the p-value.
 The ```t.test()``` function has a large number of options and settings
-which are documented under ```?t.test```.  I give a number of exaples
+which are documented under ```?t.test```.  I give a number of examples
 below.
 
 
@@ -60,7 +60,7 @@ or heavier than average.
 * step 1.  Formulate a null hypothesis: $H_0\colon\mu=100$.  The mean mass of the apples from this tree is 100g.
 * step 2.  Decide whether a one-sided or two-sided test.  Because it is not known whether the sample is greater or less than the average, we use a two-sided test.
 
-* step 3.  Conduct the t-test:
+* step 3.  Conduct the $t$-test:
 
 ```{r}
 t.test(apples,mu=100)
@@ -95,13 +95,12 @@ acid <- c(6.1, 6.4, 5.8, 5.8, 6.6, 5.3, 6.8, 6.4, 6.9, 5.8, 5.5, 6.3)
  significance, for us to conclude that the acidity of the lake has
  changed from its historical value?
 
-
 *answer*
 
 * step 1.  Formulate a null hypothesis: $H_0\colon\mu=6.5$.
-* step 2.  Decide whether a one-sided or two-sided test.  Because 
-as expect a fall in pH levels, we use a one-sided test.
-* step 3.  Conduct the t-test in R:
+* step 2.  Decide whether a one-sided or two-sided $t$-test.  Because 
+we expect a fall in pH levels, we use a one-sided test.
+* step 3.  Conduct the $t$-test in R:
 
 ```{r}
 t.test(acid,mu=6.5,alternative="less")
@@ -148,7 +147,6 @@ the difference in sample means $\overline{x_A}-\overline{x_B}$.  The
 mathematical details are all taken care of in the R function
 ```t.test()```.
 
-
 ## Example: Vitamin C
 
 Twenty-two volunteers at a cold-research institute caught a cold after
@@ -189,7 +187,6 @@ H_0\colon\mu_P = \mu_C
 and our test statistic is the difference in sample means,
 $\overline{x_P}-\overline{x_C}$.
 
-
 ```{r}
 mean(vitC)-mean(plac)
 ```
@@ -210,7 +207,7 @@ reject the null hypothesis at the 5\% level.  That is, the evidence is
 significant, at the 5 percent level, in establishing that vitamin C
 reduces the mean time that a cold persists.
 
-## Paired tests
+## The paired $t$-test
 
 Sometimes we may want to test for a difference between two population
 means, but the two sets of measurements have a natural pairing.  For
@@ -230,7 +227,8 @@ after =c(25.5, 31.2, 32.9, 20.4, 25.6, 24.7, 22.9))
 knitr::kable(patients,booktabs=TRUE,caption="patients before and after exercise")
 ```
 
-Then we can use R to perform the t-test of the null that the fitness level before is equal to the fitness level after:
+Then we can use R to perform a $t$-test on the null that the fitness
+level before is equal to the fitness level after:
 
 ```{r}
 t.test(patients$before,patients$after,alternative="less",paired=TRUE)
