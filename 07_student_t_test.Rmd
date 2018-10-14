@@ -1,0 +1,247 @@
+# the Student t test 
+
+In the previous chapter, we considered the null that the data was
+Gaussian, with a population mean equal to a particular value $\mu_0$.
+However, we implicitly assumed that the standard deviation was known,
+or at least accurately estimated from the data.  This is reasonable if
+we have $\geq 30$ observations.  In this chapter we consider what
+happens if we have only a small amount of data.
+
+Let $x_1, x_2, \ldots, x_n$ be a sample from a normal distribution
+with an unknown mean $\mu$ and unknown variance $\sigma^2$.  Suppose
+we want to test if the mean $\mu$ is equal to some value $\mu_0$, that
+is $\mu=\mu_0$ against the alternative that $\mu\neq\mu_0$.  Since we
+are testing to see if the mean is equal to some value $\mu_0$, it
+makes sense to use the sample mean $\bar{x}$.  Then, if $\bar{x}$ is a
+``long way away'' from $\mu_0$, we would reject $H_0$.  To compute the
+test statistic, we use the $Z$-score technique but call it $T$:
+
+
+\[T = \frac{\bar{X} - \mu_0}{SEM}
+\]
+
+
+where $SEM$ is the estimated standard error of the mean, calculated
+using R function ```sd()``` and the formula
+$SEM=\frac{\sigma}{\sqrt{n}}$.  Since we have estimated $\sigma$ with
+the sample standard deviation $s$, the test statistic is no longer
+normally distributed.  The tails are fatter than the Gaussian and $T$
+has a *student t distribution*.
+
+The Student t test (and the associated Student t distribution) has a
+complicated mathematical structure and is difficult to work with.
+Fortunately the R language has functionality to carry out t tests.
+The structure of the t test is the same as the previous chapter: we
+define a null in the same way, define p-value in the same way, then
+compare the p-value with 5\% and accordingly reject, or fail to reject
+the null.  The only difference is that we use specialised t-test
+functionality (in R, this is ```t.test()```) to calculate the p-value.
+The ```t.test()``` function has a large number of options and settings
+which are documented under ```?t.test```.  I give a number of exaples
+below.
+
+
+## Example: attainment scores (single sample, two-sided test)
+
+A particular type of apple is known to have a mean mass of 100g.  A
+sample of these apples is taken from a tree and measured.  The mass of
+the sampled apples is:
+
+```{r}
+apples <- c(95, 104, 101, 100, 99, 102, 98, 94, 94, 93)
+```
+
+*Quesion:* is there any evidence to suggest that these apples differ
+from the known mean?  It is not known whether these apples are lighter
+or heavier than average.
+
+*answer*
+
+* step 1.  Formulate a null hypothesis: $H_0\colon\mu=100$.  The mean mass of the apples from this tree is 100g.
+* step 2.  Decide whether a one-sided or two-sided test.  Because it is not known whether the sample is greater or less than the average, we use a two-sided test.
+
+* step 3.  Conduct the t-test:
+
+```{r}
+t.test(apples,mu=100)
+```
+
+* step 4.  Interpret.  Because the p-value exceeds 5\%, there is no
+  evidence for these apples differing from 100g.
+
+
+*Note* the mean mass of apples in the sample is:
+
+```{r}
+mean(apples)
+```
+
+But this result on its own is not interpretable because we have not
+assessed its uncertainty.
+
+## Example: acid rain (single-sample, one-sided test)
+
+Historical data show that the pH level of a lake in a particular area
+is 6.7.  It is expected that the pH level will fall as a result of
+recent increasses to acidic rain from polluting industries nearby. The
+acidity levels of the lake have been tested 12 times over the past
+year with the following results:
+
+```{r}
+acid <- c(6.1, 6.4, 5.8, 5.8, 6.6, 5.3, 6.8, 6.4, 6.9, 5.8, 5.5, 6.3)
+```
+
+*Question:* Are these data strong enough, at the 5 percent level of
+ significance, for us to conclude that the acidity of the lake has
+ changed from its historical value?
+
+
+*answer*
+
+* step 1.  Formulate a null hypothesis: $H_0\colon\mu=6.5$.
+* step 2.  Decide whether a one-sided or two-sided test.  Because 
+as expect a fall in pH levels, we use a one-sided test.
+* step 3.  Conduct the t-test in R:
+
+```{r}
+t.test(acid,mu=6.5,alternative="less")
+```
+
+(note that we set the mean pH as specified in the null, and also
+specify ```alternative="less"``` to ensure R carries out a
+one-sided test).
+
+* step 4.  Interpret.  Because the p-value is less than 5\%, there is
+  strong evidence for the pH value in the lake to be less than its
+  historical value of 6.7.
+
+
+
+## Two-sample tests
+
+Above, we considered single-sample tests where we assessed the
+hypothesis that the population mean was equal to specific, known
+value.
+
+Sometimes we may want to test for a difference between two population
+means. For example, we may be interested in the difference in
+cholesterol levels between a treatment group of patients (who received
+some new medication) and the control group (who received a placebo).
+Here we consider *two-sample* tests where we are comparing two
+populations, seeking evidence for a difference between them.  In this
+case, the null hypothesis is that the two populations have the same
+mean.  Mathematically:
+
+\[
+H_0\colon\mu_A=\mu_B
+\]
+
+where the mean of population $A$ is denoted $\mu_A$ and the mean of
+population $B$ is denoted $\mu_B$.  Observe carefully that the actual
+value of $\mu_A$ and $\mu_B$ is unspecified: all we are interested in
+is whether the two means are identical or not.
+
+Note that the *sample* means $\overline{x_A}$ and $\overline{x_B}$ are
+*both* subject to random variability and comparing two uncertain
+quantities is mathematically difficult.  Here the test statistic is
+the *difference in sample means $\overline{x_A}-\overline{x_B}$.  The
+mathematical details are all taken care of in the R function
+```t.test()```.
+
+
+## Example: Vitamin C
+
+Twenty-two volunteers at a cold-research institute caught a cold after
+having been exposed to various cold viruses.  A random selection of 10
+volunteers were given tablets containing 1 gram of vitamin C.  The
+control group, consisting of the other 12 volunteers, was given
+placebo tablets that looked and tasted exactly like the vitamin C
+tablets.  This was continued for each volunteer until a doctor decided
+that the volunteer was no longer suffering from the cold. The length
+of time the cold lasted was then recorded.
+
+At the end of this experiment, the following data was collected:
+
+```{r}
+vitC <- c(5.5, 6, 7, 6, 7.5, 6, 7.5, 5.5, 7, 6.5)
+plac <- c(6.5, 6, 8.5, 7, 6.5, 8, 7.5, 6.5, 7.5, 6, 8.5, 7.0)
+```
+
+We can calculate the sample means:
+
+```{r}
+mean(vitC)
+mean(plac)
+```
+
+so on the face of it, it looks as though the vitamin C made the cold
+last less long than the placebo.  But is this difference significant?
+
+Let $\mu_C$ denote the mean time a cold lasts when vitamin C is taken
+and let $\mu_P$ denote the mean time a cold lasts when the placebo is
+taken.  Our null is that the vitamin C has no effect and so
+$\mu_C=\mu_P$:
+
+\[
+H_0\colon\mu_P = \mu_C
+\]
+
+and our test statistic is the difference in sample means,
+$\overline{x_P}-\overline{x_C}$.
+
+
+```{r}
+mean(vitC)-mean(plac)
+```
+
+The $p$-value, is the probability if the null is true (i.e. placebo is
+as effective or more effective than the vitamin C), of our observation
+(a difference in recovery time of 0.675 days) or more extreme (0.675
+days or longer).  Note that we should perform a one-tailed test
+because we expect vitamin C to clear up colds faster than the placebo,
+not slower.
+
+```{r}
+t.test(vitC,plac,alternative="less")
+```
+
+The $p$ value is 0.036, which is less than 0.05.  This means we can
+reject the null hypothesis at the 5\% level.  That is, the evidence is
+significant, at the 5 percent level, in establishing that vitamin C
+reduces the mean time that a cold persists.
+
+## Paired tests
+
+Sometimes we may want to test for a difference between two population
+means, but the two sets of measurements have a natural pairing.  For
+example, we may be interested in the fitness level of patients before
+and after a regime of exercise.  Since each patient is measured twice,
+the two samples are not independent.  In this situation it is
+appropriate to consider a *paired test*
+
+
+```{r, echo=FALSE}
+patients <- data.frame(patient = LETTERS[1:7],
+before=c(24.2, 30.4, 32.7, 19.8, 25.1, 24.9, 22.2),
+after =c(25.5, 31.2, 32.9, 20.4, 25.6, 24.7, 22.9))
+```
+
+```{r,echo=TRUE}
+knitr::kable(patients,booktabs=TRUE,caption="patients before and after exercise")
+```
+
+Then we can use R to perform the t-test of the null that the fitness level before is equal to the fitness level after:
+
+```{r}
+t.test(patients$before,patients$after,alternative="less",paired=TRUE)
+```
+
+Note that we have used the dollar construction to extract the
+variables from the ```patients``` dataframe, and also note how we have
+passed argument ```alternative``` to ```t.test()``` to specify a
+one-sided test; and also passed ```paired=TRUE``` to indicate that the
+observations are paired with one another.
+
+Here the $p$-value is less than 5\% so we reject the null.  There is
+strong evidence to suggest that the regime was effective at increasing
+fitness levels.
