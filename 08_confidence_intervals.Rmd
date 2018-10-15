@@ -9,23 +9,152 @@ intervals*.
 We want to give an upper and lower bound for the population mean; we
 specify that we want to be "95\% sure" that the true value is between
 our two bounds.  The technical details of the precise definition of
-confidence interval are not part of this course.  Some of the theory
-is given in the more advanced courses.
+confidence interval are not emphasised this course.  Some of the
+theory is given in the more advanced courses.
 
 ## Confidence Intervals for the Population Mean with a Known Population Variance
 
-Suppose we have observations $x_1,\ldots x_n$ drawn from a Normal
-distribution $N(\mu,sigma)$, where the standard deviation $\sigma$ is
+Suppose we have observations $x_1,\ldots, x_n$ drawn from a Normal
+distribution $N(\mu,\sigma)$, where the standard deviation $\sigma$ is
 known.  To obtain a 95\% confidence interval for a mean, with a known
 population variance, we can compute these bounds as follows.  We know
-that the sample mean is approximately normally distributed with mean
-$\mu$ and standard error $\sigma/\sqrt{n}$, i.e. $\bar{X} \sim N(\mu,
-\sigma/\sqrt{n})$.
+that the sample mean is normally distributed with mean $\mu$ and
+standard deviation given by the standard error of the mean
+$\sigma/\sqrt{n}$, i.e. $\bar{X} \sim N(\mu, \sigma/\sqrt{n})$.
 
-As shown in the following figure, for a standard normal random variable we know 
-that:
+If we construct an interval from $\overline{x} +
+\alpha\frac{\sigma}{\sqrt{n}}$ to $\overline{x} -
+\alpha\frac{\sigma}{\sqrt{n}}$ then this will (in very loose language)
+"capture" the true value of the mean $\mu$ with a certain probability.
+We want this probability to be 0.95, or 95\%, so we choose $\alpha$ to
+be ```qnorm(0.975)``` (that is, about 1.96) which leaves 2.5\%
+probability on either side, as in figure \@ref(fig:confidenceconcept).
 
-\[P(-1.96 \leq Z \leq 1.96) = 0.95\]
 
-To verify this in R use: ```pnorm(1.96)-pnorm(-1.96)```
+```{r confidenceconcept,fig.cap="Conceptual diagram of confidence interval", echo=FALSE}
+x <- seq(from=-4,to=4,len=100)
+plot(x,dnorm(x),type="l")
+xp <- qnorm(0.975)
+xx <- seq(from=xp,to=4,len=100)
+polygon(c(xx,rev(xx)),c(dnorm(xx),xx*0),border=NA,col='red')
+xx <- -xx
+polygon(c(xx,rev(xx)),c(dnorm(xx),xx*0),border=NA,col='red')
+text(0,0.1,"95%")
+text(+xp+0.7,0.1,"2.5%")
+text(-xp-0.7,0.1,"2.5%")
+```
 
+
+## Example: weight of bread.
+
+Suppose a government inspector buys 30 loaves of bread from a bakery
+and wants to know the mean weight of all loaves sold by that bakery.  The data is, in grams:
+
+```{r}
+loaves <- c(804, 804, 800, 797, 805, 800, 810, 803, 806, 800, 801, 802, 
+800, 808, 806, 804, 810, 799, 804, 803, 805, 803, 804, 793, 808, 
+810, 801, 802, 797, 802)
+```
+
+Give a 95\% confidence interval for the population mean.
+
+*answer* The sample mean and standard deviation is
+
+```{r}
+mean(loaves)
+sd(loaves)
+```
+
+and the standard error of the mean is
+
+```{r}
+SEM <- sd(loaves)/sqrt(30)
+SEM
+```
+
+For a 95\% confidence interval we find the value of that has 2.5\% (=
+half of 5\%) probability to the right, that is 97.5\% to the left:
+
+```{r}
+qnorm(0.975)
+```
+
+and the 95\% confidence interval would be given by
+
+```{r}
+c(mean(loaves) - qnorm(0.975)*SEM, mean(loaves) + qnorm(0.975)*SEM)
+```
+
+To get a 99\% confidence interval we have exactly the same
+construction except we need to use ```qnorm(0.995)```:
+
+```{r}
+c(mean(loaves) - qnorm(0.995)*SEM, mean(loaves) + qnorm(0.995)*SEM)
+```
+
+See how this interval is wider than the 95\% interval: the price one
+pays for more certainty is lower precision.
+
+## Confidence intervals with the Student $t$ distribution
+
+
+The previous example had enough observations to be able to estimate
+the population standard deviation reasonably.  If that is not the
+case, then we have to use methods deriving from the Student $t$-test.
+R can do this easily.
+
+### Example: heart rates.
+
+A medical scientist takes six patients and measures their heart rate.  The data is:
+
+```{r}
+heart <- c(66,73,72,80,84,60)
+```
+
+Calculate a 95\% confidece interval for this data.
+
+There are only six datapoints, so the $Z$-score method is inapplicable.  The ```t.test()``` in R gives:
+
+```{r}
+t.test(heart)
+```
+
+So the 95\% confidence interval is about $(63.3, 81.7)$.  It is quite
+wide because we have so few observations.  Note that the Z-score
+method can also be used:
+
+```{r}
+c(
+mean(heart) - qnorm(0.975)*sd(heart)/sqrt(6),
+mean(heart) + qnorm(0.975)*sd(heart)/sqrt(6)
+)
+```
+
+This gives a confidence interval that is much narrower than given by
+the $t$-test, and should not be used.
+
+
+## Frequentist interpretation of the confidence interval
+
+The value of a confidence interval is that it contains the true value
+of the mean with a high probability.  Figure \@ref(fig:confidencefreq)
+shows repeated realisations of a confidence interval where the true
+mean of zero is indicated as a vertical line.  Most of the confidence
+intervals include the true value of zero; those that do not are shown
+in red.  The inference is that a particular confidence interval
+probably contains the true parameter, although the correct definition
+(the set of points $x$ for which $H_0\colon\mu=x$ would not be
+rejected) is problematic.
+
+```{r confidencefreq,fig.cap="Repeated confidence intervals with intervals missing the true value shown in red", echo=FALSE}
+set.seed(0)
+par(lend=1)
+f <- function(x){t.test(x)$conf.int}
+plot(NA, xlim=c(-2,2),ylim=c(0,70),xlab="",ylab="",axes=F)
+for(i in 1:70){
+  jj <- f(rnorm(5))
+  if(prod(jj)<0){col <- "black"} else {col <- "red"}
+  segments(x0=jj[1],x1=jj[2],y0=i,lwd=3,col=col)
+}
+abline(v=0)
+```
