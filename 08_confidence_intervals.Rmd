@@ -56,7 +56,7 @@ loaves <- c(804, 804, 800, 797, 805, 800, 810, 803, 806, 800, 801, 802,
 810, 801, 802, 797, 802)
 ```
 
-Give a 95\% confidence interval for the population mean.
+*Question*: Give a 95\% confidence interval for the population mean.
 
 *answer* The sample mean and standard deviation is
 
@@ -85,18 +85,18 @@ and the 95\% confidence interval would be given by
 c(mean(loaves) - qnorm(0.975)*SEM, mean(loaves) + qnorm(0.975)*SEM)
 ```
 
-To get a 99\% confidence interval we have exactly the same
-construction except we need to use ```qnorm(0.995)```:
+To get a 99\% confidence interval instead of the default 95\%, we have
+exactly the same construction except we need to use
+```qnorm(0.995)```:
 
 ```{r}
 c(mean(loaves) - qnorm(0.995)*SEM, mean(loaves) + qnorm(0.995)*SEM)
 ```
 
 See how this interval is wider than the 95\% interval: the price one
-pays for more certainty is lower precision.
+pays for more certainty is lower precision.  
 
-## Confidence intervals with the Student $t$ distribution
-
+## Confidence intervals with the Student $t$-distribution
 
 The previous example had enough observations to be able to estimate
 the population standard deviation reasonably.  If that is not the
@@ -113,7 +113,8 @@ heart <- c(66,73,72,80,84,60)
 
 Calculate a 95\% confidece interval for this data.
 
-There are only six datapoints, so the $Z$-score method is inapplicable.  The ```t.test()``` in R gives:
+There are only six datapoints, so the $Z$-score method is
+inapplicable.  The ```t.test()``` in R gives:
 
 ```{r}
 t.test(heart)
@@ -132,7 +133,6 @@ mean(heart) + qnorm(0.975)*sd(heart)/sqrt(6)
 
 This gives a confidence interval that is much narrower than given by
 the $t$-test, and should not be used.
-
 
 ## Frequentist interpretation of the confidence interval
 
