@@ -1,0 +1,178 @@
+# Linear regression
+	
+All methods we have looked at so far have a single variable.  Here we
+consider methods for two variables.  If you have more than one
+variable, you may find that they are related in some kind of way.
+Consider the ```mtcars``` data frame, provided with R.
+
+```{r}
+head(mtcars)
+``` 
+
+We might wonder if there is a relationship between fuel efficiency
+(```mpg```) and the car's weight (```wt```).  The first step would be
+to plot a scattergraph:
+
+```{r}
+plot(mpg~wt,data=mtcars,main="Efficiency as a function of car weight")
+```
+
+In the above, we use the tilde ("```~```") to mean "is a function of".
+So the line reads "plot ```mpg``` as-a-function-of ```wt```, with data
+from ```mtcars```".  We can see that high weight cars are associated
+with low fuel efficiency.  We would like to describe this relationship
+mathematically.
+
+## Mathematical basis for linear regression
+
+Any scattergraph consists of points on a plane together with an x-axis
+and a y-axis.  Each point is at position $(x_i,y_i)$, where
+$i=1,2,\ldots, n$ is the number of the observation.  We are trying to
+predict $y$ as a function of $x$.  The fundamental assumption of
+regression is:
+
+\[
+y_i = A + Bx_i+\epsilon_i 
+\]
+
+where
+
+* $y_i$ is the vertical position of point $i$
+* $x_i$ is the horizontal position of point $i$
+* $A,B$ are the intercept and slope of the line, to be found
+* $\epsilon_i$ are random errors.  We usually specify that $\epsilon_i\sim N(0,\lambda^2)$, so the errors are mean zero Gaussian
+
+Finding $A$ and $B$ is the mathematical equivalent of "making the line
+go through the points". The process is mathematically involved (it
+requires matrix algebra) but fortunately it is possible to
+estimate $A, B$  using the ```lm()``` function built in to R:
+
+
+```{r}
+lm(mpg~wt,data=mtcars)
+```
+
+thus the intercept is 37.285 and the slope -5.344; we have $y=A+Bx$
+with $A=37.285$ and $B=-5.344$, or we could write $y=37.285-5.344x$
+for the equation of the straight line.  The intercept is the value of
+$y$ when $x=0$ (that is, where the line intercepts the $y$ axis), and
+the slope is the increase in $y$ for a unit increase in $x$.  It is
+easy to add the fitted straight line on to the scatterplot using the
+```abline()``` function:
+
+```{r}
+plot(mpg~wt,data=mtcars,main="Efficiency as a function of car weight")
+abline(lm(mpg~wt,data=mtcars))
+```
+The process of fitting a straight line through a scattergraph of
+points is known as *linear regression*.  This is a very powerful
+technique and has applications throughout science.
+
+## Residuals
+
+Sometimes we write $\hat{y}$ for the predicted value of $y$ at a
+particular value of $x$ and thus $\hat{y}=A+Bx$.  The difference
+between the observed value $y$ and the predicted value $\hat{y}$ is
+called the *residual*.  We hope that the residuals are small; and if
+they are, this means we have an accurate model.  The residuals are
+shown in red on figure \@ref(fig:residuals).
+
+```{r residuals,fig.cap="Residuals on a regression", echo=FALSE,message=FALSE,warning=FALSE}
+plot(mpg~wt,data=mtcars,main="Efficiency as a function of car weight; residuals in red",ylim=c(7,35))
+fit <- lm(mpg~wt,data=mtcars)
+abline(fit)
+for(i in seq_len(nrow(mtcars))){
+    segments(x0=mtcars$wt[i],y0=fitted.values(fit)[i],y1=mtcars$mpg[i],col="red")
+}
+```
+
+
+## Measures of strength of association
+
+Consider the two figures below:
+
+```{r twoplots,fig.cap="two plots with different strengths of association",echo=FALSE}
+x <- 1:100
+plot(x,x+rnorm(100)*7,ylab="y")
+plot(x,x+rnorm(100)*30,ylab="y")
+```
+
+It is clear that the first scattergraph is "weaker" in some sense, and
+the second is "stronger".  There are two ways to quantify this: the
+$p$-value, and the correlation coefficient.
+
+Recall the definition of $p$-value: "the probability, if the null is
+true, of obtaining the observation or an observation more extreme".
+In the case of linear regression, the null is that the true slope of
+the regression line is zero.  Mathematically, $H_0\colon B=0$.  In
+textbooks you will often see $H_0\colon\beta=0$, as Greek letters are
+used for the intercept and slope.
+
+The correlation coefficient $\rho$ is a measure of the smallness of
+the residuals compared with the vertical extent of the line.  We would
+have $\rho=0$ for no correlation, $\rho=1$ for perfect positive
+correlation, $\rho=-1$ for perfect negative correlation, and
+intermediate values for intermediate levels of correlation; see figure
+\@ref(fig:fourplots).  Sometimes you will see the *square* of the
+correlation, $\rho^2$, often written "$R$".
+
+```{r fourplots,fig.cap="Different correlation coefficients",echo=FALSE}
+x <- 1:100
+y1 <- +x+rnorm(100)
+y2 <- +x+rnorm(100)*37
+y3 <- -x+rnorm(100)*37
+y4 <- rnorm(100)
+par(mfrow=c(2,2))
+plot(x,y1,main=expression(paste(rho,"=0.99")))
+plot(x,y2,main=expression(paste(rho, "=0.5")))
+plot(x,y3,main=expression(paste(rho,"=-0.5")))
+plot(x,y4,main=expression(paste(rho,   "=0")))
+```
+
+The $p$-value and correlation coefficient $\rho$ measure very
+different things.  The $p4$-value is a measure of the amount of
+information collected, and the strength of evidence against the null;
+the correlation coefficient $\rho$ measures the strength of the
+association between the variables.
+
+
+## Warning
+
+Partly because regression is such a powerful and useful technique, it
+is easily abused.  Here I discuss some of the many pitfalls
+surrounding regression.
+
+
+# Correlation does not imply causation
+
+Just because two variables have a significant linear regression does
+not mean that the $x$ variable *causes* the $y$ variable to change.
+There are several classic examples of this phenomenon:
+
+* Ice-cream sales and drownings.  These two variables have a strong
+  positive association: more ice-cream sales are associated with more
+  drownings.  Here, the link is due to the weather: on hot days, more
+  ice cream is sold, and also more people visit the beach so there are
+  more drownings.
+* Watching violent TV is associated with violent behaviour.  This can
+  be interpreted to mean that watching violent TV *causes* violent
+  behaviour.  But it could just as easily be the other way round:
+  maybe violent people tend to watch violent TV shows.
+
+These are just two examples and there are many many others.
+Establishing a causative link between two variables can be very, very
+difficult, especially in the social sciences.  Causality itself is a
+very difficult and slippery concept, even in clear-cut disciplines
+such as physics.  But note too that associations can be interesting
+irrespective of their causality.
+
+
+# Assumptions of linear regression
+
+
+
+
+
+
+
+
