@@ -3,7 +3,12 @@
 All methods we have looked at so far have a single variable.  Here we
 consider methods for two variables.  If you have more than one
 variable, you may find that they are related in some kind of way.
-Consider the ```mtcars``` data frame, provided with R.
+Consider the ```mtcars``` dataframe, provided with R.  Looking at the
+help page (type ```?mtcars``` at the R prompt), we see that each row
+is a type of car, and each column is a feature of that car such as
+fuel efficiency (miles per gallon, ```mpg```), number of cylinders,
+and so on.
+
 
 ```{r}
 head(mtcars)
@@ -133,8 +138,25 @@ The $p$-value and correlation coefficient $\rho$ measure very
 different things.  The $p4$-value is a measure of the amount of
 information collected, and the strength of evidence against the null;
 the correlation coefficient $\rho$ measures the strength of the
-association between the variables.
+association between the variabfferent correlation coefficients.
 
+## Finding the $p$-value in R
+
+To find the $p$-value for a linear regression we need to use the
+```summary()``` command:
+
+```{r}
+summary(lm(mpg~wt,data=mtcars))
+```
+
+We can see that the $p$-value is ```1.294e-10```, much smaller than
+the required 5\%: this means that the regression slope is significant
+and we can infer that the variables ```mpg``` and ```wt``` really are
+correlated.  The adjusted R-squared of 0.7746 would indicate a
+reasonably tight relationship.
+
+Note that R provides a *two-sided* $p$-value and if we want a
+one-sided test we would have to halve the value that R gives.
 
 ## Warnings
 
@@ -167,13 +189,10 @@ and worth studying, irrespective of their causality.
 
 ## Assumptions of linear regression
 
-
 Figure \@ref(fig:LINE) shows some scattergraphs with distributions
 that are problematic for simple linear regression.  A useful mnemonic
 is LINE: the distribution has to be Linear, and the errors
 Independent, Normally distributed, and Equal variance.
-
-
 
 ```{r LINE,fig.cap="Contraindications for linear regression.   Top left, non-linear response; top right, non-independent errors; lower left, non-Gaussian errors; lower right, non-equal variances", echo=FALSE}
 n <- 60
@@ -184,7 +203,6 @@ plot(x, sin(x*10)+rnorm(n)*0.1,pch=16,xlab="",ylab="",main="non independent")
 plot(x,x+(rbeta(n,0.1,0.1))*0.4,pch=16,xlab="",ylab="",main="non normal")
 plot(x, x+rnorm(n,sd=(1-x)*3)*0.1,pch=16,xlab="",ylab="",main="non-equal variance")
 ```
-
 
 ## Multiple regression
 
@@ -228,4 +246,26 @@ with (mtcars, {
  })
 ```
 
-Mathematically, 
+There is no reason why we cannot have any number of regressors.
+Mathematically, we write
+
+\[
+y = \beta_0+\beta_1x_1 + \beta_2x_2+\ldots+\beta_nx_n + \epsilon
+\]
+
+where the $\beta_0,\ldots,\beta_n$ are the coefficients and
+$x_1,\ldots x_n$ the independent variables.  Estimating these
+coefficients is straightforward in R:
+
+```{r}
+summary(lm(mpg~wt+disp,data=mtcars))
+```
+
+In the R commands and output above, note that the "```+```" symbol
+does not mean "plus"; it means "add this variable to the list of
+regressors".  Thus the input line reads in English "summary of a
+linear model of ```mpg``` as-a-function-of ```wt``` and ```disp```".
+Looking at the output we see the estimated coefficients for weight and
+displacement.  While the weight is significant, with a $p$-value of
+0.00743, the coefficient for displacement has a $p$-value of 0.06362
+and is not significant.
