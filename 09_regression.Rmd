@@ -136,14 +136,13 @@ the correlation coefficient $\rho$ measures the strength of the
 association between the variables.
 
 
-## Warning
+# Warnings
 
 Partly because regression is such a powerful and useful technique, it
 is easily abused.  Here I discuss some of the many pitfalls
 surrounding regression.
 
-
-# Correlation does not imply causation
+## Correlation does not imply causation
 
 Just because two variables have a significant linear regression does
 not mean that the $x$ variable *causes* the $y$ variable to change.
@@ -164,15 +163,24 @@ Establishing a causative link between two variables can be very, very
 difficult, especially in the social sciences.  Causality itself is a
 very difficult and slippery concept, even in clear-cut disciplines
 such as physics.  But note too that associations can be interesting
-irrespective of their causality.
+and worth studying, irrespective of their causality.
+
+## Assumptions of linear regression
 
 
-# Assumptions of linear regression
+Figure \@ref(fig:LINE) shows some scattergraphs with distributions
+that are problematic for simple linear regression.  A useful mnemonic
+is LINE: the distribution has to be Linear, and the errors
+Independent, Normally distributed, and Equal variance.
 
 
 
-
-
-
-
-
+```{r LINE,fig.cap="Contraindications for linear regression.   Top left, non-linear response; top right, non-independent errors; lower left, non-Gaussian errors; lower right, non-equal variances", echo=FALSE}
+n <- 60
+x <- seq(from=0,to=1,len=n)
+par(mfrow=c(2,2))
+plot(x,x-x^2+rnorm(n)*0.06,pch=16,xlab="",ylab="",main="nonlinear")
+plot(x, sin(x*10)+rnorm(n)*0.1,pch=16,xlab="",ylab="",main="non independent")
+plot(x,x+(rbeta(n,0.1,0.1))*0.4,pch=16,xlab="",ylab="",main="non normal")
+plot(x, x+rnorm(n,sd=(1-x)*3)*0.1,pch=16,xlab="",ylab="",main="non-equal variance")
+```
