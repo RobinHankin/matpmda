@@ -1,0 +1,70 @@
+# ANOVA
+
+Consider the following dataset:
+
+```{r}
+light <-
+data.frame(experiment=
+letters[c(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,
+2,2,2,2,2,2,2,2,2,2,2,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,
+4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,5,5,5,5,5,5,5,5,5,5,5,5,5,
+5,5,5,5,5,5,5)],speed=c(85,74,90,107,93,85,95,98,98,88,100,98,93,
+65,76,81,100,100,96,96,96,94,96,94,88,80,85,88,90,84,83,79,81,88,
+88,83,80,79,76,80,88,88,88,86,72,72,62,86,97,95,88,91,85,87,84,84,
+85,84,84,84,89,81,81,82,80,77,76,74,75,76,91,92,89,86,88,72,84,85
+,85,78,89,84,78,81,76,81,79,81,82,85,87,87,81,74,81,94,95,80,81,87))
+
+head(light)
+```
+
+This is a modified version of a dataset documented at ```?morley``` in
+the R system.  It shows the speed of light as measured in five
+tdifferent experiments in the nineteenth century.  The speed column
+shows the discrepancy between the measured speed of light and a
+standard benchmark speed.  Is there any evidence that the experiments
+have systematic bias?
+
+To answer this question we first plot the data:
+
+```{r}
+boxplot(speed~experiment,data=light,col="gray")
+```
+
+In the figure above, there is some suggestion of a difference between
+the five experiments; but is this difference real, or can it be
+explained by random variability?  To answer this, we set up a null
+hypothesis:
+
+\[
+H_0\colon\mu_A=\mu_B=\mu_C=\mu_D=\mu_E
+\]
+
+(that is, the mean speed of light is the same for all five
+experiments).  We need to calculate a $p$-value for this null, and
+this is provided by the ```aov()``` function ("AOV" stands for
+"Analysis of variance"):
+ 
+```{r} 
+summary(aov(speed~experiment,data=light))
+```
+
+Note that we take the summary of the result of ```aov()``` as this
+gives us more information.  Although the output is a little cryptic,
+we can see the $p$-value for our null is 0.00311, well below the 5\%
+threshold.  We may reject the null hypothesis and conclude that the
+experiments exhibited bias.
+
+It is possible to use the ```lm()``` function, which gives us slightly
+different information:
+
+```{r}
+summary(lm(speed~experiment,data=light))
+```
+
+The format is very similar to that of scatterplot linear regression
+but the "intercept" is experiment "a" (R puts the factors in
+alphabetic order) and the other lines give the difference between
+experiment= "a" and the other experiments "b" through "e".  The
+overall $p$-value of 0.00311 is the same as in ```aov()```, because it
+refers to the same null.
+
