@@ -136,10 +136,10 @@ the correlation coefficient $\rho$ measures the strength of the
 association between the variables.
 
 
-# Warnings
+## Warnings
 
 Partly because regression is such a powerful and useful technique, it
-is easily abused.  Here I discuss some of the many pitfalls
+is easily abused.  Here we discuss some of the many pitfalls
 surrounding regression.
 
 ## Correlation does not imply causation
@@ -184,3 +184,48 @@ plot(x, sin(x*10)+rnorm(n)*0.1,pch=16,xlab="",ylab="",main="non independent")
 plot(x,x+(rbeta(n,0.1,0.1))*0.4,pch=16,xlab="",ylab="",main="non normal")
 plot(x, x+rnorm(n,sd=(1-x)*3)*0.1,pch=16,xlab="",ylab="",main="non-equal variance")
 ```
+
+
+## Multiple regression
+
+
+It is possible to apply linear regression to more than one independent
+variable.  The simplest such case is two independent variables, which
+are plotted on the x and y axes, the dependent variable being plotted
+on the z (vertical) axis; see figure \@ref(fig:plot3d), taken from the
+```plot3d``` R package.  This which shows a visual representation of a
+regression using the ```mtcars``` dataset we considered in week 1 in
+which ```mpg``` is regressed against ```wt``` and ```disp```.
+
+```{r, plot3d, fig.cap="Visual representation of multivariate linear regression, taken from the plot3D package.  Variable ```mpg``` is shown on the vertical axis; variables ```wt``` and ```disp``` on the two horizontal axes.  The regression itself is a plane, rather than a line", echo=FALSE}
+library("plot3D")
+# Following code taken from scatter.Rd in the plot3D package
+with (mtcars, {
+
+  # linear regression
+   fit <- lm(mpg ~ wt + disp)
+
+  # predict values on regular xy grid
+   wt.pred <- seq(1.5, 5.5, length.out = 30)
+   disp.pred <- seq(71, 472, length.out = 30)
+   xy <- expand.grid(wt = wt.pred, 
+                     disp = disp.pred)
+
+   mpg.pred <- matrix (nrow = 30, ncol = 30, 
+      data = predict(fit, newdata = data.frame(xy), 
+      interval = "prediction"))
+
+# fitted points for droplines to surface
+   fitpoints <- predict(fit) 
+
+   scatter3D(z = mpg, x = wt, y = disp, pch = 18, cex = 2, 
+      theta = 20, phi = 20, ticktype = "detailed",
+      xlab = "wt", ylab = "disp", zlab = "mpg",  
+      surf = list(x = wt.pred, y = disp.pred, z = mpg.pred,  
+                  facets = NA, fit = fitpoints),
+      main = "mtcars")
+  
+ })
+```
+
+Mathematically, 
