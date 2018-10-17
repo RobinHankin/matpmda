@@ -1,0 +1,156 @@
+# Fisher's exact test {#fisher}
+
+Suppose I am interested in the prevalence of left handedness and wish
+to determine whether there is a difference between boys and girls.  I
+might survey some students and end up with a dataset like the
+following:
+
+
+```{r}
+a <- matrix(c(5,2,6,14),2,2,byrow=TRUE)   # define matrix 
+dimnames(a) <- list(gender=c("M","F"),lefthanded=c(T,F))  # display only
+a
+```
+
+Such a dataset is known as a *contingency table* and is surprisingly
+common in statistics.  I would say that over half of the statistical
+analyses I perform for clients is on contingency tables like the one
+above.
+
+Is there any evidence that handedness differs by gender?  Just looking
+at the table, we can see that the majority of males are left handed
+and the majority of females are right handed.  We need to provide
+statistical analysis of this question which means providing a p-value.
+
+The starting point would be to provide a null hypothesis, which is
+that handedness is independent of gender.  We would thus have
+$H_0\colon p(L|M)=p(L)$ (in words, "the probability of being left
+handed, given that you are male, is equal to the probability of being
+left handed").  This is mathematically identical to the assertion that
+$p(L|M)=p(L|F)$.  It certainly looks as though there is a difference,
+but to quantify this we need a more careful analysis.
+
+## The hypergeometric distribution
+
+Suppose we have an urn with $m$ white and $n$ black balls, and we draw
+out $k$ balls and write down their colour.  Note carefully that we are
+drawing *without replacement*: we draw a ball from the urn and then do
+not put it back in the urn (if we were to replace the ball in the urn,
+the number of white balls would be binomial with size $k$ and
+probability $\frac{m}{m+n}$).
+
+What is the distribution of the number of white balls drawn without
+replacement?  Well, it has a particular distribution known as the
+*hypergeometric distribution*.  This is similar to the binomial
+distribution in that it is discrete, non-negative, and has a known
+maximum.  The R idiom for this distribution is ```dhyper()``` which
+calculates the density function; we will not need this because R
+calculates the $p$-value for us.  We can make the following mapping
+between drawing balls out of a urn and left/right male/female dataset
+as follows:
+
+* white ball $\longrightarrow$ left handed
+* black ball $\longrightarrow$ right handed
+* drawn from urn $\longrightarrow$ male
+* left in urn $\longrightarrow$ female
+
+Alternatively we might say 
+
+* white ball $\longrightarrow$ male
+* black ball $\longrightarrow$ female
+* drawn from urn $\longrightarrow$ left handed
+* left in urn $\longrightarrow$ right handed
+
+Taking the second  of the two identifications, we have
+
+* number of white balls = number of males =5+2=7
+* number of black balls = number of females = 6+14=20
+* drawn from urn = left handed = 5+6=11
+* left in urn = right handed = 2+14=15
+
+With this identification, the *observation* is the number of white
+balls drawn from the urn (= the number of left handed males) which is
+5.
+
+Recall the definition of p-value: "the probability, if the null is
+true, of obtaining the observation or an observation more extreme".
+In this case (if we use a one-sided test), "more extreme" means
+greater than the observation of 5; and we know that the number of left
+handed males (=white balls drawn) cannot be larger than 7.  We can get
+a visual impression easily, using R:
+
+```{r}
+x <- 0:7  # define x-axis
+plot(x,dhyper(x,7,20,11),type='h',lwd=4,col=c(rep("black",5),rep("red",3))) 
+legend("topright",lwd=4, col=c("black","red"),legend=c("regular points","more extreme"))
+```
+
+Fortunately, R can deal with all this with the ```fisher.test()``` function:
+
+```{r}
+fisher.test(a, alternative="greater")
+```
+
+(recall that R variable ```a``` was defined at the beginning of the
+chapter).  We can see from the $p$-value of about 7\% that the result
+is not significant: there is no evidence for a difference in
+handedness between male and female students.
+
+## Other applications
+
+Fisher's exact test can be applied whenever we have two different ways
+of classifying subjects.  We used left/right handed and male/female
+above, but the same thinking applies to a very wide range of datasets.
+I include some examples below.  
+
+
+### Medical research: old treatment, new treatment.
+
+*Question* Suppose we are researching a new medical treatment and wish
+to discover whether it is better than the old one.  We take some
+patients and treat 6 with the old treatment and 8 with the new; of the
+6 patients treated with the old treatment, 2 are cured.  And of the 8
+treated with the new treatment, 5 were cured.  Is this evidence for the
+new treatment being better than the old?
+
+*answer*:
+
+The first step is to translate the information given into R idiom.  In
+this case we have a two-row matrix with the top row corresponding to
+the old treatment and the bottom row corresponding to the new
+treatment.  The first column corresponds to cured patients and the
+second column corresponds to non-cured patients.
+
+```{r}
+M <- matrix(c(2,5,4,2),2,2)
+M
+```
+
+The above is fine but is easier to understand if we modify ```M``` so
+that the rows and columns are named.  The R idiom to do this is nice,
+but not part of the learning objectives of the course and you will not
+be tested on it.  It is just cosmetic.
+
+
+```{r}
+dimnames(M) <- list(treatment=c("new","old"),cured=c(TRUE,FALSE))
+M
+```
+
+In the above, the matrix ```M``` is unchanged but has new information
+in the rownames and columnnames.  
+
+The second step is to formulate a null: $H_0\colon
+p(\mathrm{cure}|\mathrm{new}\,\mathrm{treatment}) = p(\mathrm{cure})$.
+We need a $p$-value for this null:
+
+
+```{r}
+fisher.test(M,alternative="less")
+```
+
+(note the use of a one-sided test: we are testing for the new
+treatment being *better* than the old one, not *different* from it).
+The $p$-value exceeds 5\%, so this indicates that the improvement
+could easily have occurred by chance.  There is no evidence that the
+new treatment is any better than the old.
