@@ -1,0 +1,207 @@
+---
+output: pdf_document
+title: The Gaussian distribution with known mean and variance
+fontsize: 12pt
+---
+
+# R as a calculator: hands on experience
+
+This short handout shows R being used as a calculator.  Follow the
+examples through until you understand them, make sure you can
+reproduce them in your own R session, and then try to complete the
+exercises at the end.
+       
+The course is based around the _R computer language_.  This language
+is a system that is designed to make analytics easy.  It is very
+powerful but this lab is designed to get you familiar with R's most
+basic functions: as a simple calculator.  We will cover more of R's
+abilities in the remainder of the course.
+
+This document assumes that you can log in to your computer, fire up R,
+type commands into its command window, and read the output.  If you
+have any difficulty, ask your TA.
+
+
+
+# Try the simple stuff first
+
+When using R (or any other language), it is important to try simple
+things first:
+
+```{r}
+2+2
+```
+
+Notes on the above:
+
+* This is the hardest part of the whole course.  You need to be
+  able to fire up an R session, type stuff into it (in this case
+  ``2+2''), and see the output.
+* The ```R>```is known as the R prompt.  Text after that is
+  typed by the user, using the keyboard.
+* The response, ```4``` is given by R immediately after hitting "return".
+  We will come to the   meaning of the ```[1]``` later.
+
+
+Now, make sure that you can execute the 2+2 command in different ways.
+Look at the ```Rmd``` file in the Rstudio app.  Change the 2+2 to 2+3
+and execute the new command using the green arrow to the right, or the
+pulldown "run" menu.  See how the answer changes from 4 to 5.
+
+Now open the console and type "2+2" and "2+3" directly on the command
+prompt.  Get a feel for how the interface works: the user types
+something and when you hit return, R gives a response.
+
+## Increase the complexity gradually
+
+When you are confident with the addition examples, try something harder:
+
+```{r}
+(1+4)*(3-2)
+```
+
+Comments:
+* Observe how brackets are used to evaluate the arithmetic in a specific order.
+* An asterisk is used for multiplication
+
+## Use common sense as an ongoing check
+
+Always use common sense to anticipate the rough value of the answer
+_before_ you execute a command in R.  For example:
+
+```{r}
+1000/7
+```
+
+Comments: 
+
+* You might not know what $1000/7$ is exactly, but you will have
+  an approximate idea.  You will know that $1000/10=100$, and maybe
+  that $1000/8=112.5$, so you might guess that $1000/7$ is a little
+  bit bigger than 112.5 but less than, say, $1000/5=200$.  So
+  basically we can *estimate* the answer and verify that R is
+  giving something close to the correct answer.
+* When using R, stop and think.  Ask: _Is R doing what I think
+  it is doing?_
+* It is a good idea to verify _every single thing_ you do in R.
+
+
+Another example:
+
+
+```{r}
+sqrt(60)
+```
+
+In R, ```sqrt()``` is the square root operator.  Again we don't know
+what the square root of 60 is exactly.  But it's bigger than 7
+(because $7^2=49$ which is less than 60) and it's smaller than 8
+(because $8^2=64$ which is bigger than 60).  So I would have estimated
+7.5 or thereabouts and this agrees roughly with R's answer.
+
+Another example:
+
+
+```{r}
+pi^2
+```
+
+See how the caret ```^``` is being used for powers.  Well I know that
+```pi``` (or $\pi$) is just over 3, about 3.14, and I also know that
+$3^2=9$, so I'd estimate about 10.  So the exact answer agrees quite
+closely with the exact answer.
+It's important to sharpen your mental arithmetic to be able to
+anticipate R's answer, because it's easy to get it wrong:
+
+Going back to the first example, imagine you made a typo:
+
+```{r}
+1000/.7
+```
+
+(this is an easy mistake to make).  Now if you have an idea of the
+rough size of any answer, you can catch this error straightaway (the
+technical term is _recovery_).  But if you don't have an estimate,
+errors like this can creep in, making any analysis meaningless.
+
+
+## Another type of check
+
+
+In arithmetic, we know that the order of addition makes no difference:
+$a+b=b+a$.  So we can check this in R:
+
+
+```{r}
+23.223 + 10.123
+10.123 + 23.223
+```
+
+So that checks out: both answers match.  The order of brackets makes
+no difference either, so that $a+(b+c) = (a+b)+c$.  In mathematics,
+this is called *associativity*. Check this:
+
+```{r}
+12.123 + (1.001-14.123)
+(12.123 + 1.001)-14.123
+```
+
+Observe how the two lines have the same three numbers, but the
+brackets are placed differently.  The third number is negative.  So
+this checks out.
+
+
+# Large numbers
+
+Try some large numbers:
+
+```{r}
+10
+100
+1000
+10000
+100000
+1000000
+10000000
+100000000
+```
+
+The first few are straightforward, but see how ````1000000``` (ie one
+million) is displayed as ``1e+06```.  Try it!  This means that the
+decimal point moves 6 places to the right.  Now try some small
+numbers:
+
+```{r}
+1/10
+1/100
+1/1000
+1/10000
+1/100000
+1/1000000
+```
+
+Again, the first few are straightforward, but very very small numbers
+use the ```e``` notation.
+
+
+## Help system
+
+The R language comes with a huge amount of help.  Make sure you can
+use it!
+
+* In RStudio, the "help" pulldown menu gives all sorts of help, online
+and local. Play with this.
+* In plain R or RStudio, type ```help.start()``` at the commandline and
+this opens a page of help.
+* To get help on a particular R function, say the square root function
+```sqrt()```, type ```?sqrt``` on the console.  This works in plain R
+and RStudio.
+
+
+You will be able to use all three of the above methods to get help,
+even in the midsemester test or final exam. 
+
+Of course, in a lab session you can use Google to find online
+resources.  If you find any good resources, please tell your TA and
+fellow students about them and then everyone can benefit.
+
