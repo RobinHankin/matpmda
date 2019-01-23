@@ -183,7 +183,6 @@ numbers:
 Again, the first few are straightforward, but very very small numbers
 use the ```e``` notation.
 
-
 ## Help system
 
 The R language comes with a huge amount of help.  Make sure you can
@@ -205,3 +204,60 @@ Of course, in a lab session you can use Google to find online
 resources.  If you find any good resources, please tell your TA and
 fellow students about them and then everyone can benefit.
 
+# Graphics
+
+R has an extensive system of graphics and we will make a start on some
+simple graphical techniques here.  If you use RStudio, graphs will
+appear on the "plots" pane at lower left.  In plain R, depending on
+the exact version, a new window will pop up.
+
+
+```{r}
+d <- read.table("quakes.txt",header=TRUE)
+```
+
+In the above, ```d``` is the name of the dataset, and the command
+instructs R to read the table from the file "```quakes.txt```".  Have
+a look at the file in notepad (or, better, open it excel or in one of
+RStudio's editors).  This is a truncated version of the quakes builtin
+dataset; get more documentation on it by typing ```?quakes``` at the
+command prompt.  We can see that the object has four columns
+corresponding to latitude, longitude, depth, magnitude, and stations.
+You should see the variable ```d``` appear in the evironment tab in
+Rstudio, have a look at it.  We can use R to get some visual
+understanding of the dataset using various commands:
+
+
+```{r}
+hist(d$mag)
+```
+
+(use ```?hist``` to get help on the ```hist()``` function).  This
+shows the distribution of the magnitude of the quakes.  Note the use
+of the ```$``` to extract just the magnitude.
+
+We can find the mean and median magnitude easily:
+
+
+```{r}
+mean(d$mag)
+median(d$mag)
+```
+
+We might ask whether the deeper quakes are more severe:
+
+
+```{r}
+plot(d$depth,d$mag)
+```
+
+An alternative might be:
+
+```{r}
+plot(d$mag,-d$depth)
+```
+
+
+Which do you prefer?  Use R to plot other visualisations of this
+dataset.  Remember you can get help on the ```plot()``` command by
+typing ```?plot``` at the commandline.
