@@ -1,6 +1,6 @@
 ---
 output: pdf_document
-title: The Gaussian distribution with known mean and variance
+title: Starting statistics with R
 fontsize: 12pt
 ---
 
@@ -261,3 +261,13 @@ plot(d$mag,-d$depth)
 Which do you prefer?  Use R to plot other visualisations of this
 dataset.  Remember you can get help on the ```plot()``` command by
 typing ```?plot``` at the commandline.
+
+## Your task
+
+Look at the ```mtcars``` dataset that comes with R and plot as many
+different plots as you can.  Here is one to start you off:
+
+
+```{r}
+boxplot(mpg~cyl,data=mtcars)
+```
