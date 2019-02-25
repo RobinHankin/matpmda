@@ -10,7 +10,7 @@ you can download and install it at zero cost.  This also means that
 you are free to modify that code as you wish, although this will not
 be part of stat500.
 
-You can download R from the CRAN website
+You can download R from the CRAN website:
 
 ```
 https://cran.r-project.org/
