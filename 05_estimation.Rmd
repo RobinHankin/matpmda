@@ -75,10 +75,35 @@ then our estimated mean is quite accurate, if it is large then our
 estimated mean has a large uncertainty.
 
 
-## Example
+If
 
-%In real life, we do not know the population mean, so we have to
-%estimate it from the data.
+\[
+\overline{x}\sim N\left(\mu,\frac{\sigma}{\sqrt{n}}\right)
+\]
+
+Then we can equally say
+
+\[
+\overline{x}-\mu\sim N\left(0,\frac{\sigma}{\sqrt{n}}\right)
+\]
+
+and so the error in using $\overline{x}$ instead of the true
+value~$\mu$ is Gaussian with standard deviation $\sigma/\sqrt{n}$.
+
+Quite often, we want to know how bad the error is likely to be.  We
+would like to specify a "worst credible" error, and the standard way
+to do this is to give a value for the error that is exceeded only
+rarely, in particular 5\% of the time.  This is equivalent to
+```qnorm(0.975)``` (the value of 0.975 comes from the fact that we
+specify two tails of total size 5\%, so each one is 2.5\%=0.025.  And
+then because ```qnorm()``` takes the area to the left, we need to
+specify $1-0.025=0.975$).
+
+
+
+
+
+## Example
 
 A zoologist is interested in the weights of a sample of 30 kiwis. 
 She knows that the population standard deviation is $\sigma=0.22$.
@@ -118,4 +143,26 @@ SEM
 and this shows us that the SEM is about 0.04kg.  This is the
 uncertainty of our estimate, caused by random variability.
 
+To give a confidence interval we can use ```qnorm()```:
 
+```{r}
+lower_limit <- qnorm(0.025,mean(kiwi),SEM)
+upper_limit <- qnorm(0.975,mean(kiwi),SEM)
+c(lower_limit,upper_limit)
+```
+
+This is equivalent to a 95\% confidence interval (see chapter 8 for a
+formal definition of confidence interval; *interval* is a range of
+real numbers with a specified lower and upper limits).  It means that
+we can be 95\% confident that the true population mean $\mu$ is in the
+range from 0.61kg to 1.32kg.
+
+It is possible to use 99\% instead of 95\%:
+
+
+```{r}
+qnorm(c(0.005,0.995),mean(kiwi),SEM)
+```
+
+but observe how the interval becomes wider, as the lower limit has
+decreased and the upper limit increased.
