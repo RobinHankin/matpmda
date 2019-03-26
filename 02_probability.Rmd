@@ -12,6 +12,7 @@ event will occur.
 *  What is the probability that the train will be late?
 *  What is the probability that a particular stock price will increase?
 *  What is the probability that I will roll 3 sixes in a row?
+*  What is the probability that I will get a job within six months of gratuating?
 
 Some of the questions above have well-defined and objective answers,
 some do not.  Probability and randomness are subtle concepts and there
