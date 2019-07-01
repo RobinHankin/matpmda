@@ -376,8 +376,8 @@ least one paper.
 
 Question:  what is the probability of failing both?
 
-Answer: we seek $p(S'\cap P')$.  by de Morgan, this is equal to
-$1-p(S\cup P)$=1-0.8=0.2$.  Students have a 20\% probability of
+Answer: we seek $p(S'\cap P')$.  By de Morgan, this is equal to
+$1-p(S\cup P)=1-0.8=0.2$.  Students have a 20\% probability of
 failing both.
 
 ### Example question 3
