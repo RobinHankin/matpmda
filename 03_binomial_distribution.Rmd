@@ -144,7 +144,7 @@ table(x)
 of 100 students, 2 scored 0 heads out of 5 tosses, 11 scored 1 head,
 39 scored 2 heads, and so on.
 
-## Increaing the number of trials
+## Increasing the number of trials
 
 We can try the same thing with a larger number of students:
 
