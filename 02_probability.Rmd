@@ -297,7 +297,7 @@ Define events $A$ and $C$ as follows:
 
 * event $A$: first number is 4 or 5
 * event $B$: sum is 9 or greater (that is, if the throw is $(a,b)$ then $a+b\geq 9$)
-* event $C$: first number is strictly less than or equal to the second number
+* event $C$: first number is strictly less than the second number
 
 Using the fact that $p(A) = n(A)/n(S)$ (and we know that $n(S)=6\times
 6=36$), we can see that
