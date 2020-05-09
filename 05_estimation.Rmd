@@ -136,7 +136,7 @@ sd(kiwi)
 So the standard error of the mean is 
 
 ```{r}
-SEM <- sigma/sqrt(30)
+SEM <- sd(kiwi)/sqrt(30)
 SEM
 ```
 
