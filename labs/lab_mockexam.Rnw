@@ -291,7 +291,8 @@ t.test(x,mu=100,alternative="greater")
     prob of scoring over 100 = 0.5 for instrument-players.
 <<>>=
 table(x>100)
-(pvalue <- sum(dbinom(0:3,16,0.5)))
+pbinom(sum(x<100),length(x),1/2)
+pbinom(3,19,1/2)
 @
 significant!  we have evidence that the probability exceeds 0.5
 \end{solution}
