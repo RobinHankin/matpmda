@@ -262,28 +262,28 @@ pnorm(Z)
   intelligent than average.  Fifteen subjects who play an instrument
   take this test with the following results:
 
-\begin{verbatim}
-x <- c(101, 102, 105, 89, 104, 103, 105, 105, 102, 93, 90, 103, 105, 110, 106)
-\end{verbatim}
+<<>>=
+x <- c(101, 102, 105, 89, 104, 103, 105, 105, 102, 93, 90, 103, 105,
+       106, 106,102,101,104,102)
+@
 
 \begin{enumerate}
 \item State a sensible null hypothesis about the mean score on the
   test.  State the precise definition of pvalue and state what ``more
   extreme'' means in this context.
   \begin{solution}
-    Null: mean score of instrument-playing humans is 100
-    \end{solution}
+    Null: mean score of instrument-playing humans is 100.  More
+    extreme means that the sample mean is greater than the observed
+    sample mean.
+  \end{solution}
 \item Test your null using \verb+t.test()+, and interpret.
-\begin{solution}
+  \begin{solution}
 <<>>=
 x <- c(101, 102, 105, 89, 104, 103, 105, 105, 102, 93, 90, 103, 105,
        106, 106,102,101,104,102)
 t.test(x,mu=100,alternative="greater")
 @ 
 \end{solution}
-  \item State the precise definition of pvalue, and state clearly what
-    "more extreme" means in this case
-    
 \item State a sensible null hypothesis about the probability of
   scoring over 100 on the test.  Test your null using \verb+dbinom()+,
   and interpret.
