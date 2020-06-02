@@ -1,0 +1,301 @@
+PersonID,Gender,Employment,Qualification,Ethnicity,Partnered,Age,AgeP,Income,WagesSalary,Debt,Networth
+1,Female,Employed,Degree,European,Partner,49,55,157000,41000,183000,509000
+2,Female,Not Employed,Vocation,European,NoPartner,43,0,35000,6000,61000,64000
+3,Female,Not Employed,None,European,NoPartner,40,0,16000,0,0,36000
+4,Male,Not Employed,None,European,Partner,44,43,51000,5000,39000,207000
+5,Male,Not Employed,Vocation,European,NoPartner,31,0,22000,6000,33000,117000
+6,Male,Employed,School,Other,NoPartner,22,0,3000,3000,5000,12000
+7,Male,Employed,School,European,Partner,26,24,21000,8000,20000,99000
+8,Male,Employed,School,Other,Partner,48,53,81000,39000,80000,229000
+9,Female,Not Employed,School,European,NoPartner,32,0,18000,0,16000,61000
+10,Male,Employed,Degree,European,Partner,37,39,82000,35000,108000,264000
+11,Male,Employed,School,Other,Partner,33,33,39000,18000,44000,105000
+12,Male,Not Employed,None,European,NoPartner,39,0,9000,3000,5000,3000
+13,Male,Employed,School,European,NoPartner,31,0,21000,16000,26000,68000
+14,Female,Not Employed,None,European,Partner,26,27,13000,0,14000,47000
+15,Female,Not Employed,School,European,NoPartner,43,0,37000,6000,43000,60000
+16,Female,Employed,School,European,Partner,43,45,91000,29000,113000,335000
+17,Male,Employed,Vocation,Maori,NoPartner,27,0,12000,11000,5000,29000
+18,Male,Employed,None,Other,NoPartner,42,0,10000,25000,13000,-40000
+19,Male,Not Employed,Vocation,Maori,NoPartner,45,0,16000,16000,32000,22000
+20,Male,Not Employed,None,European,Partner,31,32,21000,3000,16000,111000
+21,Male,Not Employed,None,Maori,NoPartner,23,0,1000,0,0,-9000
+22,Female,Employed,Degree,European,Partner,31,34,61000,21000,58000,209000
+23,Male,Not Employed,Vocation,European,Partner,33,32,42000,6000,50000,200000
+24,Male,Not Employed,School,European,NoPartner,20,0,0,0,0,0
+25,Male,Employed,Vocation,European,Partner,36,34,62000,25000,51000,257000
+26,Male,Not Employed,None,Maori,NoPartner,39,0,3000,4000,0,-127000
+27,Male,Not Employed,None,European,Partner,41,42,58000,6000,11000,191000
+28,Female,Employed,School,European,Partner,32,32,43000,12000,50000,184000
+29,Male,Employed,School,Maori,Partner,40,45,70000,26000,51000,224000
+30,Female,Not Employed,School,European,NoPartner,46,0,44000,0,32000,113000
+31,Male,Employed,School,European,NoPartner,41,0,41000,32000,50000,123000
+32,Female,Not Employed,None,European,NoPartner,42,0,9000,1000,14000,28000
+33,Male,Not Employed,None,European,NoPartner,20,0,0,0,0,0
+34,Female,Not Employed,Degree,Other,Partner,31,30,46000,5000,61000,111000
+35,Female,Not Employed,School,European,Partner,44,41,75000,1000,98000,274000
+36,Male,Not Employed,None,European,Partner,40,39,60000,5000,11000,184000
+37,Female,Employed,School,European,Partner,29,28,36000,8000,40000,126000
+38,Female,Employed,None,Maori,NoPartner,30,0,7000,8000,1000,26000
+39,Female,Not Employed,None,European,NoPartner,43,0,21000,0,7000,67000
+40,Male,Employed,School,European,Partner,45,49,86000,39000,80000,385000
+41,Female,Not Employed,School,European,Partner,41,40,68000,2000,54000,265000
+42,Female,Not Employed,School,European,NoPartner,34,0,16000,4000,28000,87000
+43,Male,Employed,None,European,NoPartner,46,0,40000,36000,16000,13000
+44,Male,Not Employed,School,European,NoPartner,33,0,21000,6000,20000,57000
+45,Female,Not Employed,Vocation,Maori,NoPartner,26,0,5000,2000,9000,27000
+46,Female,Not Employed,School,European,Partner,35,32,47000,0,49000,210000
+47,Female,Employed,School,European,NoPartner,49,0,63000,25000,76000,261000
+48,Female,Not Employed,Vocation,European,NoPartner,47,0,45000,8000,59000,236000
+49,Female,Employed,Degree,Other,Partner,41,40,101000,34000,140000,275000
+50,Female,Employed,Vocation,European,NoPartner,38,0,39000,21000,57000,127000
+51,Male,Employed,Degree,European,NoPartner,33,0,45000,24000,62000,110000
+52,Female,Not Employed,None,European,NoPartner,42,0,9000,0,9000,-19000
+53,Female,Not Employed,None,European,NoPartner,23,0,2000,0,3000,-2000
+54,Male,Not Employed,None,European,NoPartner,22,0,2000,1000,0,-6000
+55,Female,Not Employed,School,European,Partner,48,53,84000,5000,94000,500000
+56,Male,Employed,Vocation,European,Partner,40,39,73000,31000,74000,300000
+57,Female,Employed,School,European,NoPartner,48,0,63000,26000,65000,242000
+58,Male,Employed,None,Other,Partner,46,49,58000,34000,75000,176000
+59,Female,Not Employed,School,European,NoPartner,23,0,5000,0,4000,13000
+60,Male,Employed,None,European,NoPartner,27,0,11000,9000,5000,14000
+61,Male,Not Employed,School,European,Partner,33,32,40000,7000,49000,128000
+62,Female,Not Employed,Vocation,European,Partner,49,55,92000,3000,118000,386000
+63,Male,Employed,School,European,Partner,47,46,99000,38000,102000,460000
+64,Female,Not Employed,None,European,Partner,35,34,40000,0,30000,151000
+65,Female,Not Employed,None,European,NoPartner,33,0,9000,0,2000,-56000
+66,Female,Employed,None,Other,NoPartner,26,0,3000,5000,11000,-8000
+67,Female,Not Employed,None,European,NoPartner,47,0,22000,0,21000,44000
+68,Male,Employed,Degree,European,Partner,47,47,144000,50000,142000,446000
+69,Female,Not Employed,School,European,NoPartner,37,0,20000,1000,37000,68000
+70,Male,Not Employed,None,European,Partner,26,27,15000,2000,5000,44000
+71,Female,Employed,School,European,Partner,31,30,42000,12000,35000,163000
+72,Female,Not Employed,Vocation,Maori,NoPartner,28,0,8000,1000,14000,16000
+73,Female,Employed,Degree,European,Partner,27,29,37000,11000,41000,115000
+74,Male,Employed,Degree,European,Partner,42,39,117000,42000,128000,348000
+75,Female,Not Employed,None,European,Partner,44,41,59000,0,49000,207000
+76,Male,Employed,Vocation,European,Partner,47,50,104000,41000,65000,492000
+77,Male,Employed,Vocation,European,Partner,30,31,33000,15000,43000,148000
+78,Male,Employed,Vocation,European,Partner,46,51,104000,41000,106000,430000
+79,Male,Not Employed,None,European,NoPartner,43,0,9000,0,12000,7000
+80,Male,Employed,School,European,Partner,46,47,95000,38000,97000,370000
+81,Male,Employed,School,European,Partner,37,39,62000,25000,54000,253000
+82,Female,Employed,School,European,Partner,38,38,63000,18000,67000,316000
+83,Female,Not Employed,Vocation,European,NoPartner,23,0,4000,0,9000,23000
+84,Male,Not Employed,None,European,Partner,31,31,28000,3000,17000,87000
+85,Male,Employed,Degree,European,NoPartner,41,0,72000,42000,83000,160000
+86,Male,Employed,Degree,Other,Partner,32,34,52000,22000,76000,146000
+87,Male,Employed,None,Other,Partner,37,36,31000,21000,48000,150000
+88,Male,Employed,School,Maori,NoPartner,43,0,35000,37000,53000,54000
+89,Female,Employed,School,European,Partner,47,48,105000,28000,104000,466000
+90,Male,Employed,School,European,Partner,30,28,35000,14000,42000,145000
+91,Female,Employed,Degree,European,NoPartner,48,0,95000,46000,154000,342000
+92,Male,Employed,Vocation,European,Partner,46,48,99000,42000,1098000,366000
+93,Male,Employed,School,European,Partner,33,33,50000,20000,45000,197000
+94,Female,Not Employed,School,Maori,NoPartner,29,0,9000,2000,13000,-19000
+95,Female,Employed,Vocation,Other,Partner,32,30,35000,16000,49000,146000
+96,Male,Employed,Vocation,European,Partner,46,48,83000,39000,103000,397000
+97,Female,Employed,Vocation,European,Partner,31,31,43000,12000,40000,171000
+98,Female,Employed,Degree,Other,Partner,26,28,30000,9000,39000,86000
+99,Male,Not Employed,Degree,Maori,Partner,32,32,47000,12000,47000,111000
+100,Female,Employed,School,European,Partner,48,45,112000,31000,115000,482000
+101,Female,Not Employed,School,European,Partner,33,32,39000,1000,36000,163000
+102,Female,Not Employed,None,European,NoPartner,32,0,6000,0,4000,14000
+103,Female,Employed,Vocation,European,Partner,43,40,94000,32000,84000,382000
+104,Male,Employed,School,European,NoPartner,20,0,0,0,0,0
+105,Male,Employed,School,European,NoPartner,22,0,4000,3000,5000,21000
+106,Female,Not Employed,None,Maori,NoPartner,32,0,9000,0,0,-49000
+107,Female,Not Employed,School,European,Partner,39,40,61000,1000,63000,193000
+108,Female,Employed,School,Other,Partner,40,46,66000,23000,84000,193000
+109,Male,Not Employed,Vocation,European,NoPartner,47,0,42000,11000,49000,211000
+110,Female,Employed,School,European,Partner,37,35,60000,18000,62000,246000
+111,Female,Employed,Vocation,European,Partner,38,42,76000,17000,71000,293000
+112,Male,Employed,School,European,NoPartner,20,0,0,0,0,0
+113,Female,Employed,Vocation,European,Partner,48,47,105000,31000,95000,388000
+114,Male,Employed,None,European,Partner,40,42,61000,21000,35000,141000
+115,Female,Not Employed,School,European,NoPartner,35,0,26000,0,32000,79000
+116,Female,Not Employed,School,European,NoPartner,27,0,13000,1000,12000,30000
+117,Female,Employed,Degree,European,NoPartner,22,0,7000,3000,8000,19000
+118,Male,Employed,School,European,NoPartner,28,0,13000,11000,11000,35000
+119,Female,Not Employed,None,European,NoPartner,23,0,2000,0,0,8000
+120,Male,Not Employed,None,European,Partner,46,53,62000,4000,28000,190000
+121,Female,Employed,None,European,NoPartner,35,0,24000,12000,23000,34000
+122,Male,Employed,Degree,European,Partner,22,22,10000,4000,12000,37000
+123,Female,Not Employed,None,European,Partner,37,35,40000,0,17000,133000
+124,Female,Employed,School,Other,Partner,29,31,27000,9000,43000,94000
+125,Male,Employed,None,European,Partner,25,26,16000,7000,12000,38000
+126,Male,Employed,None,European,NoPartner,46,0,30000,33000,24000,120000
+127,Female,Employed,School,European,NoPartner,47,0,59000,27000,56000,40000
+128,Female,Not Employed,Degree,European,NoPartner,38,0,54000,10000,51000,125000
+129,Female,Not Employed,None,Maori,Partner,38,39,44000,1000,22000,56000
+130,Male,Employed,School,Other,Partner,30,30,30000,16000,38000,116000
+131,Male,Not Employed,School,European,NoPartner,35,0,23000,5000,31000,76000
+132,Male,Not Employed,None,European,NoPartner,47,0,16000,9000,24000,45000
+133,Female,Employed,Vocation,Maori,NoPartner,46,0,35000,33000,57000,99000
+134,Female,Employed,None,European,NoPartner,37,0,20000,12000,25000,77000
+135,Female,Employed,None,European,NoPartner,46,0,42000,29000,42000,6000
+136,Male,Employed,None,European,Partner,47,47,78000,33000,59000,222000
+137,Male,Not Employed,None,European,NoPartner,46,0,26000,2000,5000,-13000
+138,Male,Employed,Vocation,European,NoPartner,47,0,49000,39000,72000,245000
+139,Female,Employed,School,Maori,Partner,29,29,31000,9000,29000,115000
+140,Male,Employed,School,European,Partner,31,33,39000,13000,39000,178000
+141,Male,Employed,School,European,Partner,31,29,42000,16000,31000,155000
+142,Male,Employed,School,Other,Partner,29,30,27000,14000,38000,108000
+143,Male,Not Employed,School,European,Partner,21,22,3000,0,3000,9000
+144,Male,Employed,School,European,Partner,36,37,67000,25000,56000,229000
+145,Male,Not Employed,Vocation,European,NoPartner,24,0,7000,2000,8000,19000
+146,Male,Employed,None,European,NoPartner,35,0,13000,19000,18000,16000
+147,Female,Employed,Degree,European,Partner,32,36,65000,19000,76000,189000
+148,Male,Employed,School,European,NoPartner,48,0,57000,42000,46000,146000
+149,Female,Employed,Vocation,Maori,Partner,36,38,53000,16000,60000,223000
+150,Female,Employed,Vocation,European,Partner,25,25,20000,6000,18000,78000
+151,Female,Not Employed,None,Other,NoPartner,36,0,3000,0,17000,-53000
+152,Female,Employed,School,Other,NoPartner,22,0,2000,2000,6000,3000
+153,Female,Employed,Vocation,Maori,NoPartner,49,0,46000,33000,53000,159000
+154,Male,Not Employed,None,European,NoPartner,44,0,23000,2000,2000,-40000
+155,Female,Employed,Vocation,European,Partner,32,30,49000,13000,36000,182000
+156,Female,Not Employed,School,European,NoPartner,23,0,3000,0,4000,10000
+157,Female,Employed,School,Other,Partner,31,30,33000,11000,47000,121000
+158,Female,Employed,Vocation,Maori,NoPartner,34,0,23000,16000,39000,79000
+159,Male,Employed,Degree,European,Partner,48,51,143000,50000,133000,447000
+160,Male,Employed,Vocation,European,Partner,37,40,63000,29000,65000,239000
+161,Male,Employed,Vocation,European,Partner,21,23,4000,2000,4000,16000
+162,Male,Employed,Vocation,European,Partner,23,23,12000,5000,12000,61000
+163,Female,Employed,None,European,Partner,34,32,48000,11000,37000,138000
+164,Female,Not Employed,School,Other,NoPartner,21,0,1000,0,2000,-2000
+165,Female,Employed,None,European,NoPartner,33,0,16000,12000,20000,50000
+166,Female,Not Employed,None,European,Partner,31,30,25000,0,23000,71000
+167,Female,Not Employed,School,European,Partner,26,27,19000,0,16000,67000
+168,Male,Employed,Vocation,European,NoPartner,31,0,24000,16000,32000,95000
+169,Female,Not Employed,None,European,NoPartner,46,0,15000,0,9000,26000
+170,Female,Employed,Degree,European,Partner,38,38,96000,30000,108000,252000
+171,Female,Employed,School,Other,NoPartner,22,0,3000,2000,6000,7000
+172,Male,Not Employed,None,European,Partner,33,34,34000,2000,26000,89000
+173,Male,Employed,School,European,Partner,23,25,13000,4000,12000,49000
+174,Male,Not Employed,None,European,NoPartner,29,0,2000,2000,0,-8000
+175,Male,Employed,School,European,Partner,36,36,62000,24000,58000,234000
+176,Female,Not Employed,School,European,Partner,42,46,65000,1000,73000,317000
+177,Female,Employed,Vocation,Other,Partner,44,42,78000,31000,117000,312000
+178,Female,Employed,Degree,European,Partner,46,45,136000,44000,143000,488000
+179,Male,Not Employed,None,European,Partner,47,49,59000,3000,37000,189000
+180,Female,Employed,School,European,NoPartner,36,0,33000,14000,48000,121000
+181,Male,Employed,None,Other,NoPartner,26,0,5000,7000,13000,2000
+182,Male,Employed,Degree,European,NoPartner,43,0,77000,45000,82000,216000
+183,Male,Not Employed,Vocation,European,Partner,42,46,70000,18000,56000,294000
+184,Female,Not Employed,None,European,Partner,34,33,34000,2000,36000,114000
+185,Male,Employed,None,European,Partner,38,41,49000,22000,22000,235000
+186,Male,Employed,Degree,European,Partner,36,34,94000,33000,80000,282000
+187,Female,Employed,School,Maori,NoPartner,26,0,10000,6000,13000,18000
+188,Male,Employed,School,European,Partner,38,37,65000,24000,66000,265000
+189,Female,Employed,Vocation,European,NoPartner,24,0,9000,4000,10000,36000
+190,Female,Not Employed,None,Maori,NoPartner,31,0,1000,0,0,-17000
+191,Female,Not Employed,None,European,NoPartner,43,0,18000,0,12000,12000
+192,Female,Employed,Vocation,European,Partner,32,32,55000,14000,57000,226000
+193,Female,Employed,Degree,European,Partner,39,36,103000,31000,112000,343000
+194,Male,Not Employed,Vocation,European,NoPartner,31,0,11000,6000,9000,56000
+195,Female,Employed,Degree,European,NoPartner,20,0,0,0,0,0
+196,Male,Employed,School,European,Partner,35,39,53000,22000,48000,224000
+197,Male,Employed,None,European,NoPartner,35,0,14000,16000,9000,27000
+198,Female,Employed,School,European,NoPartner,48,0,51000,24000,97000,207000
+199,Male,Not Employed,School,European,NoPartner,44,0,31000,13000,29000,101000
+200,Male,Employed,School,European,Partner,38,40,59000,25000,53000,224000
+201,Female,Employed,None,European,Partner,43,46,74000,21000,70000,241000
+202,Female,Employed,None,European,NoPartner,37,0,17000,15000,29000,35000
+203,Female,Not Employed,School,European,Partner,30,33,31000,1000,32000,114000
+204,Male,Employed,Vocation,European,NoPartner,29,0,19000,13000,19000,50000
+205,Female,Employed,None,Other,Partner,36,38,42000,14000,47000,137000
+206,Male,Employed,School,European,NoPartner,46,0,53000,41000,63000,171000
+207,Male,Employed,None,European,Partner,36,39,45000,20000,29000,185000
+208,Female,Not Employed,School,European,Partner,32,34,42000,1000,36000,120000
+209,Female,Not Employed,School,European,NoPartner,22,0,3000,0,3000,7000
+210,Male,Employed,Vocation,European,NoPartner,26,0,11000,9000,16000,46000
+211,Female,Employed,None,Maori,Partner,31,32,31000,9000,20000,56000
+212,Male,Employed,Vocation,Maori,Partner,28,29,29000,12000,23000,95000
+213,Female,Employed,School,European,NoPartner,41,0,39000,26000,60000,153000
+214,Female,Employed,School,European,Partner,40,41,80000,20000,80000,277000
+215,Male,Employed,School,Maori,NoPartner,27,0,10000,10000,11000,25000
+216,Male,Employed,None,European,Partner,41,49,66000,28000,67000,234000
+217,Female,Not Employed,None,European,NoPartner,38,0,6000,0,0,-20000
+218,Male,Not Employed,None,European,NoPartner,32,0,6000,2000,4000,-13000
+219,Male,Employed,School,European,Partner,36,36,62000,23000,62000,198000
+220,Female,Not Employed,Degree,Maori,NoPartner,22,0,5000,1000,7000,8000
+221,Female,Employed,None,European,NoPartner,24,0,6000,3000,2000,22000
+222,Male,Employed,None,European,Partner,38,39,56000,21000,45000,255000
+223,Female,Employed,None,European,Partner,42,41,59000,17000,48000,265000
+224,Female,Not Employed,School,European,Partner,26,25,19000,1000,19000,88000
+225,Male,Employed,None,European,Partner,43,44,62000,31000,42000,193000
+226,Female,Employed,Degree,European,Partner,36,36,84000,25000,85000,310000
+227,Male,Employed,School,Maori,Partner,44,45,76000,40000,73000,200000
+228,Female,Employed,School,Maori,NoPartner,48,0,41000,32000,53000,46000
+229,Male,Employed,Degree,European,Partner,49,46,143000,61000,142000,533000
+230,Male,Employed,None,Maori,Partner,43,41,50000,30000,45000,150000
+231,Male,Employed,None,European,Partner,38,38,52000,20000,39000,172000
+232,Female,Employed,School,Other,Partner,32,33,37000,12000,54000,138000
+233,Male,Employed,Vocation,European,Partner,33,31,43000,22000,53000,195000
+234,Male,Employed,Vocation,European,NoPartner,42,0,39000,28000,38000,233000
+235,Female,Employed,None,Maori,Partner,41,40,54000,19000,44000,162000
+236,Male,Employed,None,European,NoPartner,36,0,15000,17000,17000,31000
+237,Female,Employed,Degree,European,NoPartner,23,0,11000,5000,14000,27000
+238,Female,Not Employed,School,European,NoPartner,21,0,1000,0,2000,6000
+239,Female,Employed,Degree,European,Partner,27,25,36000,11000,47000,114000
+240,Male,Not Employed,None,Maori,NoPartner,27,0,0,1000,0,-27000
+241,Female,Employed,School,Other,Partner,41,44,63000,24000,97000,167000
+242,Male,Employed,School,European,Partner,47,45,103000,42000,91000,436000
+243,Female,Not Employed,School,European,NoPartner,33,0,16000,2000,20000,47000
+244,Female,Not Employed,None,European,Partner,31,35,24000,0,22000,106000
+245,Male,Not Employed,School,European,NoPartner,23,0,4000,2000,6000,14000
+246,Male,Employed,Vocation,European,Partner,37,39,57000,25000,70000,281000
+247,Female,Employed,Vocation,Other,NoPartner,37,0,29000,19000,48000,95000
+248,Female,Employed,Vocation,European,Partner,30,31,39000,10000,39000,160000
+249,Female,Employed,School,Other,NoPartner,31,0,16000,12000,24000,22000
+250,Female,Employed,Degree,European,Partner,28,26,44000,14000,44000,163000
+251,Female,Employed,None,European,NoPartner,41,0,22000,22000,31000,44000
+252,Female,Employed,School,European,Partner,36,33,63000,16000,64000,258000
+253,Female,Employed,School,European,Partner,37,37,64000,20000,68000,242000
+254,Female,Employed,School,European,NoPartner,37,0,32000,16000,41000,136000
+255,Male,Employed,School,European,NoPartner,28,0,13000,11000,15000,27000
+256,Male,Not Employed,Vocation,European,NoPartner,34,0,17000,6000,20000,69000
+257,Female,Not Employed,None,European,Partner,46,53,64000,0,64000,167000
+258,Female,Not Employed,Vocation,European,NoPartner,20,0,0,0,0,0
+259,Male,Employed,Vocation,European,NoPartner,38,0,35000,22000,38000,140000
+260,Female,Employed,School,European,Partner,26,25,21000,8000,27000,79000
+261,Female,Employed,None,Maori,Partner,43,43,54000,22000,46000,85000
+262,Male,Employed,Vocation,Other,Partner,49,51,91000,48000,128000,372000
+263,Male,Employed,Vocation,Maori,NoPartner,44,0,34000,37000,33000,68000
+264,Male,Not Employed,School,European,Partner,32,32,33000,4000,40000,143000
+265,Female,Employed,School,European,Partner,35,32,51000,16000,66000,225000
+266,Female,Not Employed,None,Maori,Partner,44,45,50000,0,32000,133000
+267,Male,Employed,None,European,Partner,38,38,59000,20000,47000,186000
+268,Female,Employed,School,Maori,NoPartner,41,0,26000,25000,24000,60000
+269,Male,Employed,Degree,European,Partner,21,21,5000,2000,5000,18000
+270,Male,Employed,Vocation,European,Partner,28,30,27000,11000,34000,132000
+271,Female,Employed,Vocation,European,NoPartner,38,0,36000,17000,56000,176000
+272,Female,Employed,Vocation,European,Partner,28,27,28000,9000,29000,156000
+273,Female,Not Employed,School,Maori,Partner,33,32,33000,3000,38000,126000
+274,Male,Employed,Vocation,European,Partner,27,30,26000,11000,25000,136000
+275,Female,Employed,School,Other,NoPartner,23,0,3000,3000,8000,16000
+276,Male,Employed,School,European,Partner,36,34,59000,23000,47000,211000
+277,Male,Employed,None,Other,Partner,46,47,55000,33000,63000,222000
+278,Male,Employed,Degree,European,Partner,34,33,75000,27000,77000,211000
+279,Male,Employed,School,European,Partner,27,27,26000,10000,19000,99000
+280,Male,Employed,School,European,NoPartner,23,0,7000,5000,7000,24000
+281,Male,Employed,None,European,NoPartner,46,0,40000,28000,5000,63000
+282,Female,Not Employed,School,European,Partner,37,33,54000,8000,52000,213000
+283,Female,Employed,Vocation,European,Partner,41,37,82000,23000,100000,341000
+284,Female,Employed,Vocation,European,NoPartner,28,0,19000,9000,22000,97000
+285,Female,Employed,None,Maori,NoPartner,42,0,21000,22000,24000,-3000
+286,Male,Employed,School,European,Partner,48,45,98000,37000,74000,364000
+287,Male,Employed,School,European,NoPartner,27,0,16000,10000,12000,59000
+288,Male,Employed,None,Maori,Partner,38,33,43000,22000,29000,132000
+289,Male,Not Employed,School,European,Partner,28,28,22000,3000,24000,100000
+290,Male,Employed,Vocation,European,Partner,47,52,105000,38000,103000,398000
+291,Male,Not Employed,None,European,Partner,27,25,18000,1000,13000,53000
+292,Male,Employed,Vocation,European,Partner,31,32,42000,15000,45000,137000
+293,Male,Employed,Vocation,Other,Partner,33,29,36000,21000,49000,166000
+294,Female,Employed,Vocation,European,Partner,44,47,87000,29000,80000,395000
+295,Male,Employed,Vocation,European,Partner,27,29,24000,11000,28000,125000
+296,Female,Employed,School,European,Partner,37,36,59000,16000,72000,191000
+297,Female,Employed,School,European,Partner,27,26,26000,7000,29000,92000
+298,Male,Not Employed,School,European,NoPartner,45,0,50000,10000,28000,83000
+299,Female,Employed,Vocation,European,NoPartner,27,0,15000,8000,22000,70000
+300,Male,Not Employed,School,European,NoPartner,38,0,21000,8000,13000,52000
