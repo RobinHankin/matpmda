@@ -42,7 +42,6 @@ prefix.string <- paste("figs/", fname, "-graphic", sep = "")
 \SweaveOpts{prefix.string=\Sexpr{prefix.string}}
 
 
-
 %Control spacing at start of verbatim environments
 \newlength{\fancyvrbtopsep}
 \newlength{\fancyvrbpartopsep}
@@ -108,7 +107,7 @@ baselinestretch=1}
 Auckland University of Technology\\
 School of Engineering, Computer and Mathematical Sciences\\
 \courseCode \; \courseName \\
-\textbf{Lab: hypothesis testing}\\
+\textbf{Lab: Final exam, STAT500, 2013}\\
 \ifthenelse{\boolean{printanswers}}{\textcolor{solcol}{Outline Solutions}}{}
 \ifthenelse{\boolean{printtutornotes}}{\textcolor{tutorcol}{ \& Tutor Notes}}{}
 \end{center}
