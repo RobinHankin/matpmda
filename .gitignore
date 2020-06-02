@@ -7,3 +7,9 @@
 *.idx
 *.out
 *.toc
+
+labs/*.pdf
+labs/*.tex
+labs/*.log
+labs/*.Rnw~
+labs/*.tex
