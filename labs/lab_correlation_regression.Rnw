@@ -76,10 +76,10 @@ baselinestretch=1}
 \newcommand{\bin}[2]{\ensuremath{\operatorname{Bin}\left(#1,#2\right)}}
 
 %To print questions with a space for the answer
-\printanswersfalse
-\printlinefalse
-\printspacetrue
-\printtutornotesfalse %printanswers must be true for this to work
+%\printanswersfalse
+%\printlinefalse
+%\printspacetrue
+%\printtutornotesfalse %printanswers must be true for this to work
 
 %To print questions and solutions
 %\printanswerstrue
@@ -89,10 +89,10 @@ baselinestretch=1}
 
 
 %%To print questions and solutions and tutor notes
-%\printanswerstrue
-%\printlinefalse
-%\printspacetrue
-%\printtutornotestrue %printanswers must be true for this to work
+\printanswerstrue
+\printlinefalse
+\printspacetrue
+\printtutornotestrue %printanswers must be true for this to work
 
 %Use this is typos occur...
 \definecolor{typocol}{gray}{1}  %white
@@ -534,40 +534,44 @@ summary(lm(y~x))
 \item Use t-test and ANOVA to investigate questions such as:
 \begin{itemize}
 \item Do males have a higher income than females?
-\item Is there a relationship between qualification level and networth?
+\item Is there a relationship between qualification level and income?
+  How about net worth?
 \end{itemize}
 
 \begin{solution}[20mm]
 
 
-Qualification and Income
+{\bf Qualification and Income}
+
 \setkeys{Gin}{width=0.5\textwidth}
 <<household_qualification_income, fig=TRUE>>=
 boxplot(Income~Qualification, data=d)
 summary(aov(Income~Qualification, data=d))
 @
 
-There is a statistically significant difference between the mean income level for people with different qualifications.
+There is a statistically significant difference between the mean
+income level for people with different qualifications.
 
-Gender and Income
+{\bf Qualification and Net worth}
+
+\setkeys{Gin}{width=0.5\textwidth}
+<<household_qualification_income, fig=TRUE>>=
+boxplot(Networth~Qualification, data=d)
+summary(aov(Networth~Qualification, data=d))
+@
+
+{\bf Gender and Income}
 \setkeys{Gin}{width=0.5\textwidth}
 <<household_gender_income, fig=TRUE>>=
 boxplot(Income~Gender, data=d)
 t.test(Income~Gender, data=d)
 @
 
-There is not a statistically significant difference between the mean income level for males and females (p value is 0.4238 > 0.05).
-
-
+There is not a statistically significant difference between the mean
+income level for males and females (p value is 0.4238 > 0.05).
 
 \end{solution}
 
-
-
-
-%\item Download the global indicators dataset from assignment 2. Investigate the relationship between variables of your choice using correlation and regression.
-%\end{enumerate}
-%
 \end{enumerate}
 
 \end{document}
