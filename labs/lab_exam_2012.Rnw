@@ -335,10 +335,11 @@ plot(fail~temp) # NB not plot(temp~fail)
 If your scattergraph shows an outlier, correct the error and plot a
 second scattergraph
 \begin{solution}
-<<>>=
+<<fig=TRUE>>=
 temp <- temp[-2]
 fail <- fail[-2]
 plot(fail~temp)
+abline(lm(fail~temp)) # line not needed for maximum credit
 @ 
 \end{solution}
 \item Using \verb+lm()+, perform a linear regression
