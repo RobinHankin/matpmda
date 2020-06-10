@@ -1,0 +1,375 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage{ifthen}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{marginnote}
+\reversemarginpar
+
+\setlength{\hoffset}{-0.5cm}
+\setlength{\voffset}{-10mm}
+\setlength{\textheight}{25cm}
+\setlength{\textwidth}{17cm}
+
+\hyphenpenalty  = 10000
+\exhyphenpenalty = 10000
+\parindent=0mm	
+
+\usepackage[dvips]{graphicx}
+\usepackage{url}
+\usepackage{xcolor}
+\usepackage{verbatim,dsfont}
+\usepackage{fancyvrb}
+\newcommand{\textubf}[1]{\underline{\textbf{#1}}}
+
+\usepackage{template/labhandout}
+
+
+<<echo=FALSE>>=
+foo <- function(x) {x}
+srcref <- attr(body(foo), "srcref")[[1]]
+#attr(srcref, "srcfile")$filename
+@
+
+<<echo=FALSE>>=
+fname <- sub("\\.Rnw", "", attr(srcref, "srcfile")$filename)
+prefix.string <- paste("figs/", fname, "-graphic", sep = "")
+@
+
+\SweaveOpts{prefix.string=\Sexpr{prefix.string}}
+
+
+%Control spacing at start of verbatim environments
+\newlength{\fancyvrbtopsep}
+\newlength{\fancyvrbpartopsep}
+\makeatletter
+\FV@AddToHook{\FV@ListParameterHook}{\topsep=\fancyvrbtopsep\partopsep=\fancyvrbpartopsep}
+\makeatother
+
+%Verbatim environments
+\newenvironment{codeChunk}{}{} %Use to wrap codeIn and codeOut to keep them together. A feature of Sweave - may not be necessary.
+\DefineVerbatimEnvironment{codeOut}{Verbatim} {formatcom=\color{codecol}, baselinestretch=1}
+\DefineVerbatimEnvironment{codeIn}{Verbatim} {formatcom=\color{codecol}, %fontshape=sl,
+baselinestretch=1}
+\DefineVerbatimEnvironment{code}{Verbatim} {baselinestretch=1}  %Uses colour current environment, so can be used with solution.
+\newcommand{\codett}[1]{\textcolor{codecol}{\texttt{#1}}}  %use for in-line code
+
+\setlength{\fancyvrbtopsep}{0pt}
+\setlength{\fancyvrbpartopsep}{0pt}
+
+%Set colours
+\definecolor{solcol}{RGB}{0, 0, 250} %blue
+\definecolor{codecol}{RGB}{0,0,0} %black
+\definecolor{tutorcol}{RGB}{159, 0, 197} %purple
+
+\SolutionEmphasis{\color{solcol}}
+\TutorEmphasis{\color{tutorcol}}
+
+
+\newcommand{\youtry}{\marginnote{\includegraphics[width=2cm]{keyboard_with_hands}}}
+\newcommand{\stoptyping}{\marginnote{\includegraphics[width=2cm]{keyboard}}}
+\newcommand{\Rq}{{\textsf{\textbf{``Is R doing what I think it is doing?''}}}}
+\newcommand{\bin}[2]{\ensuremath{\operatorname{Bin}\left(#1,#2\right)}}
+
+%To print questions with a space for the answer
+\printanswersfalse
+\printlinefalse
+\printspacetrue
+\printtutornotesfalse %printanswers must be true for this to work
+
+%To print questions and solutions
+%\printanswerstrue
+%\printlinefalse
+%\printspacetrue
+%\printtutornotesfalse%printanswers must be true for this to work
+
+
+%%To print questions and solutions and tutor notes
+%\printanswerstrue
+%\printlinefalse
+%\printspacetrue 
+%\printtutornotestrue %printanswers must be true for this to work
+
+%Use this is typos occur...
+\definecolor{typocol}{gray}{1}  %white
+%\definecolor{typocol}{gray}{0}  %white
+
+\newcommand{\courseName}[0]{Applied Statistics}
+\newcommand{\courseCode}[0]{STAT500}
+
+\begin{document}
+\SweaveOpts{concordance=TRUE}
+\hrule 
+\begin{center}
+Auckland University of Technology\\
+School of Engineering, Computer and Mathematical Sciences\\
+\courseCode \; \courseName \\
+\textbf{Lab: Final exam, STAT500, 2013}\\
+\ifthenelse{\boolean{printanswers}}{\textcolor{solcol}{Outline Solutions}}{}
+\ifthenelse{\boolean{printtutornotes}}{\textcolor{tutorcol}{ \& Tutor Notes}}{}
+\end{center}
+\hrule
+\vbox{\vspace{3mm}}
+
+<<echo=FALSE>>=
+options(prompt=' ')
+options(continue='   ')
+@ 
+
+
+
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+%\textcolor{typocol}{Modifications/Typos}
+
+\tutorNotes{\textbf{Reminders:}
+
+Consider starting with a brief recap on standard error and sampling distributions.
+
+}
+
+
+
+\tutorNotes{\textbf{Reminders:}
+
+Note: references to books are for my reference. No need to share these with the students.}
+
+
+\begin{enumerate}
+\item You will recall the standard Gaussian distribution from
+  lectures.
+  \begin{enumerate}
+\item
+What is the probability that a standard Gaussian random variable
+  exceeds 2.1?
+  \begin{solution}
+<<>>=
+1-pnorm(1.2)
+pnorm(1.2,lower.tail=FALSE)  # slick alternative
+@ 
+\end{solution}    
+
+\item Verify your answer using random sampling
+  \begin{solution}
+<<>>=
+sum(rnorm(1e6) > 1.2)/1e6
+@ 
+\end{solution}
+\end{enumerate} 
+
+
+% \item Each year, a particular AUT statistician sets an exam for a
+%   statistics course that always has exactly five questions on it.
+%   Each question is either ``easy'' or ``difficult''.  A question's
+%   status is thus a Bernoulli trial.
+% 
+% The probability of a question being easy is known to be~$p=0.9$.
+% 
+% \begin{enumerate}
+% 
+% \item
+% If each question's status is independent of the others, what
+% distribution specifies the total number of easy
+% questions?~\worthmarks{5}
+% \item
+% Using \verb+dbinom()+ or otherwise, what is the probability that exactly four
+% questions on an exam are easy?~\worthmarks{5}
+% \item
+% What is the probability that two or fewer questions are
+% easy?~\worthmarks{10}
+% \item A new statistics lecturer is recruited to AUT, and he sets an
+%   exam one year.    State a sensible null hypothesis when considering this
+%   examiner's questions.\worthmarks{5}
+% \item It is suspected that this new statistician tends to
+%   set harder exams.  Is a one-sided or two-sided test
+%   appropriate?~\worthmarks{5}
+% \item The new statistician sets an exam on which two questions are
+%   easy and three are difficult.  You will recall from lectures that
+%   the p-value for our null is the probability of observing two or
+%   fewer easy questions on the exam.  Thus your answer to part (c)
+%   above is a p-value.  Is this significant?~\worthmarks{5}.
+% \item Interpret your finding in a way that a busy AUT examination
+%   moderator, who is not a statitician, could understand\worthmarks{10}
+% \end{enumerate}
+
+\item An environmental scientist collects samples from a lake, and measures
+  the amount of lead pollution in each one.
+
+On the next day, she visits a second lake and again collects samples.
+The second lake is suspected to harbour more lead than the first site.
+
+The amounts of lead pollution, in micrograms per litre, are as
+follows:
+
+<<>>=
+lake1 <- c(1.404, 1.402, 1.419, 1.398, 1.373, 1.401)
+lake2 <- c(1.414, 1.401, 1.409, 1.408, 1.431, 1.419)
+@ 
+
+\begin{enumerate}
+\item
+What is the sample mean of \verb+lake1+ and \verb+lake2+?
+\begin{solution}
+<<>>=
+mean(lake1)
+mean(lake2)
+@   
+\end{solution}
+\item
+Bearing in mind that the samples were collected on different days and
+the order of the samples was effectively random each time, is a paired
+or unpaired test indicated?
+
+\begin{solution}
+  unpaired, no natural pairing
+\end{solution}
+
+\item
+Bearing in mind what is known about the two lakes, is a one-sided or
+two-sided test appropriate?
+\begin{solution}
+two-sided, symmetrical situation
+\end{solution}
+\item state the precise definition of pvalue
+  \begin{solution}
+    p-value = probability, if the null is true, of obtaining the observation or an observation more extreme
+    \end{solution}
+\item
+Conduct the appropriate t-test and report the p-value.
+\begin{solution}
+<<>>=
+t.test(lake1,lake2)  # NB two-sided by default, unpaired by default
+@   
+\end{solution}
+\item
+Interpret the result in a way that a resident near the lakes, who is
+not a statistician could understand.
+\begin{solution}
+  pvalue exceeds 5\% there is no significant difference between the lakes.
+\end{solution}
+\end{enumerate}
+
+\item A certain department in AUT has 12 staff including 6 professors.
+  Each staff member has their own office.  Everyone wants an office
+  with a window but there are only eight offices with windows.  This
+  semester, all 6 professors have a window in their office.
+
+  The following R idiom describes this dataset:
+
+<<>>=
+a <- matrix(c(6,0,2,4),2,2)
+dimnames(a) <- 
+list(office=c("window", "no window"), professor=c("yes","no"))
+@ 
+
+
+\begin{enumerate}
+
+\item In the context of assessing whether professors are more likely
+  to secure an office with a window than non-professors, state a
+  sensible null hypothesis
+  \begin{solution}
+    null: having a windowed office is independent of professorial status
+    \end{solution}
+\item Bearing in mind that professors generally like to spend their
+  day looking out of the window, and also bearing in mind that
+  professors are more likely than non-professors to be able to choose
+  an office with a window, is a one-sided test or a two-sided test
+  more appropriate?
+  \begin{solution}
+    one-sided, professors push other academics out of nice offices
+  \end{solution}
+\item Using R idiom such as
+  \verb+fisher.test()+, test the null
+  hypothesis that professors are no more likely to have a window in
+  their office than non-professors
+\begin{solution}
+<<>>=
+fisher.test(a,alternative="greater")
+@ 
+\end{solution}
+
+State the precise definition of p-value.  Interpret your result in a
+way in which a busy professor, who has a window in her office but is
+not a professor of statistics, could understand.
+\begin{solution}
+  p-value = probability, if the null is true, of obtaining the observation or an observation more extreme
+  
+  the pvalue is small enough for us to reject the hypothesis of
+  random office allocation and infer that professors are indeed
+  more likely to have a nice office with a window.
+\end{solution}
+  
+\end{enumerate}
+
+\item 
+A computer scientist in Auckland has a large number of computers in
+his laboratory and suspects that more failures occur when the
+temperature outside is higher.
+
+The dataset is as follows:
+
+<<>>=
+temp <- c(16.1, -18.2, 16.5, 14.1, 15.2, 17.2, 17.9, 17.5, 16.8, 14.3)
+fail <- c(9.90, 9.21, 10.01, 8.22, 9.33, 8.89, 9.58, 10.97, 10.38, 9.96)
+@ 
+
+The first dataset is the temperature in Auckland in Centigrade, the
+second is the percentage of computers that have a failure.
+
+\begin{enumerate}
+\item The scientist suggests a regression technique to analyze this
+  dataset.  Using R commands like \verb+plot(y~x)+, produce a
+  scattergraph of this dataset.
+<<>>=
+plot(fail~temp) # NB not plot(temp~fail)
+@   
+
+\item Look at your scattergraph.  Bear in mind that the temperatures
+  were taken in Auckland in November when subzero temperatures are
+  unlikely; and also recall that datasets often have a sign error.
+
+If your scattergraph shows an outlier, correct the error and plot a
+second scattergraph
+\begin{solution}
+<<>>=
+temp <- temp[-2]
+fail <- fail[-2]
+plot(fail~temp)
+@ 
+\end{solution}
+\item Using \verb+lm()+, perform a linear regression
+  \begin{solution}
+<<>>=
+temp <- temp[-2]
+fail <- fail[-2]
+summary(lm(fail~temp))
+@ 
+\end{solution}
+  
+\item Is a one-sided test or a two sided test needed? Why? 
+  \begin{solution}
+    one-sided as negative slopes meaningless; we need to halve the pvalue
+    \end{solution}
+  
+\item Recalling that one-sided p-values are obtained by halving the
+  two-sided p-values provided by R, report the p-value for the null
+  hypothesis that the true slope of the line is zero.  Is it
+  significant?
+  \begin{solution}
+    pvalue exceeds 5\%, not significant 
+  \end{solution}
+\item Interpret your findings in a way that a computer scientist with
+  a flaky air conditioning plant, who is not a statistician, could
+  understand
+  \begin{solution}
+    no evidence for any dependence
+  \end{solution}
+\end{enumerate}
+\end{enumerate}
+\end{document}
+
+
