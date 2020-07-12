@@ -1,0 +1,577 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage{ifthen}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{marginnote}
+\reversemarginpar
+
+\setlength{\hoffset}{-0.5cm}
+\setlength{\voffset}{-10mm}
+\setlength{\textheight}{25cm}
+\setlength{\textwidth}{17cm}
+
+\hyphenpenalty  = 10000
+\exhyphenpenalty = 10000
+\parindent=0mm	
+
+\usepackage[dvips]{graphicx}
+\usepackage{url}
+\usepackage{xcolor}
+\usepackage{verbatim,dsfont}
+\usepackage{fancyvrb}
+\newcommand{\textubf}[1]{\underline{\textbf{#1}}}
+
+\usepackage{template/labhandout}
+
+
+<<echo=FALSE>>=
+foo <- function(x) {x}
+srcref <- attr(body(foo), "srcref")[[1]]
+#attr(srcref, "srcfile")$filename
+@
+
+<<echo=FALSE>>=
+fname <- sub("\\.Rnw", "", attr(srcref, "srcfile")$filename)
+prefix.string <- paste("figs/", fname, "-graphic", sep = "")
+@
+
+\SweaveOpts{prefix.string=\Sexpr{prefix.string}}
+
+
+
+%Control spacing at start of verbatim environments
+\newlength{\fancyvrbtopsep}
+\newlength{\fancyvrbpartopsep}
+\makeatletter
+\FV@AddToHook{\FV@ListParameterHook}{\topsep=\fancyvrbtopsep\partopsep=\fancyvrbpartopsep}
+\makeatother
+
+%Verbatim environments
+\newenvironment{codeChunk}{}{} %Use to wrap codeIn and codeOut to keep them together. A feature of Sweave - may not be necessary.
+\DefineVerbatimEnvironment{codeOut}{Verbatim} {formatcom=\color{codecol}, baselinestretch=1}
+\DefineVerbatimEnvironment{codeIn}{Verbatim} {formatcom=\color{codecol}, %fontshape=sl,
+baselinestretch=1}
+\DefineVerbatimEnvironment{code}{Verbatim} {baselinestretch=1}  %Uses colour current environment, so can be used with solution.
+\newcommand{\codett}[1]{\textcolor{codecol}{\texttt{#1}}}  %use for in-line code
+
+\setlength{\fancyvrbtopsep}{0pt}
+\setlength{\fancyvrbpartopsep}{0pt}
+
+%Set colours
+\definecolor{solcol}{RGB}{0, 0, 250} %blue
+\definecolor{codecol}{RGB}{0,0,0} %black
+\definecolor{tutorcol}{RGB}{159, 0, 197} %purple
+
+\SolutionEmphasis{\color{solcol}}
+\TutorEmphasis{\color{tutorcol}}
+
+
+\newcommand{\youtry}{\marginnote{\includegraphics[width=2cm]{keyboard_with_hands}}}
+\newcommand{\stoptyping}{\marginnote{\includegraphics[width=2cm]{keyboard}}}
+\newcommand{\Rq}{{\textsf{\textbf{``Is R doing what I think it is doing?''}}}}
+\newcommand{\bin}[2]{\ensuremath{\operatorname{Bin}\left(#1,#2\right)}}
+
+%To print questions with a space for the answer
+%\printanswersfalse
+%\printlinefalse
+%\printspacetrue
+%\printtutornotesfalse %printanswers must be true for this to work
+
+%To print questions and solutions
+%\printanswerstrue
+%\printlinefalse
+%\printspacetrue
+%\printtutornotesfalse%printanswers must be true for this to work
+
+
+%%To print questions and solutions and tutor notes
+\printanswerstrue
+\printlinefalse
+\printspacetrue
+\printtutornotestrue %printanswers must be true for this to work
+
+%Use this is typos occur...
+\definecolor{typocol}{gray}{1}  %white
+%\definecolor{typocol}{gray}{0}  %white
+
+%\newcommand{\todo}[1]{\textcolor{red}{#1}}
+
+\newcommand{\courseName}[0]{Applied Statistics}
+\newcommand{\courseCode}[0]{STAT500}
+
+\begin{document}
+\hrule 
+\begin{center}
+Auckland University of Technology\\
+School of Engineering, Computer and Mathematical Sciences\\
+\courseCode \; \courseName \\
+{\ }\\[2mm]
+\textbf{Lab: correlation and regression}\\
+\ifthenelse{\boolean{printanswers}}{\textcolor{solcol}{Outline Solutions}}{}
+\ifthenelse{\boolean{printtutornotes}}{\textcolor{tutorcol}{ \& Tutor Notes}}{}
+\end{center}
+\hrule
+\vbox{\vspace{3mm}}
+
+<<echo=FALSE>>=
+options(prompt=' ')
+options(continue='   ')
+@ 
+
+
+
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+%\textcolor{typocol}{Modifications/Typos}
+
+
+This lab comprises questions which are similar to the final assessment
+items.
+
+\begin{enumerate}
+\item 
+A computer scientist in Auckland has a large number of computers in
+his laboratory and suspects that more failures occur when the
+temperature outside is higher.
+
+The dataset is as follows:
+
+<<>>=
+temp <- c(16.1, 18.2, 16.5, 14.1, 15.2, 17.2, 17.9, 17.5, 16.8, 14.3)
+fail <- c(9.90, 9.21, 10.01, 8.22, 9.33, 8.89, 9.58, 10.97, 10.38, 8.96)
+@
+
+The first dataset is the temperature in Auckland in Centigrade, the
+second is the percentage of computers that have a failure.
+
+\begin{enumerate}
+
+\item Construct a scatterplot of the data and describe the
+  relationship that you observe.  Remove any outliers.
+
+\begin{solution}[20mm]
+
+\setkeys{Gin}{width=0.5\textwidth}
+<<temperature_scatter, fig=TRUE>>=
+plot(fail~temp)
+@
+%\begin{codeIn}
+%plot(fail~temp)
+%\end{codeIn}
+%
+%\includegraphics[width=0.5\linewidth]{outlier_present.pdf}
+%
+%
+%\end{solution}
+%
+%\item Look at your scattergraph.  Bear in mind that the temperatures
+%were taken in Auckland in November when subzero temperatures are
+%unlikely; and also recall that datasets often have a sign error.
+%
+%If your scattergraph shows an outlier, correct the error and plot a
+%second scattergraph
+%
+%\begin{solution}[20mm]
+%\begin{codeIn}
+%> temp[-3] <- -temp[-3]
+%\end{codeIn}
+
+%\includegraphics[width=0.5\linewidth]{outlier_removed.pdf}
+\end{solution}
+
+\item Compute the correlation coefficient $r$ and describe the
+  relationship you observe.
+
+\begin{solution}[20mm]
+<<>>=
+cor(temp, fail)
+@
+
+
+There is a moderate positive correlation between temperature and
+computer failures.
+
+\end{solution}
+
+\item
+Using \verb+lm()+, perform a linear regression.
+\begin{solution}[20mm]
+%\begin{codeIn}
+%> plot(fail~temp)  # looks OK
+%> abline(lm(fail~temp))
+%\end{codeIn}
+
+%\includegraphics[width=0.5\linewidth]{regression.pdf}
+\setkeys{Gin}{width=0.5\textwidth}
+<<temperature_lm, fig=TRUE>>=
+lm1 =  lm(fail~temp)
+summary(lm1)
+
+plot(fail~temp) 
+abline(lm(fail~temp))
+
+@
+
+\end{solution}
+
+\item Referring to the r output in the previous question, write the
+  regression line equation for the model where we use temperature to
+  estimate the number of failures.
+
+\begin{solution}[20mm]
+$\widehat{\text{fail}} = 4.91 + 0.2829 \text{temperature} $
+\end{solution}
+
+
+\item Are the assumptions for regression met?
+\begin{solution}[20mm]
+Use the acronym LINE to remember the assumptions of linear regression.
+
+\setkeys{Gin}{width=\textwidth}
+<<temperature_residuals, fig=TRUE>>=
+par(mfrow=c(2,2))
+plot(temp, fail); abline(lm1)
+plot(temp, rstandard(lm1)); abline(h=0)
+hist(lm1$residuals)
+qqnorm(rstandard(lm1)); abline(0,1)
+@
+
+
+Linear - there appears to be a linear relationship between the two variables\\
+
+Independence -- we need more information about the way that the data were collected to accurately assess this assumption. However, from the information provided we can reasonably assume that the observations were independent.\\
+
+Normality -- 
+the sample size is too small to be able assess normality using a histogram, however, the qqplot appears to follow the main diagonal, which indicates the data could be consistent with a normal distribution.  The plot of $x$ vs the standardised residuals is also consistent with normality as most values are between -2 and 2.\\
+
+Equal Variance-- it is difficult to assess the residuals with so little data, however they do appear to be greater for larger temperatures.\\
+
+
+
+\end{solution}
+
+
+\item Interpret your findings in a way that a computer scientist with
+a flaky air conditioning plant, who is not a statistician, could
+understand. 
+\begin{solution}[20mm]
+The p-value for the regression model as a whole is 0.1317, which exceeds the usual significance level of $0.05$.
+
+Whilst there appears to be a moderate positive relationship between temperature and the number of failures, 
+there is no statistical evidence for this relationship.
+The pattern observed in the graph is likely due to random variation.
+
+%there is no evidence for a connection between temperature and failure rates
+\end{solution}
+
+
+\end{enumerate}
+
+
+\item
+The following R commands define two datasets:
+<<>>=
+length <- c(0.111, 6.061, 0.171, 0.228, 0.802, 0.039, 0.64, 0.238, 0.603, 0.337)
+
+conc <- c(0.093, 0.102, 0.087, 0.085, 0.015, 0.107, 0.044, 0.08, 0.026, 0.073)
+@
+
+
+Here, \verb+length+ is the length of a beetle measured in centimeters,
+and \verb+conc+ is the concentration of a certain hormone found in a
+tissue sample.  The researchers are studying whether there is a relationship between the size of the beetle and the concentration of hormone present.
+The beetles are a small species and are known to always be under 1cm in length.
+
+[helpful hint: commands such as \verb+plot(conc~length)+ and
+\verb+lm(conc~length)+ might be helpful here; to remove a single
+observation use a command like \verb+plot(conc[-2]~length[-2])+,
+which will remove the second observation (ie observation number 2)]
+
+
+\begin{itemize}
+\item Plot the data and describe the relationship you observe.
+\begin{solution}[20mm]
+
+<<beetles, fig=TRUE>>=
+par(mfrow=c(2,2))
+plot(length, conc)
+conc_new = conc[-2]
+length_new = length[-2]
+plot(conc_new~length_new)
+@
+
+In the first graph, there is a clear outlier. Further inspection reveals that this value may be an error, since beetles are known to be under 1cm in length and observation 2 is over 6cm.
+
+
+There is a strong negative relationship between beetle length and the concentration of the horomone.
+
+\end{solution}
+\item Perform a regression (with
+\verb+length+ on the horizontal axis and \verb+conc+ on the
+vertical).  Report the p-value and interpret the output.
+\begin{solution}[20mm]
+
+
+%\includegraphics[width=0.5\linewidth]{beetles.pdf}
+<<beetles, fig=TRUE, height=4>>=
+par(mfrow=c(1,2))
+plot(length, conc)
+conc_new = conc[-2]
+length_new = length[-2]
+plot(conc_new~length_new)
+lmbeetles = lm(conc_new~length_new)
+summary(lmbeetles)
+abline(lmbeetles)
+
+@
+
+The p-value (2.62e-06) is less than 5\% therefore significant. 
+
+There is statistically significant evidence that there is a relationship between beetle length and the concentration of the hormone.
+
+
+Check the residuals
+<<beetles_residuals, fig=TRUE, width=14>>=
+par(mfrow=c(1,2))
+hist(rstandard(lmbeetles), main="")
+plot(length_new, rstandard(lmbeetles)); abline(h=0)
+@
+
+
+
+
+\end{solution}
+\item Write the regression equation and use it to predict the level of hormone for a beetle measuring 0.5cm in length.
+\begin{solution}
+The equation is:
+$\widehat{\text{Hormone}} = 0.109 -0.118 \text{Length}$
+
+The predicted hormone concentration is 0.05 units.
+<<>>=
+0.109 - 0.118*0.5
+@
+\end{solution}
+
+\item Interpret the slope of the regression model.
+\begin{solution}
+The slope is -0.118. Therefore for a 1cm increase in beetle length we predict a decrease in the hormone concentration of 0.118.
+
+Given what is known about the beetles (i.e. their maximum length is 1cm), we shouldn't use our model to predict hormone concentration for beetles above this length.
+
+\end{solution}
+
+\end{itemize}
+
+
+
+\item Load the household savings data (on Blackboard)
+
+\begin{enumerate}
+\item Load the data
+<<>>=
+d <- read.csv("HouseholdSavingsSurvey.csv", head=TRUE)
+head(d)
+@
+
+\item Policy makers are interested in whether there is a relationship
+  between age and income level.  Construct a scatter plot of these two
+  variables.
+
+\begin{solution}
+\setkeys{Gin}{width=0.5\textwidth}
+<<household_age_income, fig=TRUE>>=
+plot(Income~Age, data=d)
+@
+
+
+\end{solution}
+
+\item Describe the relationship between these two variables and
+  comment on whether linear regression is a suitable technique.
+\begin{solution}[20mm]
+There is a positive relationship between these two variables, however
+as age increase, there is a wider range of incomes.  It would be
+possible to use linear regression here but results should be
+interpreted with caution.
+
+\end{solution}
+
+\item Compute the correlation coefficient $r$ using the command
+  \codett{cor(d\$Income,d\$Age)}. Confirm that $r$ is about 70\%.
+
+\begin{solution}
+
+<<>>=
+cor(d$Income,d$Age)
+@
+
+\end{solution}
+
+\item Perform linear regression to assess the impact of age on income.
+\begin{solution}[20mm]
+\setkeys{Gin}{width=0.5\textwidth}
+<<household_age_income_lm, fig=TRUE>>=
+lm1 = lm(Income~Age, data=d)
+summary(lm1)
+
+@
+
+\end{solution}
+
+
+
+\item What is the regression equation?
+\begin{solution}[20mm]Income = -52792.7 + 2638.1 Age
+\end{solution}
+
+\item Use \codett{abline(lm(...))} to plot this line on the scatterplot.
+\begin{solution}[0mm]
+\setkeys{Gin}{width=0.5\textwidth}
+<<household_age_income_lm, fig=TRUE>>=
+plot(Income~Age, data=d)
+abline(lm1)
+@
+\end{solution}
+
+\item Interpret the value of the slope and the intercept. Does this
+  make sense?
+\begin{solution}[30mm]
+  
+  The slope is 2638.1, which means that every extra year of age
+  results in income increasing by 2638.1; this is reasonable.
+
+  The intercept is -52792.7; this is the income which corresponds to
+  someone with age 0.  This does not really make sense because
+  negative income is not realistic (but on the other hand, neither is
+  negative age).  Extrapolating results outside the range of data is
+  not a good idea (in this case age is from about 20 - 50).
+\end{solution}
+
+\item Check the residuals of your model. Do they appear to be normally distributed and randomly scattered?
+\begin{solution}[20mm]
+\setkeys{Gin}{width=0.8\textwidth}
+<<household_age_income_residuals, fig=TRUE>>=
+par(mfrow=c(2,2))
+plot(d$Age, d$Income); abline(lm1)
+plot(d$Age, rstandard(lm1)); abline(h=0);  abline(h=c(-2,2), lty=2)
+hist(lm1$residuals)
+qqnorm(rstandard(lm1));abline(a=0, b=1)
+@
+
+Linearity - there is a linear relationship between the variables\\
+
+Independent - we can assume that the data are obtained from
+independent individuals.\\
+
+Normality - the residuals appear to be approximately normally
+distributed, although there is a slight deviation from normality in
+the upper tail.\\
+
+Equal variance - the residuals do not have equal variances. There is a
+much larger variance for older people. \\
+
+
+\bigskip
+The lack of equality of variance would be the major concern if this
+model was to be used for prediction.  Predictions for older people
+would be less accurate than for younger people.
+\end{solution}
+\end{enumerate}
+
+\item 
+Use correlation and regression to investigate questions such as:
+\begin{itemize}
+\item Is there a relationship between income and net worth?
+\item Is there a relationship between debt and income?
+\end{itemize}
+
+
+\begin{solution}[20mm]
+Networth and Income
+<<household_networth_income, fig=TRUE>>=
+plot(Networth~Income, data=d)
+abline(lm(Networth~Income, data=d))
+summary(lm(Networth~Income, data=d))
+@
+
+Scattergraph shows that this is perfectly acceptable for linear
+regression.  Networth increases by about 3.777 per unit increase of
+income.
+
+Now debt:
+
+<<debtandincome,fig=TRUE>>=
+plot(Debt~Income, data=d)
+abline(lm(Debt~Income, data=d))
+summary(lm(Debt~Income, data=d))
+@ 
+
+There is a single outlier of a person who has about a million dollars
+worth of debt.  One would have to justify removing this observation as
+an outlier, as it is perfectly possible to accumulate ths amount of
+debt (perhaps medical degree fees in the US are this much, especially
+if the person had to take---or re-take---many courses).  But removing
+it is easy:
+
+<<debtandincomenooutlier,fig=TRUE>>=
+x <- d$Income
+y <- d$Debt
+wanted <- y<1e6
+x <- x[wanted]
+y <- y[wanted]
+plot(y~x)
+abline(lm(y~x))
+summary(lm(y~x))
+@ 
+
+
+\end{solution}
+
+\item Use t-test and ANOVA to investigate questions such as:
+\begin{itemize}
+\item Do males have a higher income than females?
+\item Is there a relationship between qualification level and income?
+  How about net worth?
+\end{itemize}
+
+\begin{solution}[20mm]
+
+
+{\bf Qualification and Income}
+
+\setkeys{Gin}{width=0.5\textwidth}
+<<household_qualification_income, fig=TRUE>>=
+boxplot(Income~Qualification, data=d)
+summary(aov(Income~Qualification, data=d))
+@
+
+There is a statistically significant difference between the mean
+income level for people with different qualifications.
+
+{\bf Qualification and Net worth}
+
+\setkeys{Gin}{width=0.5\textwidth}
+<<household_qualification_income, fig=TRUE>>=
+boxplot(Networth~Qualification, data=d)
+summary(aov(Networth~Qualification, data=d))
+@
+
+{\bf Gender and Income}
+\setkeys{Gin}{width=0.5\textwidth}
+<<household_gender_income, fig=TRUE>>=
+boxplot(Income~Gender, data=d)
+t.test(Income~Gender, data=d)
+@
+
+There is not a statistically significant difference between the mean
+income level for males and females (p value is 0.4238 > 0.05).
+
+\end{solution}
+
+\end{enumerate}
+
+\end{document}

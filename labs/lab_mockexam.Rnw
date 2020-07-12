@@ -1,0 +1,319 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage{ifthen}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{marginnote}
+\reversemarginpar
+
+\setlength{\hoffset}{-0.5cm}
+\setlength{\voffset}{-10mm}
+\setlength{\textheight}{25cm}
+\setlength{\textwidth}{17cm}
+
+\hyphenpenalty  = 10000
+\exhyphenpenalty = 10000
+\parindent=0mm	
+
+\usepackage[dvips]{graphicx}
+\usepackage{url}
+\usepackage{xcolor}
+\usepackage{verbatim,dsfont}
+\usepackage{fancyvrb}
+\newcommand{\textubf}[1]{\underline{\textbf{#1}}}
+
+\usepackage{template/labhandout}
+
+
+<<echo=FALSE>>=
+foo <- function(x) {x}
+srcref <- attr(body(foo), "srcref")[[1]]
+#attr(srcref, "srcfile")$filename
+@
+
+<<echo=FALSE>>=
+fname <- sub("\\.Rnw", "", attr(srcref, "srcfile")$filename)
+prefix.string <- paste("figs/", fname, "-graphic", sep = "")
+@
+
+\SweaveOpts{prefix.string=\Sexpr{prefix.string}}
+
+
+%Control spacing at start of verbatim environments
+\newlength{\fancyvrbtopsep}
+\newlength{\fancyvrbpartopsep}
+\makeatletter
+\FV@AddToHook{\FV@ListParameterHook}{\topsep=\fancyvrbtopsep\partopsep=\fancyvrbpartopsep}
+\makeatother
+
+%Verbatim environments
+\newenvironment{codeChunk}{}{} %Use to wrap codeIn and codeOut to keep them together. A feature of Sweave - may not be necessary.
+\DefineVerbatimEnvironment{codeOut}{Verbatim} {formatcom=\color{codecol}, baselinestretch=1}
+\DefineVerbatimEnvironment{codeIn}{Verbatim} {formatcom=\color{codecol}, %fontshape=sl,
+baselinestretch=1}
+\DefineVerbatimEnvironment{code}{Verbatim} {baselinestretch=1}  %Uses colour current environment, so can be used with solution.
+\newcommand{\codett}[1]{\textcolor{codecol}{\texttt{#1}}}  %use for in-line code
+
+\setlength{\fancyvrbtopsep}{0pt}
+\setlength{\fancyvrbpartopsep}{0pt}
+
+%Set colours
+\definecolor{solcol}{RGB}{0, 0, 250} %blue
+\definecolor{codecol}{RGB}{0,0,0} %black
+\definecolor{tutorcol}{RGB}{159, 0, 197} %purple
+
+\SolutionEmphasis{\color{solcol}}
+\TutorEmphasis{\color{tutorcol}}
+
+
+\newcommand{\youtry}{\marginnote{\includegraphics[width=2cm]{keyboard_with_hands}}}
+\newcommand{\stoptyping}{\marginnote{\includegraphics[width=2cm]{keyboard}}}
+\newcommand{\Rq}{{\textsf{\textbf{``Is R doing what I think it is doing?''}}}}
+\newcommand{\bin}[2]{\ensuremath{\operatorname{Bin}\left(#1,#2\right)}}
+
+%To print questions with a space for the answer
+\printanswersfalse
+\printlinefalse
+\printspacetrue
+\printtutornotesfalse %printanswers must be true for this to work
+
+%To print questions and solutions
+%\printanswerstrue
+%\printlinefalse
+%\printspacetrue
+%\printtutornotesfalse%printanswers must be true for this to work
+
+
+%%To print questions and solutions and tutor notes
+%\printanswerstrue
+%\printlinefalse
+%\printspacetrue 
+%\printtutornotestrue %printanswers must be true for this to work
+
+%Use this is typos occur...
+\definecolor{typocol}{gray}{1}  %white
+%\definecolor{typocol}{gray}{0}  %white
+
+\newcommand{\courseName}[0]{Applied Statistics}
+\newcommand{\courseCode}[0]{STAT500}
+
+\begin{document}
+\SweaveOpts{concordance=TRUE}
+\hrule 
+\begin{center}
+Auckland University of Technology\\
+School of Engineering, Computer and Mathematical Sciences\\
+\courseCode \; \courseName \\
+\textbf{Lab: Final exam, STAT500, 2013}\\
+\ifthenelse{\boolean{printanswers}}{\textcolor{solcol}{Outline Solutions}}{}
+\ifthenelse{\boolean{printtutornotes}}{\textcolor{tutorcol}{ \& Tutor Notes}}{}
+\end{center}
+\hrule
+\vbox{\vspace{3mm}}
+
+<<echo=FALSE>>=
+options(prompt=' ')
+options(continue='   ')
+@ 
+
+
+
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+%\textcolor{typocol}{Modifications/Typos}
+
+\tutorNotes{\textbf{Reminders:}
+
+Consider starting with a brief recap on standard error and sampling distributions.
+
+}
+
+
+
+\tutorNotes{\textbf{Reminders:}
+
+Note: references to books are for my reference. No need to share these with the students.}
+
+\begin{enumerate}
+
+\item You will recall the binomial distribution from lectures.
+
+A certain chemistry experiment has a probability~$p=0.65$ of success.
+A class of size $n=12$ carry out the experiment; the results are
+independent of one another.
+  
+\begin{enumerate}
+\item What is the probability that~$r=7$ experiments are successful?  Verify.
+  \begin{solution}
+<<>>=
+    dbinom(7,12,0.65)
+    table(rbinom(1e6,12,0.65)==7)/1e6
+@
+  \end{solution}
+  
+\item What is the probability that at least 8 experiments are successful?
+
+  \begin{solution}
+<<>>=
+sum(dbinom(8:12,12,0.65))
+table(rbinom(1e6,12,0.65) >= 8)/1e6
+@
+\end{solution}  
+  
+\item What is the probability that an even number of experiments are
+  successful?
+\begin{solution}
+<<>>=
+even <- 2*(0:6)
+sum(dbinom(even,12,0.65))
+## suspiciously close to 1/2...
+@
+\end{solution}
+\end{enumerate}
+\item You will recall the Normal (or Gaussian) distribution from
+lectures.
+\begin{enumerate}
+\item What is the probability that a random observation from a standard
+  Gaussian (normal) distribution is greater than 1.2?  Verify numerically
+  \begin{solution}
+<<>>=
+1-pnorm(1.2)
+table(rnorm(1e6) > 1.2)/1e6
+@
+  \end{solution}
+\item (harder) By subtracting one value given by \verb+pnorm()+ from
+  another, or otherwise, find the probability that a standard Gaussian
+  random variable is between 0.2 and 0.5.   Verify numerically
+  \begin{solution}
+<<>>=
+pnorm(0.5) - pnorm(0.2)
+x <- rnorm(1e6)
+table((x>0.2) & (x<0.5))/length(x)
+@
+  \end{solution}
+\end{enumerate}
+
+\item A diesel engine researcher is investigating a new type of engine
+  and its fuel efficiency.  She suspects that this new engine burns
+  less fuel than older types of engine.
+
+She drives a car with this new engine on particular route six times
+and records the amount of fuel burnt each time.  It is known that
+standard engines burn an average of 41 units of fuel for this route.
+
+The amount of fuel burned by the new engine is as follows:
+
+\begin{verbatim}
+fuel <- c(40.4, 40.2, 41.9, 39.8, 37.3, 40.1)
+\end{verbatim}
+
+\begin{enumerate}
+\item What is the mean amount of fuel burnt by the new engine?
+  \begin{solution}
+<<>>=
+fuel <- c(40.4, 40.2, 41.9, 39.8, 37.3, 40.1)
+mean(fuel)
+@ 
+\end{solution}    
+\item State a sensible null hypothesis for this situation
+  \begin{solution}
+    Null: population mean is 41
+  \end{solution}
+\item State the precise definition of p-value and say what "more
+  extreme" means in this context.
+  \begin{solution}
+    pvalue is the probability, if the null is true, of obtaining the
+    observation or an observation more extreme.  Here, more extreme
+    means that the sample mean is less than its observed value of \Sexpr{mean(fuel)}. 
+    \end{solution}
+\item Conduct the appropriate t-test and report the p-value
+  \begin{solution}
+<<>>=
+t.test(fuel,mu=41,alternative="less")
+@ 
+pvalue  0.0727 exceeds  5\%.
+\end{solution}
+
+\item Interpret the result in a way that an engineer who is not a
+  statistician could understand.
+\begin{solution}
+  There is no evidence that this engine burns less than 41 units of fuel
+  \end{solution}
+
+\item (harder).  Calculate the standard error of the mean for the
+  dataset using the estimated standard deviation [use
+    \verb+sd(fuel)+] and provide a p-value for the null.
+  \begin{solution}
+<<>>=
+SEM <- sd(fuel)/sqrt(length(fuel))
+Z <- (mean(fuel)-41)/SEM
+pnorm(Z)
+@     
+\end{solution}
+\end{enumerate}
+
+\item For all human beings, the mean score on an intelligence test is
+  known to be exactly 100 marks.  A cognitive scientist is
+  investigating whether people who play a musical instrument are more
+  intelligent than average.  Fifteen subjects who play an instrument
+  take this test with the following results:
+
+<<>>=
+x <- c(101, 102, 105, 89, 104, 103, 105, 105, 102, 93, 90, 103, 105,
+       106, 106,102,101,104,102)
+@
+
+\begin{enumerate}
+\item State a sensible null hypothesis about the mean score on the
+  test.  State the precise definition of pvalue and state what ``more
+  extreme'' means in this context.
+  \begin{solution}
+    Null: mean score of instrument-playing humans is 100.  More
+    extreme means that the sample mean is greater than the observed
+    sample mean.
+  \end{solution}
+\item Test your null using \verb+t.test()+, and interpret.
+  \begin{solution}
+<<>>=
+x <- c(101, 102, 105, 89, 104, 103, 105, 105, 102, 93, 90, 103, 105,
+       106, 106,102,101,104,102)
+t.test(x,mu=100,alternative="greater")
+@ 
+\end{solution}
+\item State a sensible null hypothesis about the probability of
+  scoring over 100 on the test.  Test your null using \verb+dbinom()+,
+  and interpret.
+  \begin{solution}
+    prob of scoring over 100 = 0.5 for instrument-players.
+<<>>=
+table(x>100)
+pbinom(sum(x<100),length(x),1/2)
+pbinom(3,19,1/2)
+@
+significant!  we have evidence that the probability exceeds 0.5
+\end{solution}
+  \item (harder) Give a plausible explanation for any discrepancy
+\begin{solution}
+<<fig=TRUE>>=
+plot(x)
+@ 
+majority scores $>100$, a small number of (low) outliers  keeps mean close to 100
+\end{solution}
+
+\end{enumerate}
+
+
+
+
+
+
+
+
+
+
+
+\end{enumerate}
+\end{document}

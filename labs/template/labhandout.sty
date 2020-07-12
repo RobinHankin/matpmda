@@ -1,0 +1,56 @@
+\newif\ifprintanswers
+\newif\ifprintline
+\newif\ifprintspace
+\newif\ifprinttutornotes
+
+
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+\newcommand\SolutionEmphasis[1]{%
+  \def\Solution@Emphasis{#1}%
+}
+
+\newcommand\TutorEmphasis[1]{%
+  \def\Tutor@Emphasis{#1}%
+}
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+%% Solution environment
+\newenvironment{solution}[1][0pt]%
+  {%
+  \ifprintanswers
+      \begingroup \par \Solution@Emphasis      
+   \else 
+   \ifprintspace
+   \penalty 0  \vspace*{#1}%
+      \else        % Do nothing     
+      \fi 
+      \setbox\z@\vbox\bgroup
+  \fi
+  }{%
+  \ifprintanswers
+      \endgroup
+ \else   
+      \egroup
+ \fi
+  \ifprintline
+  \par
+  \vspace{-\baselineskip}
+  \hrulefill  \par 		
+     \else
+ 	    \par
+     \fi
+     	\par \vspace*{\baselineskip}%
+  }%
+
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+% %Tutor Notes
+\newcommand{\tutorNotes}[1]{
+ \ifprinttutornotes
+ \par %\vspace{-0.5\baselineskip}
+{\Tutor@Emphasis #1 }
+\vspace*{\baselineskip}
+ \else
+ \fi
+
+}
+
+

@@ -1,0 +1,340 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage{ifthen}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{marginnote}
+\reversemarginpar
+
+\setlength{\hoffset}{-0.5cm}
+\setlength{\voffset}{-10mm}
+\setlength{\textheight}{25cm}
+\setlength{\textwidth}{17cm}
+
+\hyphenpenalty  = 10000
+\exhyphenpenalty = 10000
+\parindent=0mm	
+
+\usepackage[dvips]{graphicx}
+\usepackage{url}
+\usepackage{xcolor}
+\usepackage{verbatim,dsfont}
+\usepackage{fancyvrb}
+\newcommand{\textubf}[1]{\underline{\textbf{#1}}}
+
+\usepackage{template/labhandout}
+
+<<echo=FALSE>>=
+foo <- function(x) {x}
+srcref <- attr(body(foo), "srcref")[[1]]
+#attr(srcref, "srcfile")$filename
+@
+
+<<echo=FALSE>>=
+fname <- sub("\\.Rnw", "", attr(srcref, "srcfile")$filename)
+prefix.string <- paste("figs/", fname, "-graphic", sep = "")
+@
+
+\SweaveOpts{prefix.string=\Sexpr{prefix.string}}
+
+
+%Control spacing at start of verbatim environments
+\newlength{\fancyvrbtopsep}
+\newlength{\fancyvrbpartopsep}
+\makeatletter
+\FV@AddToHook{\FV@ListParameterHook}{\topsep=\fancyvrbtopsep\partopsep=\fancyvrbpartopsep}
+\makeatother
+
+%Verbatim environments
+\newenvironment{codeChunk}{}{} %Use to wrap codeIn and codeOut to keep them together. A feature of Sweave - may not be necessary.
+\DefineVerbatimEnvironment{codeOut}{Verbatim} {formatcom=\color{codecol}, baselinestretch=1}
+\DefineVerbatimEnvironment{codeIn}{Verbatim} {formatcom=\color{codecol}, %fontshape=sl,
+baselinestretch=1}
+\DefineVerbatimEnvironment{code}{Verbatim} {baselinestretch=1}  %Uses colour current environment, so can be used with solution.
+\newcommand{\codett}[1]{\textcolor{codecol}{\texttt{#1}}}  %use for in-line code
+
+\setlength{\fancyvrbtopsep}{0pt}
+\setlength{\fancyvrbpartopsep}{0pt}
+
+%Set colours
+\definecolor{solcol}{RGB}{0, 0, 250} %blue
+\definecolor{codecol}{RGB}{0,0,0} %black
+\definecolor{tutorcol}{RGB}{159, 0, 197} %purple
+
+\SolutionEmphasis{\color{solcol}}
+\TutorEmphasis{\color{tutorcol}}
+
+
+\newcommand{\youtry}{\marginnote{\includegraphics[width=2cm]{keyboard_with_hands}}}
+\newcommand{\stoptyping}{\marginnote{\includegraphics[width=2cm]{keyboard}}}
+\newcommand{\Rq}{{\textsf{\textbf{``Is R doing what I think it is doing?''}}}}
+\newcommand{\bin}[2]{\ensuremath{\operatorname{Bin}\left(#1,#2\right)}}
+
+%To print questions with a space for the answer
+\printanswersfalse
+\printlinefalse
+\printspacetrue
+\printtutornotesfalse %printanswers must be true for this to work
+
+%To print questions and solutions
+%\printanswerstrue
+%\printlinefalse
+%\printspacetrue
+%\printtutornotesfalse%printanswers must be true for this to work
+
+
+%%To print questions and solutions and tutor notes
+%\printanswerstrue
+%\printlinefalse
+%\printspacetrue 
+%\printtutornotestrue %printanswers must be true for this to work
+
+%Use this is typos occur...
+\definecolor{typocol}{gray}{1}  %white
+%\definecolor{typocol}{gray}{0}  %white
+
+\newcommand{\courseName}[0]{Applied Statistics}
+\newcommand{\courseCode}[0]{STAT500}
+
+\begin{document}
+\SweaveOpts{concordance=TRUE}
+\hrule 
+\begin{center}
+Auckland University of Technology\\
+School of Engineering, Computer and Mathematical Sciences\\
+\courseCode \; \courseName \\
+\textbf{Lab: Final exam, STAT500, 2016}\\
+\ifthenelse{\boolean{printanswers}}{\textcolor{solcol}{Outline Solutions}}{}
+\ifthenelse{\boolean{printtutornotes}}{\textcolor{tutorcol}{ \& Tutor Notes}}{}
+\end{center}
+\hrule
+\vbox{\vspace{3mm}}
+
+<<echo=FALSE>>=
+options(prompt=' ')
+options(continue='   ')
+@ 
+
+
+
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+%\textcolor{typocol}{Modifications/Typos}
+
+
+\tutorNotes{\textbf{Reminders:}
+
+Note: references to books are for my reference. No need to share these with the students.}
+
+\begin{enumerate}
+  \item Consider a standard Gaussian random variable $N(0,1)$.
+\begin{enumerate}
+\item What is the probability that a standard Gaussian random variable
+  exceeds 1.2?
+  \begin{solution}
+<<>>=
+ 1-pnorm(1.2)
+@ 
+  \end{solution}
+  
+\item  Verify your answer using random sampling
+
+  \begin{solution}
+<<>>=
+table(rnorm(1e6) > 1.2)
+@ 
+Numerical value  close to theoretical value of \Sexpr{1-pnorm(1.2)}.
+  \end{solution}
+
+  
+\item  What value is exceeded 15\% of the time when sampling from a
+standard Gaussian distribution?
+  \begin{solution}
+<<>>=
+ qnorm(0.85)
+@ 
+  \end{solution}
+  
+\item (harder) You will recall
+\verb+dnorm(), qnorm(), pnorm(), and rnorm()+ from lectures.  You
+  will also recall the Cauchy distribution, which has density function
+  \verb+dcauchy()+.  Answer parts (a), (b) and (c) above but using the
+  Cauchy distribution instead of the Gaussian
+  \begin{solution}
+<<>>=
+pcauchy(1.2,lower.tail=FALSE)
+table(rcauchy(1e6)>1.2)
+qcauchy(0.85)
+table(rcauchy(1e6)>qcauchy(0.85))
+@       
+  \end{solution}
+\end{enumerate}
+\item
+A particular AUT statistician catches the bus to work every weekday
+(five days).  He is interested in whether or not the bus is late.  The
+Bus being late is thus a Bernoulli trial; consider a late bus to be a
+``success''.  The statistician has determined that 11\% of buses are
+late on average.
+
+\begin{enumerate}
+\item 
+   If each bus's status is independent of the others, what
+   distribution specifies the total number of late buses in a given
+   week?
+  \begin{solution}
+    binomial distribution with size 5 and probability 0.11; also,
+    $H_0\colon p=0.11$ is acceptable.
+  \end{solution}
+   
+\item Using \verb+dbinom()+ or otherwise, what is the probability that
+ exactly two buses are late in a given week?
+  \begin{solution}
+<<>>=
+dbinom(2,5,0.11)
+choose(5,2)*0.11^2*(1-0.11)^3
+@
+  \end{solution}
+
+\item A new company takes over the running of the bus route.  State a
+   sensible null hypothesis for considering the new company's
+   performance
+  \begin{solution}
+      The number of late buses with the new company has the same
+      distribution as the old one, specifically binomial with size 5
+      and probability 0.11
+  \end{solution}
+\item It is suspected that this new company is less punctual (ie,
+more late buses) than the old one.  During the first week, the new bus
+company has a total of three late buses.
+
+State the precise definition of p-value, and state what ``more
+extreme'' means in this context.
+\begin{solution}
+p-value is the probability, if the null is true, of obtaining the
+observation of three buses, or an observation more extreme.  Here,
+``more extreme'' means ``more than three late buses''.
+  \end{solution}
+\item Calculate the p-value for the observation that three buses are
+  late. 
+  \begin{solution}
+<<>>=
+sum(dbinom(3:5,5,0.11))
+@
+  \end{solution}
+\item Interpret your finding in terms that a bus driver, who is not a statistican, could understand
+  \begin{solution}
+    The small p-value means we can be reasonably sure that the new bus
+    company has more late buses than the old
+  \end{solution}
+  \end{enumerate}
+
+\item
+An anthropologist (a scientist who studies human beings)
+works in an isolated part of the world that has two islands, A and B.
+The anthropologist is interested in these people's heights, which may
+be assumed to be Gaussian.  She measures the height of ten people from
+each island and tabulates the results:
+
+<<>>=
+  island_A <- c(1.67, 1.92, 1.54, 1.57, 2.14, 1.96, 1.68, 1.53, 1.85, 1.85)
+  island_B <- c(1.82, 1.88, 2.09, 2.02, 1.94, 1.89, 1.82, 1.82, 1.99, 1.96)
+@ 
+
+All results are in meters.
+
+\begin{enumerate}
+\item When comparing the heights of residents from islands~A and~B, state a sensible null hypothesis.
+  \begin{solution}
+Null: the mean of heights on A is equal to the mean of heights on B.
+  \end{solution}
+\item  Give the sample means for island A and island B.
+  \begin{solution}
+<<>>=
+mean(island_A)
+mean(island_B)
+@
+    \end{solution}
+\item   Is a one-sided or a two-sided test required?  Justify
+  \begin{solution}
+    A two-sided test is needed because the islands are symmetric with
+    respect to height
+    \end{solution}
+\item  Paired or unpaired?  Justify
+\begin{solution}
+Unpaired, no natural pairing  
+\end{solution}
+
+\item
+Perform the appropriate statistical test and interpret your finding
+\begin{solution}
+<<>>=
+t.test(island_A,island_B)
+@
+p-value exceeds 5\%, no significant difference between the islands.
+\end{solution}
+\item (harder)  In this part of
+the world, it is known that the probability of being taller than 2m
+is~0.5 exactly.  Is there any evidence that this is the case for these
+two islands?
+\begin{solution}
+  null of probability of being taller than 2m is 0.5.
+
+  There are three people with heights taller than 2m: one on island A
+  two of island B.
+  
+  Any of the following acceptable:
+<<>>=
+sum(dbinom(0:3,20,0.5))
+2*sum(dbinom(0:3,20,0.5))
+sum(dbinom(c(0:3,17:20),20,0.5))
+sum(dbinom(0:1,10,0.5))
+2*sum(dbinom(0:1,10,0.5))
+sum(dbinom(0:2,10,0.5))
+2*sum(dbinom(0:1,10,0.5))
+@
+  (other similar answers also OK; Z-test for partial credit).
+    \end{solution}
+\end{enumerate}
+
+\item An economist studies the price of a particular kind of car.  He is
+interested in how quickly the price of a car decreases as it becomes
+older.  He finds a collection of recently sold cars and writes down
+the age and price of the cars.  His data is as follows:
+
+<<>>=
+age <-
+ c(12.7, 5.4, 9, 11.8, 4.7, 7.7, 14.7, 12.9, 7.7, 12.7, 11, 4.2, 13.7)
+price <-
+ c(353, 6437, 51, 1978, 7032, 2884, 509, 98, 582, 967, 202, 5530, 102)
+@
+
+where \verb+age+ is the age in years and \verb+price+ the price in
+dollars.  We will perform linear regression on this dataset.  You may
+find \verb+lm()+ useful here.
+
+\begin{enumerate}
+\item In the context of investigating cars' prices as a function of age, state a reasonable null hypothesis
+  \begin{solution}
+    Null: the price of a car is independent of its age
+    \end{solution}
+\item Bearing in mind the final bullet point on the instructions page, perform a linear regression.
+\begin{solution}
+<<fig=TRUE>>=
+plot(price~age)
+abline(lm(price~age))
+@
+
+Assumptions seem to be OK, can proceed with regression:
+<<>>=
+summary(lm(price~age))
+@ 
+
+p-value very small, can reject null and infer older cars are actually
+cheaper.
+\end{solution}
+\end{enumerate}
+\end{enumerate}
+\end{document}

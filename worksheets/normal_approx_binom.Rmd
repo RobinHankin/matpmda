@@ -1,0 +1,181 @@
+---
+title: "normal_approx_to_binomial"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# binomial distribution R commands
+
+you will recall the four basic functions of the binomial distribution: `dbinom()`, `pbinom()`, `rbinom()` and `qbinom()`.  
+
+## rbinom
+
+From the help page, `rbinom(n,size,prob)` simulates `n` students
+tossing a coin `size` times, each toss having probability `prob`.  For
+example:
+
+```{r rbinom}
+rbinom(100,8,0.5)
+```
+
+This is 100 students each tossing a fair coin 8 times.    We might use temporary R variables to understand the simulation better:
+
+```{r binom2}
+x <- rbinom(100,4,0.2)
+x
+table(x)
+plot(table(x))
+```
+
+### *Task*: 
+
+carry out the following simulations and discuss:
+
+* 10 students, toss once, prob 0.1
+* 100 students, toss 100 times, prob 0.5
+* 100 students, toss 9 times, prob 0.01
+* 100000 students, toss once, prob 0.2
+* 1000000000000 students, toss 1000000 times, prob 0
+
+
+## size becomes large
+
+Something odd happens when the `size` parameter becomes large.  We will consider `n=100,p=0.2`:
+
+```{r}
+plot(table(rbinom(1e6,100,0.2)))
+```
+
+We see that the shape of the distribution becomes nice and smooth.
+This is a Gaussian distribution. 
+
+### *TASK* 
+
+Investigate how changing `p`, the probability of success, affects this
+result.  What happens if `p` is 0.5? 0.1? 0.01?  
+
+### Use dbinom() instead
+
+The simulations above used random sampling but it is possible to use
+`dbinom()` to get a more accurate figure:
+
+
+```{r}
+x <- 1:100
+plot(x,dbinom(x,100,0.3))
+```
+
+The above plot does not use random variables or random sampling, so it
+is exactly correct.  We can plot it slightly differently:
+
+```{r}
+x <- 1:100
+plot(x,dbinom(x,100,0.3),type='h')
+```
+
+
+
+
+Now we use the fact, discussed in chapter 4 of the course manual, that
+a binomial distribution is *approximately* normal (or Gaussian).  If
+we have a binomial distribution with size $n$ and probability $p$,
+then the mean is $np$ and the standard deviation is $\sqrt{np(1-p)}$.
+Symbolically
+
+\begin{equation}
+X\sim\operatorname{Bin}(n,p)\longrightarrow X\sim N(np,\sqrt{np(1-p)}\qquad\mbox{approximately, if $n$ is large}
+\end{equation}
+
+(note the use of the "$\sim$" symbol, to mean "is distributed as").
+We will investigate this numerically with $n=100,p=0.3$.
+
+```{r}
+n <- 100
+p <- 0.3
+x <- 10:50   # region of x-axis to be plotted
+plot(x,dbinom(x,n,p),pch=16,col="black")
+points(x,dnorm(x,mean=n*p, sd=sqrt(n*p*(1-p))),col='red',pch=16)
+legend("topright",lty=0,pch=16,col=c("black","red"),legend=c("exact binomial", "Normal approximation"))
+```
+
+In the above, see how close the red and black dots are, indicating
+that the approximation is quite close.
+
+### *TASK* 
+
+check the binomial approximation for the following parameters:
+
+* $n=100,p=0.5$
+* $n=100,p=0.2$
+* $n=100,p=0.1$
+* $n=100,p=0.01$
+* $n=1000,p=0.3$
+* $n=1000,p=0.01$
+
+Modify the R code above to get nice diagrams.  Can you quantify the
+accuracy of the approximation?
+
+##  Normal approximation in practice.
+
+
+The Normal distribution is much easier to deal with than the binomial,
+which is why the normal approximation is used in practice.
+
+Suppose $n=100, p=0.5$: a fair coin tossed 100 times.  What is the
+maximum number of heads that would be reasonably expected?  We can use
+the concepts of chapter 4 of the manual and ask for the 95th
+percentile of the distribution (recall that the 95th percentile is
+that value which is exceeded only 5\% of the time).  Using the normal
+approximation we get:
+
+
+```{r}
+n <- 100
+p <- 0.5
+qnorm(0.95, mean=n*p, sd=sqrt(n*p*(1-p)))
+```
+
+Thus we will observe more than 58 heads only 5\% of the time.  Verify:
+
+```{r}
+table(rbinom(1e6,100,0.5) > 58)
+```
+
+showing reasonably close agreement (about 4.4\%, we wanted 5\%).  A
+more sophisticated approach would be to calculate the exact value.  To
+do this, use `qbinom()` which is analogous to `qnorm()`:
+
+
+```{r}
+qbinom(0.95,100,0.5)
+```
+
+(however, note that `qbinom()` is complicated mathematically and often
+difficult to use in practice).
+
+### *TASK* 
+
+We have been using the 95th percentile but we can use the 90th
+percentile or the 99th percentile by changing from 0.95 or 0.9 or
+0.99.  Calculate the following, using both the normal approximation
+and the exact expression:
+
+
+* 95th percentile for $n=100,p=0.5$
+* 99th percentile for $n=100,p=0.5$
+* 99.9th percentile for $n=100,p=0.5$
+* 95th percentile for $n=10000,p=0.5$
+* 95th percentile for $n=100,p=0.1$
+* 95th percentile for $n=100,p=0.01$
+* 95th percentile for $n=100,p=0.001$
+
+(try other values too).  Can you say when the binomial approximation
+is good and where it goes bad?
+
+
+

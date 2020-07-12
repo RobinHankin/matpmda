@@ -1,0 +1,411 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage{ifthen}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{marginnote}
+\reversemarginpar
+
+\setlength{\hoffset}{-0.5cm}
+\setlength{\voffset}{-10mm}
+\setlength{\textheight}{25cm}
+\setlength{\textwidth}{17cm}
+
+\hyphenpenalty  = 10000
+\exhyphenpenalty = 10000
+\parindent=0mm	
+
+\usepackage[dvips]{graphicx}
+\usepackage{url}
+\usepackage{xcolor}
+\usepackage{verbatim,dsfont}
+\usepackage{fancyvrb}
+\newcommand{\textubf}[1]{\underline{\textbf{#1}}}
+
+\usepackage{template/labhandout}
+
+
+
+  
+<<echo=FALSE>>=
+foo <- function(x) {x}
+srcref <- attr(body(foo), "srcref")[[1]]
+#attr(srcref, "srcfile")$filename
+@
+
+<<echo=FALSE>>=
+fname <- sub("\\.Rnw", "", attr(srcref, "srcfile")$filename)
+prefix.string <- paste("figs/", fname, "-graphic", sep = "")
+@
+
+\SweaveOpts{prefix.string=\Sexpr{prefix.string}}
+
+
+%Control spacing at start of verbatim environments
+\newlength{\fancyvrbtopsep}
+\newlength{\fancyvrbpartopsep}
+\makeatletter
+%\FV@AddToHook{\FV@ListParameterHook}{\topsep=\fancyvrbtopsep\partopsep=\fancyvrbpartopsep} commented out by Robin.
+\makeatother
+
+%Verbatim environments
+\newenvironment{codeChunk}{}{} %Use to wrap codeIn and codeOut to keep them together. A feature of Sweave - may not be necessary.
+\DefineVerbatimEnvironment{codeOut}{Verbatim} {formatcom=\color{codecol}, baselinestretch=1}
+\DefineVerbatimEnvironment{codeIn}{Verbatim} {formatcom=\color{codecol}, %fontshape=sl,
+baselinestretch=1}
+\DefineVerbatimEnvironment{code}{Verbatim} {baselinestretch=1}  %Uses colour current environment, so can be used with solution.
+\newcommand{\codett}[1]{\textcolor{codecol}{\texttt{#1}}}  %use for in-line code
+
+\setlength{\fancyvrbtopsep}{0pt}
+\setlength{\fancyvrbpartopsep}{0pt}
+
+%Set colours
+\definecolor{solcol}{RGB}{0, 0, 250} %blue
+\definecolor{codecol}{RGB}{0,0,0} %black
+\definecolor{tutorcol}{RGB}{159, 0, 197} %purple
+
+\SolutionEmphasis{\color{solcol}}
+\TutorEmphasis{\color{tutorcol}}
+
+
+\newcommand{\youtry}{\marginnote{\includegraphics[width=2cm]{keyboard_with_hands}}}
+\newcommand{\stoptyping}{\marginnote{\includegraphics[width=2cm]{keyboard}}}
+\newcommand{\Rq}{{\textsf{\textbf{``Is R doing what I think it is doing?''}}}}
+\newcommand{\bin}[2]{\ensuremath{\operatorname{Bin}\left(#1,#2\right)}}
+\newcommand{\spacer}{\rule{0mm}{15mm}\ }
+
+
+%To print questions with a space for the answer
+\printanswersfalse
+\printlinefalse
+\printspacetrue
+\printtutornotesfalse %printanswers must be true for this to work
+
+%To print questions and solutions
+%\printanswerstrue
+%\printlinefalse
+%\printspacetrue
+%\printtutornotesfalse%printanswers must be true for this to work
+
+
+%%To print questions and solutions and tutor notes
+%\printanswerstrue
+%\printlinefalse
+%\printspacetrue
+%\printtutornotestrue %printanswers must be true for this to work
+
+%Use this is typos occur...
+\definecolor{typocol}{gray}{1}  %white
+%\definecolor{typocol}{gray}{0}  %white
+
+\newcommand{\courseName}[0]{Applied Statistics}
+\newcommand{\courseCode}[0]{STAT500}
+
+\begin{document}
+\hrule 
+\begin{center}
+Auckland University of Technology\\
+School of Engineering, Computer and Mathematical Sciences\\
+\courseCode \; \courseName \\
+{\ }\\[2mm]
+\textbf{Computer Lab}\\
+\ifthenelse{\boolean{printanswers}}{\textcolor{solcol}{Outline Solutions}}{}
+\ifthenelse{\boolean{printtutornotes}}{\textcolor{tutorcol}{ \& Tutor Notes}}{}
+\end{center}
+\hrule
+\vbox{\vspace{3mm}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+<<echo=FALSE>>=
+options(prompt='R> ')
+options(continue='   ')
+@ 
+
+
+\section{ANOVA}
+This tutorial will take you through several simple ANOVAs, which are
+similar to those in the course handbook, chapter 10.  Although some of
+the datasets are built into  R, sometimes we will have to enter the
+data into R manually.  In this case, the first step is to enter the
+data into R:
+
+<<specify_data>>=
+dd  <- data.frame(
+  HairColour = structure(c(3, 3, 3, 3, 3, 1, 1, 1, 1, 1, 4, 4, 4, 
+                           4, 4, 2, 2, 2, 2, 2), 
+                           .Label = c("DarkBlond", "DarkBrunette", 
+                           "LightBlond", "LightBrunette"), class = "factor"),
+  Pain = c(62, 60, 71, 55, 48, 63, 57, 52, 41, 43, 
+           42, 50, 41, 37, 45, 32, 39, 51, 30, 35)
+)
+@ 
+
+
+We can view this data by typing {\tt dd} on the commandline:
+
+<<show_dd>>=
+head(dd)
+@ 
+
+And plotting it is also easy in R. %; see Figure~\ref{pain} on
+%page~\pageref{pain} for the R idiom.
+
+%\begin{figure}[h]
+  \begin{center}
+\setkeys{Gin}{width=0.5\textwidth}
+<<plotter,fig=TRUE,print=FALSE>>= 
+
+plot(Pain ~ HairColour, data=dd, 
+     main="Pain sensitivity as a function of hair colour")
+@
+%\caption{Pain \label{pain} sensitivity as a function of hair colour}
+\end{center}
+%\end{figure}
+
+Note that the {\tt plot()} command uses the ``{\verb+~+}'' symbol, which
+is read ``is a function of''.  So the command reads ``plot pain as a
+function of hair colour, using dataset {\tt dd}''.
+
+\bigskip
+It is possible to use {\tt by()} to show mean values in each group:
+
+<<>>=
+c(by(dd$Pain,dd$HairColour,mean))
+@ 
+
+(see how R orders the factors alphabetically).
+
+In the case of an ANOVA, the null hypothesis is that the population
+mean for each group ($i=1,2,3,4$) is identical.  Note that the sample
+means differ, as shown above.  The null hypotheses can be written:
+
+\begin{itemize}
+\item [] $H_0\colon\mu_1=\mu_2=\mu_3=\mu_4$ 
+\item [] $H_1 \colon\mbox{at least one mean differs from the others}$.
+\end{itemize}
+
+\tutorNotes{Observe\spacer how one-sided tests are meaningless here}
+
+
+
+\tutorNotes{Conventional\spacer practice demands the use of a
+  one-tailed test.  Does the left tail have any meaning?  That is, can
+  you interpret an abnormally {\em low} test statistic?}
+
+Thus the p-value is less than 5\% and the result is significant; we
+can conclude that the means of the hair colour groups are indeed
+different.
+
+
+\section{ANOVA in R}
+
+We can test our null  easily in R by using {\tt aov()}:
+
+<<>>=
+summary(aov(Pain~HairColour, data=dd))
+@
+
+The only value in the table in which we are interested is the p-value
+of 0.00279 [the others are intermediate steps in R's calculations].
+The result is significant because our pvalue is less than 0.05.  We
+can infer that pain sensitivity really does differ between different
+hair-coloured groups, and that the sample means are unlikely to be due
+to random variability.
+
+\tutorNotes{Make sure the students can identify the information in the
+  table}
+
+\subsection{Farming yield dataset}
+
+The {\tt npk} dataset is a classical experiment in agricultural
+science.  It is built into R and gives information on growth of peas
+as a function of N, P, K which are fertiliser nutrients needed for
+plant growth.  Have a look at it in R, and read the documentation with
+{\tt ?npk}.  We will use ANOVA to analyse the dataset.
+
+
+<<>>=
+npk
+@ 
+
+\begin{enumerate}
+\item Plot the data by group
+
+\begin{solution}
+\begin{center}
+<<NPK_solution,fig=TRUE>>=
+plot(yield~block,data=npk)
+@   
+\end{center}
+
+\end{solution}
+
+\item From the graph, say whether there appears to be any evidence
+  that yield depends on block.
+
+\begin{solution}
+Doubtful dependence; note the large difference in ranges between the block.
+
+\tutorNotes{ Try {\tt boxplot(rnorm(24)\~{}rep(1:4,6))} to get a
+  feel for the variability under the null}
+\end{solution}
+
+
+\item   Use ANOVA to assess whether the yield is a
+function of the block, and interpret.  
+\end{enumerate}
+
+
+\begin{solution}
+Let $\mu_i$ denote the mean yield of peas (in pounds/plot) for block $i$, $i=1, \ldots, 6$.
+
+The hypotheses can be written:
+\begin{itemize}
+\item [] $H_0\colon\mu_1=\mu_2=\mu_3=\mu_4 = \mu_5 = \mu_6$ 
+\item [] $H_1 \colon\mbox{at least one mean differs from the others}$.
+\end{itemize}
+
+
+\begin{Schunk}
+\begin{Sinput}
+R> summary(aov(yield~block,data=npk))
+\end{Sinput}
+\begin{Soutput}
+            Df Sum Sq Mean Sq F value Pr(>F)  
+block        5  343.3   68.66   2.318 0.0861 .
+Residuals   18  533.1   29.61                 
+---
+Signif. codes:  0 "***" 0.001 "**" 0.01 "*" 0.05 "." 0.1 " " 1
+\end{Soutput}
+\end{Schunk}
+
+\tutorNotes{Explain \spacer the discrepancy in p-value between 
+  
+{\tt  summary(aov(yield $\sim$ block+N,data=npk))}
+
+  and 
+  
+{\tt summary(aov(yield $\sim$ block+P,data=npk))}
+
+}
+
+The p-value exceeds the 5\% cut-off so the result is {\em not
+  significant}.  There is no evidence to suggest that the yield
+depends on the block.
+
+\end{solution}
+
+\subsection{Pest control dataset}
+
+The {\tt OrchardSprays} dataset is the result of an experiment on
+insect sprayign in an orchard.  It is built into R.  Read the R help
+page with {\tt ?OrchardSprays}.  Plot the data, then use ANOVA to
+assess whether the treatment affects the behaviour of bees.
+
+<<>>=
+head(OrchardSprays) # just the first few lines
+@ 
+
+\begin{solution}
+\begin{center}
+<<plotorchard,fig=TRUE>>=
+plot(decrease~treatment,data=OrchardSprays)
+@ 
+\end{center}
+
+From the plot, there appears to be a clear dependence.
+
+\tutorNotes{The dependence is so obvious that providing a p-value is
+  superfluous\ldots do you agree?}
+  
+Let $\mu_i$ denote the mean decrease in the volume of the solution for
+treatment $i$, $i=1, \ldots, 8$.  The hypotheses can be written:
+
+\begin{itemize}
+\item [] $H_0\colon \mu_1=\mu_2=\mu_3=\mu_4 = \mu_5 = \mu_6 = \mu_7=\mu_8$ 
+\item [] $H_1 \colon\mbox{at least one mean differs from the others}$.
+\end{itemize}
+
+
+\begin{Schunk}
+\begin{Sinput}
+R> summary(aov(decrease~treatment,data=OrchardSprays))
+\end{Sinput}
+\begin{Soutput}
+            Df Sum Sq Mean Sq F value  Pr(>F)    
+treatment    7  56160    8023   19.06 9.5e-13 ***
+Residuals   56  23570     421                    
+---
+Signif. codes:  0 "***" 0.001 "**" 0.01 "*" 0.05 "." 0.1 " " 1
+\end{Soutput}
+\end{Schunk}
+
+The p-value less than 5\% therefore significant.
+
+There are statistically significant differences in the average
+solutions decrease between the different orchard spray
+treatments. This implies that different orchard sprays do have
+different impacts on repelling honey bees.
+\end{solution}
+
+\subsection{Loom breakage dataset}
+
+Look at the {\tt warpbreaks} dataset and read the helppage with {\tt
+  ?warpbreaks}.  Plot the data in a suitable way, then assess whether
+the number of breaks depends on the type of wool.
+
+
+<<>>=
+head(warpbreaks)
+@ 
+
+\begin{solution}
+
+\begin{centering}
+<<loomplot,fig=TRUE>>=
+plot(breaks~wool,data=warpbreaks)
+@   
+\end{centering}
+
+
+Let $\mu_i$ denote the mean number of breakages per loom for wool type $i$, $i=A, B$.
+
+
+The hypotheses can be written:
+\begin{itemize}
+\item [] $H_0\colon \mu_A = \mu_B$ 
+\item [] $H_1 \colon\mbox{at least one mean differs from the others}$.
+\end{itemize}
+
+
+From the boxplot, the dependence is not clear.  
+
+\begin{Schunk}
+\begin{Sinput}
+R> summary(aov(breaks~wool,data=warpbreaks))
+\end{Sinput}
+\begin{Soutput}
+            Df Sum Sq Mean Sq F value Pr(>F)
+wool         1    451   450.7   2.668  0.108
+Residuals   52   8782   168.9               
+\end{Soutput}
+\end{Schunk}
+@ 
+
+p-value = 10.8\% thus not significant.  There is no evidence for any
+dependence between type of wool and the number of breaks per loom.
+
+
+\tutorNotes{This is\spacer equivalent to a t-test\ldots with {\tt
+var.equal=TRUE}.  I think in this case the t-test is actually
+preferable.  Do you agree?}
+
+\end{solution}
+\end{document}
+

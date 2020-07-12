@@ -1,0 +1,818 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage{ifthen}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{marginnote}
+\reversemarginpar
+
+\setlength{\hoffset}{-0.5cm}
+\setlength{\voffset}{-10mm}
+\setlength{\textheight}{25cm}
+\setlength{\textwidth}{17cm}
+
+\hyphenpenalty  = 10000
+\exhyphenpenalty = 10000
+\parindent=0mm	
+
+\usepackage[dvips]{graphicx}
+\usepackage{url}
+\usepackage{xcolor}
+\usepackage{verbatim,dsfont}
+\usepackage{fancyvrb}
+\newcommand{\textubf}[1]{\underline{\textbf{#1}}}
+
+\usepackage{template/labhandout}
+
+
+<<echo=FALSE>>=
+foo <- function(x) {x}
+srcref <- attr(body(foo), "srcref")[[1]]
+#attr(srcref, "srcfile")$filename
+@
+ 
+<<echo=FALSE>>=
+fname <- sub("\\.Rnw", "", attr(srcref, "srcfile")$filename)
+prefix.string <- paste("figs/", fname, "-graphic", sep = "")
+@
+ 
+\SweaveOpts{prefix.string=\Sexpr{prefix.string}}
+ 
+
+
+%Control spacing at start of verbatim environments
+\newlength{\fancyvrbtopsep}
+\newlength{\fancyvrbpartopsep}
+\makeatletter
+\FV@AddToHook{\FV@ListParameterHook}{\topsep=\fancyvrbtopsep\partopsep=\fancyvrbpartopsep}
+\makeatother
+
+%Verbatim environments
+\newenvironment{codeChunk}{}{} %Use to wrap codeIn and codeOut to keep them together. A feature of Sweave - may not be necessary.
+\DefineVerbatimEnvironment{codeOut}{Verbatim} {formatcom=\color{codecol}, baselinestretch=1}
+\DefineVerbatimEnvironment{codeIn}{Verbatim} {formatcom=\color{codecol}, %fontshape=sl,
+ baselinestretch=1}
+\DefineVerbatimEnvironment{code}{Verbatim} {baselinestretch=1}  %Uses colour current environment, so can be used with solution.
+\newcommand{\codett}[1]{\textcolor{codecol}{\texttt{#1}}}  %use for in-line code
+
+\setlength{\fancyvrbtopsep}{0pt}
+\setlength{\fancyvrbpartopsep}{0pt}
+
+%Set colours
+\definecolor{solcol}{RGB}{0, 0, 250} %blue
+\definecolor{codecol}{RGB}{0,0,0} %black
+\definecolor{tutorcol}{RGB}{159, 0, 197} %purple
+
+\SolutionEmphasis{\color{solcol}}
+\TutorEmphasis{\color{tutorcol}}
+
+
+\newcommand{\youtry}{\marginnote{\includegraphics[width=2cm]{keyboard_with_hands}}}
+\newcommand{\stoptyping}{\marginnote{\includegraphics[width=2cm]{keyboard}}}
+\newcommand{\Rq}{{\textsf{\textbf{``Is R doing what I think it is doing?''}}}}
+\newcommand{\bin}[2]{\ensuremath{\operatorname{Bin}\left(#1,#2\right)}}
+
+%To print questions with a space for the answer
+\printanswersfalse
+\printlinefalse
+\printspacetrue
+\printtutornotesfalse %printanswers must be true for this to work
+
+%To print questions and solutions
+%\printanswerstrue
+%\printlinefalse
+%\printspacetrue
+%\printtutornotesfalse%printanswers must be true for this to work
+
+
+%%To print questions and solutions and tutor notes
+%\printanswerstrue
+%\printlinefalse
+%\printspacetrue
+%\printtutornotestrue %printanswers must be true for this to work
+
+%Use this is typos occur...
+\definecolor{typocol}{gray}{1}  %white
+%\definecolor{typocol}{gray}{0}  %white
+
+\newcommand{\courseName}[0]{Applied Statistics}
+\newcommand{\courseCode}[0]{STAT500}
+
+\begin{document}
+\hrule 
+\begin{center}
+Auckland University of Technology\\
+School of Engineering, Computer and Mathematical Sciences\\
+\courseCode \; \courseName \\
+{\ }\\[2mm]
+\textbf{Lab: estimation and confidence intervals}\\
+\ifthenelse{\boolean{printanswers}}{\textcolor{solcol}{Outline Solutions}}{}
+\ifthenelse{\boolean{printtutornotes}}{\textcolor{tutorcol}{ \& Tutor Notes}}{}
+\end{center}
+\hrule
+\vbox{\vspace{3mm}}
+
+<<echo=FALSE>>=
+options(prompt=' ')
+options(continue='   ')
+@ 
+
+
+
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+%\textcolor{typocol}{Modifications/Typos}
+
+\tutorNotes{\textbf{Reminders:}
+
+Encourage the students to use any additional time to ask questions about other material covered so far.\\
+
+
+Note: $SE[\bar{X}] $ and $SEM$ are used interchangeably.  
+}
+
+\begin{enumerate}
+
+\item In an electrolysis experiment each student in a class of 30 chemistry students measured the amount of copper precipitated from a saturated solution of copper sulphate  over a 30-minute period.  The sample mean  for all students was equal to 0.145 mole. It is known that the population standard deviation is 0.0051 mole.  
+\tutorNotes{Mendenhall, page 299}
+\begin{enumerate}
+\item Compute the standard error of the mean.
+
+
+\begin{solution}[3cm]
+
+$X = $amount of copper sulphate.  \\
+There are 30 students, $n=30$.\\
+The sample mean from 30 students is $\bar{x} = 0.145$ .\\
+The population standard deviation $\sigma = 0.0051$.\\
+The standard error of the mean is $SE[\bar{X}] = \frac{0.0051}{\sqrt{30}}=0.0009311283$
+
+\end{solution}
+
+
+\item Find a 90\% confidence interval for the mean amount of copper precipitated from the solution of a 30-minute period. (Recall that for $\alpha=0.1$, $z=1.645$.) 
+
+\begin{solution}[3cm]
+A confidence interval has the form:
+$\bar{x} \pm z \frac{\sigma}{\sqrt{n}} = 0.145 \pm 1.645 \frac{0.0051}{\sqrt{30}}$\\
+Lower:   $0.145 - 1.645 \frac{0.0051}{\sqrt{30}} = 0.1434683$\\
+Upper:  $0.145 + 1.645 \frac{0.0051}{\sqrt{30}} =  0.146531$\\
+
+The 90\% confidence interval is: (0.1435, 0.1465).\\
+
+In R:
+<<>>=
+n=30
+xbar = 0.145
+sigma = 0.0051
+SEM = sigma/sqrt(n)
+xbar + c(-1,1)*qnorm(0.95)*SEM
+@ 
+
+\end{solution}
+
+\end{enumerate}
+
+%\item 
+%An electric scale gives a reading equal to the true weight plus a random
+%error that is normally distributed with mean 0 and standard deviation
+%$\sigma = 0.1$ ounces. Suppose that the results of five successive weighings
+%of the same object are as follows: 3.142, 3.163, 3.155, 3.150, 3.141.
+%
+%\tutorNotes{Ross, section 8.5, q1}
+%
+%\begin{enumerate}
+%\item 
+%Determine a 95 percent confidence interval estimate of the true
+%weight.
+%\begin{solution}[3cm]
+%
+%<<>>=
+%x = c( 3.142, 3.163, 3.155, 3.150, 3.141)
+%n=length(x)
+%mean(x) + c(-1,1)*qnorm(0.975)*0.1/sqrt(n)
+%@ 
+%
+%The 95\% confidence interval is (3.06, 3.24).  We are 95\% confident that the true weight of the object is between 3.06 and 3.26 ounces.
+%
+%
+%
+%\end{solution}
+%\item Determine a 99 percent confidence interval estimate of the true
+%weight.
+%\begin{solution}[3cm]
+%
+%
+%<<>>=
+%x = c( 3.142, 3.163, 3.155, 3.150, 3.141)
+%n=length(x)
+%mean(x) + c(-1,1)*qnorm(0.995)*0.1/sqrt(n)
+%@ 
+%
+%The 99\% confidence interval is (3.04, 3.27).  We are 99\% confident that the true weight of the object is between 3.04 and 3.27 ounces.
+%
+%
+%\end{solution}
+%\end{enumerate}
+
+\item 
+The standard deviation of test scores on a certain achievement test is
+11.3. A random sample of 81 students had a sample mean score of 74.6.
+Find a 90 percent confidence interval estimate for the average score of
+all students.
+\tutorNotes{Ross, section 8.5, q7}
+\begin{solution}[3cm]
+
+Using the formula, $\bar{x} \pm z \frac{\sigma}{\sqrt{n}}$
+<<>>=
+74.6 + c(-1,1)*qnorm(0.95)*11.3/sqrt(81)
+@ 
+
+The 90\% confidence interval is (72.53, 76.67).  We are 90\% confident that the mean score of all students is between 72.53 and 76.67.
+\end{solution}
+
+\item 
+To estimate p, the proportion of all newborn babies who are male,
+the gender of 10,000 newborn babies was noted. If 5106 were male,
+determine a  \tutorNotes{Ross, section 8.7, q3}
+\begin{enumerate}
+\item 90 percent confidence interval estimate of p.
+\begin{solution}[3cm]
+Using the formula, $\hat{p} \pm z \sqrt{\frac{\hat{p}(1-\hat{p}}{n}}$
+
+<<>>=
+n = 10000
+phat = 5106/n
+phat + c(-1,1)*qnorm(0.95)*sqrt(phat*(1-phat)/n)
+@ 
+
+The 90\% confidence interval is  (0.502, 0.519).  We are 90\% confident that the true proportion babies born who are male is between 0.502 and 0.519.
+\end{solution}
+
+\bigskip
+
+\item 99 percent confidence interval estimate of p.
+
+
+
+\begin{solution}[3cm]
+Using the formula, $\hat{p} \pm z \sqrt{\frac{\hat{p}(1-\hat{p}}{n}}$
+<<>>=
+n = 10000
+phat = 5106/n
+phat + c(-1,1)*qnorm(0.995)*sqrt(phat*(1-phat)/n)
+@ 
+The 99\% confidence interval is (0.498, 0.523).  We are 99\% confident that the true proportion babies born who are male is between  0.498 and 0.523.
+\end{solution}
+\end{enumerate}
+
+
+\item 
+From past experience it is known that the weights of salmon grown at a commercial
+hatchery are normal with a mean that varies from season to season but
+with a standard deviation that remains fixed at 0.3 pounds. If we want to be 90
+percent certain that our estimate of the mean weight of a salmon is correct to
+within $\pm 0.1$ pounds, how large a sample is needed? What if we want to be 99
+percent certain?
+\tutorNotes{Ross, section 8.5, ex8.8}
+
+\begin{solution}[3cm]
+We know that
+\[\bar{X} \pm  z_{\alpha/2} \sigma/\sqrt{n}\]
+
+If we want to estimate the mean to within 0.1 pounds, then the margin of error (MOE) must be 0.1.
+That is, 
+\[MOE = 0.1 = z_{\alpha/2} \sigma/\sqrt{n}\]
+
+We know $z_{\alpha/2}$ and $\sigma$ so can solve for $n$.
+
+\[n = (z_{\alpha/2} \sigma/MOE)^2 \]
+
+<<>>=
+sigma = 0.3
+z = qnorm(0.95)
+MOE = 0.1
+n = (z*sigma/MOE)^2
+n
+@ 
+
+
+
+\textbf{To be 90\% certain, the minimum required sample size is 25. }
+
+<<>>=
+sigma = 0.3
+z = qnorm(0.995)
+MOE = 0.1
+n = (z*sigma/MOE)^2
+n
+@ 
+
+
+\textbf{To be 99\% certain the sample size would need to be at least 60.}
+
+
+Note: 
+Ross (2014) works with the width of the confidence interval, rather than the Margin of Error.
+To estimate the mean to within 0.1 pounds, then the width of the interval must be
+less than or equal to 0.2. 
+\[n = (2 z_{\alpha/2} \sigma/\text{(width of interval)})^2 \]
+
+<<>>=
+sigma = 0.3
+z = qnorm(0.95)
+width = 0.2
+n = (2*z*sigma/width)^2
+n
+@ 
+
+
+\end{solution}
+
+
+\item The butchery department at a local supermarket sells chicken drumsticks in packs of 36 randomly selected drumsticks.  Single drumsticks have a mean weight of  125g and a variance of 25g.
+
+\begin{enumerate}
+%\item What is the expected weight, standard deviation and approximate distribution of a pack of 36 drumsticks?
+%\begin{solution}[3cm]%\\[5ex]}{
+%Let $S$ = combined weight of 36 drumsticks, $\sum_{i=1}^{36} x_i$.
+%$E[S] = n\mu= (36)(125) = 4500g$, $SE[S] = \sigma \sqrt{n} = 5 \sqrt{36} = 30$.
+%$S$ is approximately Normally distributed.
+%\end{solution}
+%\item What is probability that a pack of 36 drumsticks will weigh more than 4500 g? (Use of R is not required, use the properties of the appropriate distribution).
+%
+%\begin{solution}[3cm]%\\[2ex]}{
+%$S\sim N(4500, 30^2)$, so $P(S > 4500) = 0.5$.
+%\end{solution}
+%
+%\item What is probability that a pack of 36 drumsticks will weigh more than 4444 g? (Guess your answer using the properties of the appropriate distribution, but then use R to compute the actual probability).
+%
+%\begin{solution}[3cm]%\\[2ex]}{
+%$S\sim N(4500, 30^2)$, so $P(S > 4444) = \texttt{1-pnorm(4444, 4500, 30)} = 0.9690259$.
+%\end{solution}
+
+\item A random sample of chicken drumsticks has been chosen and the sample mean $\bar{x}$, has been computed. What is the expected value of the sample mean $E[\bar{X}]$?
+\begin{solution}[3cm]%\\[2ex]}{
+$E[\bar{X}] = \mu=125g$.
+\end{solution}
+
+
+\item A random sample of chicken drumsticks has been chosen and the sample mean $\bar{x}$, has been computed. If the sample size is 49, what is the standard error of sample mean $SEM$?
+
+\begin{solution}[3cm]%\\[2ex]}{
+$SE[\bar{X}] = \frac{\sigma}{\sqrt{n}} = \frac{5}{7} = 0.833$
+\end{solution}
+\end{enumerate}
+
+
+\item A wine importer has the opportunity to purchase a large consignment
+of 1947 Chateau Lafite Rothschild wine. Because of the wine's age,
+some of the bottles may have turned to vinegar. However, the only way
+to determine whether a bottle is still good is to open it and drink some.
+As a result, the importer has arranged with the seller to randomly
+select and open 20 bottles. Suppose 3 of these bottles are spoiled. Construct
+a 95 percent confidence interval estimate of the proportion of the
+entire consignment that is spoiled.
+\tutorNotes{Ross, section 8.7, q9}
+\begin{solution}[3cm]
+
+<<>>=
+n = 20
+phat = 3/n
+z = qnorm(0.975)
+phat + c(-1,1)*z*sqrt(phat*(1-phat)/n)
+@ 
+
+The 95\% confidence interval for the proportion of the consignment which is spoiled is (0, 0.306).
+
+
+\textit{Note that the lower side of the interval was rounded up to 0.
+}
+
+\end{solution}
+
+
+\item A sample survey was conducted in order to estimate the proportion of sports utility vehicles (SUV) being driven in the State of California. A random sample of 500 registrations are selected from a Department of Motor Vehicles database, and 68 are classified as SUVs.
+\tutorNotes{Mendenhall, page 300}
+\begin{enumerate}
+\item Use a point estimator to estimate the proportion of sports utility vehicles in California.
+\begin{solution}[3cm]%\\[3ex]}{
+$X$ = number of SUVs in California.
+$\hat{p} = \frac{x}{n} = \frac{68}{500} = 0.136$.
+\end{solution}
+
+\item Use a 95\% confidence interval to estimate the proportion of sports utility vehicles in California.
+\begin{solution}[3cm]%\\[4ex]}{
+$\hat{p} \pm z \sqrt{\frac{p(1-p)}{n}} = 0.136 \pm 1.96 \sqrt{\frac{0.136(1-0.136)}{500}}$\\
+Lower:  $0.136 - 1.96 ( 0.01532997...) = 0.1059533 $\\
+Upper: $0.136 + 1.96 ( 0.01532997...) = 0.1660467 $\\
+The 95\% confidence interval is: (0.106, 0.166).
+\end{solution}
+
+
+\item How can you estimate the proportion of sports utility vehicles in California with a higher degree of accuracy? (Hint: there are two answers).
+\begin{solution}[3cm]%\\[2ex]}{
+Increase the sample size or decrease the confidence level.
+\end{solution}
+
+
+\item What confidence level is required to obtain a margin of error of 0.03955?
+\begin{solution}[3cm]%\\[4ex]}{
+$MOE = z \sqrt{\frac{p(1-p)}{n}}$\\
+$0.03955 = z \sqrt{\frac{0.136(1-0.136)}{500}}$\\
+$z = \frac{0.03955}{\sqrt{\frac{0.136(1-0.136)}{500}}} = 2.5799... \approx 2.58$\\
+This corresponds to a 99\% confidence level.
+\end{solution}
+
+\end{enumerate}
+
+
+
+
+
+%%\section{Sampling and seeds}
+%\item 
+%
+%Random numbers in R (and other software packages) are not really random. There is a sequence of numbers and when you initiate a function like \codett{rbinom()} it starts from a certain point in this sequence and provides the required number of ``random'' numbers. We can specify the starting point in the sequence by setting the \textubf{seed}.
+%
+%\begin{enumerate}
+%
+%\item Enter the following code several times and observe the numbers that are produced (you should get a different sequence each time).
+%
+%\begin{codeChunk}
+%\begin{codeIn}
+%rbinom(10, 1, 0.5)
+%\end{codeIn}
+%\end{codeChunk}
+%
+%The \codett{sample(x, n)} command chooses $n$ values from the vector $x$, without replacement.
+%\begin{codeChunk}
+%\begin{codeIn}
+%sample(1:10, 5)
+%\end{codeIn}
+%\end{codeChunk}
+%
+%\item Run both the following lines of code multiple times. You should get the output below every time.
+%
+%\begin{codeChunk}
+%\begin{codeIn}
+%set.seed(1234)
+%sample(1:10, 5)
+%\end{codeIn}
+%\begin{codeOut}
+%[1] 2 6 5 8 9
+%\end{codeOut}
+%\end{codeChunk}
+%
+%\item If you rerun the \codett{sample(1:10, 5)} command without resetting the seed you will get different numbers. The first time you do it you should get the following output.
+%\begin{codeChunk}
+%\begin{codeIn}
+%sample(1:10, 5)
+%\end{codeIn}
+%\begin{codeOut}
+%[1] 7 1 2 5 4
+%\end{codeOut}
+%\end{codeChunk}
+%
+%\item Let's try uniform random numbers. Run both the following lines of code multiple times. You should get the output below every time.
+%
+%\begin{codeChunk}
+%\begin{codeIn}
+%set.seed(4321)
+%runif(5)
+%\end{codeIn}
+%\begin{codeOut}
+%[1] 0.33477802 0.90913948 0.41152969
+%[4] 0.04384097 0.76350011
+%\end{codeOut}
+%\end{codeChunk}
+%
+%\item Now enter your ID number in the \codett{set.seed} and choose 10 numbers between 1 and 300.  For example, if your ID number was 12345678, you would enter the following code:
+%\begin{codeChunk}
+%\begin{codeIn}
+%set.seed(12345678)
+%sample(1:300, 10)
+%\end{codeIn}
+%\end{codeChunk}
+%Check that your sample matches the one in the solution file.
+%\end{enumerate}
+
+
+
+\item 
+The dataset \texttt{Nile} is one of R's inbuilt dataset.
+
+\begin{enumerate}
+\item Use the R help system to find out what is contained in this dataset.
+
+\begin{solution}[3cm]
+\begin{code}
+?Nile
+\end{code}
+Measurements of the annual flow of the river Nile at Ashwan 1871--1970.
+\end{solution}
+\item How many observations are contained within the dataset?
+\begin{solution}[3cm]
+\begin{code}
+length(Nile)
+#100
+\end{code}
+\end{solution}
+
+\item Estimate the mean annual flow of the river Nile.
+\begin{solution}[3cm]
+\begin{code}
+mean(Nile)
+[1] 919.35
+\end{code}
+\end{solution}
+
+\item Estimate the standard deviation annual flow of the river Nile.
+\begin{solution}[2cm]
+\begin{code}
+sd(Nile)
+[1] 169.2275
+\end{code}
+\end{solution}
+
+\bigskip
+\bigskip
+
+
+\item Construct a histogram of the flow and describe the distribution.
+
+\begin{solution}[2cm]
+\begin{code}
+hist(Nile)
+\end{code}
+
+\end{solution}
+
+
+
+\item Estimate the standard error of the mean. (Note, you will need to estimate $\sigma$ with $s$).
+
+\begin{solution}[2cm]
+$SEM = \sigma/\sqrt{n}$ where $\sigma$ is the standard
+  deviation of the dataset and $n$ the number of observations:
+
+\begin{code}
+sd(Nile)/sqrt(length(Nile))
+[1] 16.92275
+\end{code}
+\end{solution}
+
+\item Compute a 95\% confidence interval for the mean flow of the river Nile.
+\begin{solution}[2cm]
+<<>>=
+mean(Nile) + c(-1, 1)*qnorm(0.975)*sd(Nile)/sqrt(length(Nile))
+@
+The 95\% confidence interval for the flow of the River Nile is (886.18, 952.52).
+
+\end{solution}
+%\end{enumerate}
+%
+%\item Nile revisited. We will now look at how you can create a sample of size 50 from the river Nile flow dataset using your student ID number as a seed.
+%\begin{enumerate}
+
+%\item Copy the following code into an R script file and replace the ... with your id number.
+%\begin{codeChunk}
+%\begin{codeIn}
+%set.seed(id)
+%mydata = sample(Nile, 50)
+%mydata
+%\end{codeIn}
+%\end{codeChunk}
+%
+%
+%\item Construct a histogram of your sample.
+%
+%\begin{solution}
+%Example graph:\\
+%\begin{code}
+%hist(mydata, main="Annual Flow of the River Nile at Ashwan (n=50)", 
+%				xlab="flow")
+%\end{code}
+%
+%\includegraphics[width=0.7\linewidth]{figs/AS_lab_week6_riverNile_sample}
+%\end{solution}
+%
+%\item Estimate the mean and median from your graph. Justify your answer.
+%\begin{solution}
+%This answer refers to the data generated with id=12345678.\\
+%
+%Multiple answers are possible, but should be supported with a sensible justification.\\
+%
+%The median is the mid value, which in this case will be between the 25th and 26th observations.
+%The first bar of the histogram represents a frequency of 3, the second 6, the third 13 and the fourth 10. The 25th and 26th values will fall in the 4th bar. We know the median is between 900 and 1000. Since the first three bars contain 22 observations and the fourth contains 10, we could guess that median will be closer to 900 than 1000 (though we cannot know for sure from the graph).
+%Estimate: 930.\\
+%
+%
+%The histogram shows that the data are slightly positively skewed. We know that the mean $>$ median if the data are positively skewed, so we will estimate that the mean is slightly higher than the median.
+%Estimate: 950.
+%
+%
+%\end{solution}
+%
+%\item Compute some summary statistics of your sample.  Compare your answers to your estimates above.\\
+%
+%\begin{solution}
+%This answer refers to the data generated with id=12345678.\\
+%\begin{code}
+%mean(mydata) #[1] 940.94
+%sum(mydata)  #[1] 47047
+%median(mydata) #[1] 917.5
+%sd(mydata) #[1] 168.3224
+%summary(mydata)
+%#   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+%#  649.0   821.2   917.5   940.9  1088.0  1370.0 
+%\end{code}
+%\end{solution}
+%
+%\item Report the mean and sum of your sample to the tutor. Class demonstration to follow...
+%
+%\tutorNotes{
+%\begin{enumerate}
+%\item Circulate a piece of paper and ask the students to write down their means and sums.
+%\item Enter the data into R 
+%\item Plot a histogram of the means and discuss the shape. If class attendance is high, then the histogram should be approx normal.
+%\item Mention to the students that all the samples are drawn from the same population but have different means. The ``population'' has the following summary statistics: $\mu= 919.35$
+%$\sigma = 169.2275$. Note that here we are assuming that the dataset is the population. In Q2, the dataset is a sample.
+%%\begin{code}
+%%> mean(Nile)
+%%[1] 919.35
+%%> sd(Nile)
+%%[1] 169.2275
+%%\end{code}
+%
+%\item Compute the expected value of the mean $E[\bar{X}]=\mu=919.35$ and the standard error of the mean $SE[\bar{X}] = \sigma/\sqrt{n} = 169.2275/\sqrt{50}=23.93238$.
+%
+%\item Sketch with a whiteboard marker (or similar) a normal curve over the top of the histogram.
+%The 3SD below and above the mean are: 847.5529 991.1471.
+%
+%\item Use the lines command to draw the density of a normal curve $N(919.35, 23.93238^2)$. 
+%Note you will need to replot the histogram with the option \texttt{prob=TRUE}.
+%
+%\item Explain that if we repeated this for a larger number of students the histogram would approach to the density. 
+%%\begin{code}
+%%\end{code}
+%
+%\end{enumerate}
+%
+%
+%
+%}
+
+\bigskip
+
+\end{enumerate}
+
+
+
+
+
+\item You will recall from lectures that the standard error of the
+  mean is $\sigma/\sqrt{n}$.  We will verify this numerically by repeatedly sampling from the $N(0,1)$ distribution.
+\tutorNotes{This follows directly from the fact that the variance of
+  the sum of two independent random variables is the sum of their
+  variances.}
+\begin{enumerate}
+\item 
+The \verb+replicate()+ command replicates commands in R. For example:
+
+\begin{code}
+rnorm(10)
+mean(rnorm(10))
+replicate(6,mean(rnorm(10)))
+\end{code}
+
+\item  Now increase the number of reps:
+
+\begin{code}
+mean(rnorm(10))
+x <- replicate(1000,mean(rnorm(10)))
+hist(x)
+\end{code}
+
+\item As you increase the number of replications, what value will \texttt{mean(x)} approach?
+
+\begin{solution}[1cm]
+As $n$ increases, the \texttt{mean(x)} should approach $0$, since our sample was drawn from the standard normal distribution.
+\end{solution}
+
+\item As you increase the number of replications, what value will \texttt{sd(x)} approach?
+
+\begin{solution}[1cm]
+As $n$ increases, the \texttt{sd(x)} should approach $\sigma/\sqrt{n} = 1/\sqrt{10}$
+\end{solution}
+
+\tutorNotes{Make sure the students know where the 1 in the numerator
+  comes from.}
+
+%\item Suppose we are interested in the sum of a sample.
+%\begin{code}
+%sum(rnorm(10))
+%x <- replicate(1000,sum(rnorm(10)))
+%hist(x)
+%\end{code}
+%
+%For large $n$, what are the mean and standard deviation of \texttt{x}?
+%
+%\begin{solution}[1cm]
+%As $n$ increases, $\bar{X} = n\mu = 10\times 0 = 0$ and $SE[\bar{X}] = \sigma \sqrt{n} = 1 \times \sqrt{10}$.
+%\end{solution}
+
+\end{enumerate}
+
+\item  Let $X$ be a random variable representing the height of a randomly chosen student and let $X \sim N(165, 12^2)$.  Suppose that a sample of 36 independent students are selected. %Let $Y = \sum_{i=1}^{36} X_i$, where $X_i$ are independent and have the same distribution as $X$. 
+Compute:
+
+\begin{enumerate}
+\item $E[\bar{X}] $
+
+\begin{solution}[1cm]
+$E[\bar{X}] =\mu = 165$
+\end{solution}
+
+\item $SE[\bar{X}]$
+\begin{solution}[1cm]
+$SE[\bar{X}] =\sigma/\sqrt{n} = 12/6 = 2$
+\end{solution}
+
+%\item $E[Y]$
+%\begin{solution}[1cm]
+%$E[Y] = n\mu = 36 \times 165 =  5940$
+%\end{solution}
+%
+%\item $SE[Y]$
+%\begin{solution}[1cm]
+%$SE[Y] =\sigma \sqrt{n} = 12 \times 6 = 72$
+%\end{solution}
+
+\item Verify your answers to the above numerically.
+\begin{solution}[1cm]
+\begin{code}
+x <- replicate(1e6,mean(rnorm(36, 165, 12)))
+mean(x); sd(x);
+\end{code}
+
+
+%\begin{code}
+%y <- replicate(1e6,sum(rnorm(36, 165, 12)))
+%mean(y); sd(y)
+%\end{code}
+
+\end{solution}
+
+\item The following exercise demonstrates how to verify that 95\% of 95\% confidence intervals contain the true population mean.
+<<>>=
+#Generate a random sample and compute a confidence interval
+mean(rnorm(36, 165, 12)) + c(-1,1)*qnorm(0.975)*12/sqrt(36)
+
+#Generate 5 random samples and 
+#compute a confidence interval for each one
+CI = replicate(5, mean(rnorm(36, 165, 12)) 
+          + c(-1,1)*qnorm(0.975)*12/sqrt(36))
+CI
+
+#Is the true mean inside the interval?
+CI[1,]< 165 & CI[2,]>165
+
+#Increase the number of replications
+CI = replicate(1e5, mean(rnorm(36, 165, 12)) 
+     + c(-1,1)*qnorm(0.975)*12/sqrt(36))
+table(CI[1,]< 165 & CI[2,]>165)
+@
+
+\item Edit the code from the previous question and verify that 90\% of 90\% confidence intervals contain the true population mean.
+\begin{solution}[1cm]
+<<>>=
+
+#Increase the number of replications
+CI = replicate(1e5, mean(rnorm(36, 165, 12)) 
+        + c(-1,1)*qnorm(0.95)*12/sqrt(36))
+table(CI[1,]< 165 & CI[2,]>165)
+@
+\end{solution}
+
+\end{enumerate}
+
+
+
+
+
+\item You should spend the remainder of the lab revising for the test.
+
+%\end{enumerate}
+
+\end{enumerate}
+
+%\textbf{Chocolate Fish Question: }
+
+
+
+%\end{enumerate}
+\end{document}
