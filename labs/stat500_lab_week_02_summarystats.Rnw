@@ -1,0 +1,574 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage{ifthen}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{enumerate}
+\usepackage{fullpage}
+
+\setlength{\hoffset}{-0.5cm}
+\setlength{\voffset}{-10mm}
+\setlength{\textheight}{25cm}
+\setlength{\textwidth}{17cm}
+
+\hyphenpenalty  = 10000
+\exhyphenpenalty = 10000
+\parindent=0mm	
+
+\usepackage[dvips]{graphicx}
+\usepackage{url}
+\usepackage{xcolor}
+\usepackage{verbatim,dsfont}
+\usepackage{fancyvrb}
+\newcommand{\textubf}[1]{\underline{\textbf{#1}}}
+\usepackage{template/labhandout}
+
+
+%Control spacing at start of verbatim environments
+\newlength{\fancyvrbtopsep}
+\newlength{\fancyvrbpartopsep}
+\makeatletter
+\FV@AddToHook{\FV@ListParameterHook}{\topsep=\fancyvrbtopsep\partopsep=\fancyvrbpartopsep}
+\makeatother
+
+%Verbatim environments
+\newenvironment{codeChunk}{}{} %Use to wrap codeIn and codeOut to keep them together. A feature of Sweave - may not be necessary.
+\DefineVerbatimEnvironment{codeOut}{Verbatim} {formatcom=\color{codecol}, baselinestretch=1}
+\DefineVerbatimEnvironment{codeIn}{Verbatim} {formatcom=\color{codecol}, %fontshape=sl,
+ baselinestretch=1}
+\DefineVerbatimEnvironment{code}{Verbatim} {baselinestretch=1}  %Uses colour current environment, so can be used with solution.
+\newcommand{\codett}[1]{\textcolor{codecol}{\texttt{#1}}}  %use for in-line code
+
+\setlength{\fancyvrbtopsep}{0pt}
+\setlength{\fancyvrbpartopsep}{0pt}
+
+%Set colours
+\definecolor{solcol}{RGB}{0, 0, 250} %blue
+\definecolor{codecol}{RGB}{0,0,0} %black
+\definecolor{tutorcol}{RGB}{159, 0, 197} %purple
+
+\SolutionEmphasis{\color{solcol}}
+\TutorEmphasis{\color{tutorcol}}
+
+
+\newcommand{\Rq}{{\textsf{\textbf{``Is R doing what I think it is doing?''}}}}
+
+%To print questions with a space for the answer
+%\printanswersfalse
+%\printlinefalse
+%\printspacetrue
+%\printtutornotesfalse %printanswers must be true for this to work
+
+%To print questions and solutions
+%\printanswerstrue
+%\printlinefalse
+%\printspacetrue
+%\printtutornotesfalse%printanswers must be true for this to work
+
+
+%To print questions and solutions and tutor notes
+\printanswerstrue
+\printlinefalse
+\printspacetrue
+\printtutornotestrue %printanswers must be true for this to work
+
+%Use this is typos occur...
+\definecolor{typocol}{gray}{1}  %white
+%\definecolor{typocol}{gray}{0}  %white
+
+\newcommand{\courseName}[0]{Applied Statistics}
+\newcommand{\courseCode}[0]{STAT500}
+
+\begin{document}
+\SweaveOpts{concordance=TRUE}
+\hrule 
+\begin{center}
+Auckland University of Technology\\
+School of Engineering, Computer and Mathematical Sciences\\
+\courseCode \; \courseName \\
+Semester 1 2016\\[2mm]
+\textbf{Lab Week 2}\\
+\ifthenelse{\boolean{printanswers}}{\textcolor{solcol}{Outline Solutions}}{}
+\ifthenelse{\boolean{printtutornotes}}{\textcolor{tutorcol}{ \& Tutor Notes}}{}
+\end{center}
+\hrule
+\vbox{\vspace{3mm}}
+
+
+The following commands will be useful for computing summary statistics:
+\begin{codeIn}
+mean(x)
+median(x)
+table(x)
+diff(range(x))
+sd(x)
+var(x)
+min(x)
+max(x)
+summary(x)
+\end{codeIn}
+
+\bigskip
+
+To explore these commands we will use the \texttt{mtcars} dataset. 
+\begin{enumerate}
+
+\item Compute the mean, median, and standard deviation of the variable miles per gallon. Recall that the column of a dataframe can be extracted using \$ i.e., \texttt{mtcars\$mpg}.
+\begin{solution}[1.5cm]
+\begin{code}
+> summary(mtcars$mpg)
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  10.40   15.42   19.20   20.09   22.80   33.90
+
+> mean(mtcars$mpg)
+[1] 20.09062
+
+> median(mtcars$mpg)
+[1] 19.2
+
+> sd(mtcars$mpg)
+[1] 6.026948
+\end{code}
+\end{solution}
+
+
+\item Construct a histogram of the horsepower of the vehicles in the dataset. 
+Given the shape of your histogram, will the mean be greater than, less than or approximately equal to the median?
+Estimate the median from your graph, then verify your answer using R.
+\begin{solution}[2cm]
+The histogram is right skewed, so the mean will be higher than the median.  Since there are 32 values, it will be the mean of the 16th and 17th values. In the histogram (with default settings), there are 9 values in the first category and 10 in the second. This means that values 16 and 17 will value in the second category and therefore will be between 100 and 150. The median will be between 100 and 150.
+\begin{code}
+> sort(mtcars$hp)
+ [1]  52  62  65  66  66  91  93  95
+ [9]  97 105 109 110 110 110 113 123
+[17] 123 150 150 175 175 175 180 180
+[25] 180 205 215 230 245 245 264 335
+
+> summary(mtcars$hp)
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   52.0    96.5   123.0   146.7   180.0   335.0 
+\end{code}
+\end{solution}
+
+
+\item Construct a boxplot and a stem and leaf plot of the horsepower. Compare the properties of these two graphs with the histogram constructed in the previous question.
+What is similar, and what is different?
+
+\begin{solution}[2cm]
+
+\begin{minipage}{0.6\textwidth}
+\begin{code}
+> hist(mtcars$hp)
+> boxplot(mtcars$hp, 
+    main="Boxplot of mtcars$hp")
+\end{code}
+\end{minipage}
+\begin{minipage}{0.4\textwidth}
+\begin{code}
+> stem(mtcars$hp)
+
+  The decimal point is 2 digit(s) 
+     to the right of the |
+
+  0 | 5677799
+  1 | 0011111122
+  1 | 55888888
+  2 | 123
+  2 | 556
+  3 | 4
+\end{code}
+
+\end{minipage}
+
+Notice that the shape of the histogram and the stem and leaf plot are similar. 
+The data is right-skewed (a longer tail to the right).
+The skew in the data is apparent in the box plot because of the outlier and because the median line is closer to the bottom of the box rather than in the middle. 
+\end{solution}
+
+
+\item The cars in the sample have either 3, 4 or 5 gears. Find the mean, median and mode of this variable.
+
+\begin{solution}[2cm]
+\begin{code}
+> summary(mtcars$gear)
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  3.000   3.000   4.000   3.688   4.000   5.000 
+
+> median(mtcars$gear)
+[1] 4
+
+> mean(mtcars$gear)
+[1] 3.6875
+
+> table(mtcars$gear)
+
+ 3  4  5 
+15 12  5 
+\end{code}
+
+The mean is 3.6875 gears, the median is 4 gears and the mode is 3 gears.
+Note \texttt{mode(x)} does not give the statistical mode.
+\end{solution}
+
+
+\item Compute the range of the variable weight?
+Hint: your answer should be a single number, i.e. the maximum  - minimum.
+
+\begin{solution}[1cm]
+\begin{code}
+> range(mtcars$wt)
+[1] 1.513 5.424
+> diff(range(mtcars$wt))
+[1] 3.911
+> max(mtcars$wt)-min(mtcars$wt)
+[1] 3.911
+\end{code}
+The range of the variable weight is 3911 lbs.
+\end{solution}
+
+
+\end{enumerate}
+
+%\newpage
+\section{Data Analysis}
+\begin{enumerate}
+\item The following data contains the lengths of snapper\footnote{(Note this data is simulated).} from the Hauraki Gulf in centimetres. 
+\begin{enumerate}
+\item Copy and paste this data into R. Do NOT type it in yourself.
+\begin{codeChunk}
+\begin{codeIn}
+fish = c(73.88, 49.24, 38.63, 42.71, 33.36, 59.68, 57.27, 36.86, 59.93, 
+70.21, 52.86, 47.28, 38.17, 72.27, 33.62, 55.57, 57.59, 66.18, 46.67, 
+75.72, 48.88, 61.81, 45.97, 59.99, 57.20, 37.50, 48.32, 89.96, 56.52, 
+31.90, 36.00, 70.52, 50.23, 63.35, 55.44, 60.59, 53.75, 45.11, 55.89, 
+14.17, 42.99, 63.18, 35.71, 60.33, 73.51, 62.29, 33.22, 33.63, 39.77, 
+50.10, 31.64, 43.83, 20.01, 60.02, 42.83, 61.72, 7.13, 47.30, 36.40, 
+50.96, 79.43, 51.49, 62.68, 39.45, 61.05, 63.71, 37.07, 60.28, 57.60, 
+25.73, 43.71, 53.12, 59.01, 50.66, 46.63, 59.19, 58.80, 66.83, 39.27, 
+43.72, 58.81, 56.67, 52.80, 73.57, 62.87, 39.48, 42.64, 27.04, 25.15, 
+38.51, 38.34, 55.12, 86.48, 31.82, 49.17, 41.99, 50.10, 56.84, 44.04, 
+48.30)
+\end{codeIn}
+\end{codeChunk}
+
+\item How many snapper lengths are represented in the dataset? (Hint: use \codett{length(x)}).
+%To show the \textubf{relative frequency} on a histogram, use the option \codett{prob=TRUE}.
+\begin{solution}[10mm]
+There are 100 fish in the sample.
+\begin{codeIn}
+length(fish)
+\end{codeIn}
+\begin{codeOut}
+[1] 100
+\end{codeOut}
+\end{solution}
+\item  What type/s of graph would be appropriate for representing this data? Discuss.
+%
+\begin{solution}[20mm]
+The snapper lengths are numeric variables so we want to choose a graph which displays this type of data.
+A number of graphs could be appropriate here, for example stem and leaf, boxplot or histogram.
+These graphs will all show the distribution of the data, which can be useful for identifying outliers and skewness.  Outliers will be explicitly identified in the boxplot only.
+
+\tutorNotes{ }
+\end{solution}
+
+\item Construct a histogram of the fish data. Is the data symmetric? Are there any outliers?
+\begin{solution}[20mm]
+The boxplot looks roughly symmetrical. There may be an outlier (approx 7cm) as this data point is a long way from the rest of the data. This value skews the data in a negative direction.  The boxplot will confirm whether this data point is an outlier according to the criteria 1.5IQR above/below the upper/lower fence.
+
+\tutorNotes{}
+\end{solution}
+
+
+\item Construct a boxplot of the fish data. Is the data symmetric? Are there any outliers? 
+\begin{solution}[20mm]
+The boxplot looks roughly symmetrical, however there is one outlier (approx 7cm).  This skews the data in a negative direction. 
+
+\tutorNotes{Suggest the students also compute a histogram and compare the ``symmetry'' of the two graphs.}
+\end{solution}
+
+\item Compute the min, max, median, 1st quartile and 3rd quartile of this data. Compare the values with the boxplot computed above.
+\begin{codeChunk}
+\begin{codeIn}
+summary(fish)
+\end{codeIn}
+\end{codeChunk}
+
+\begin{solution}[20mm]
+\begin{codeOut}
+Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+7.13   39.47   50.44   50.47   60.00   89.96 
+\end{codeOut}
+\end{solution}
+
+\tutorNotes{
+Encourage the students to check that their answers make sense: For example: 
+This dataset is a bit too big to compute the mean and standard deviation by hand, but we can easily check the median and the minimum and maximum.
+First we need to sort the data.
+\codett{sort(fish)}
+The minimum and maximum match the values obtained by R. 
+There are 100 data points, so the median will be the mean of the 50th (50.23) and 51st (50.66) data points.
+The mean of these is $(50.23 + 50.66)/2 = 50.445$.  This matches the result from the \codett{median} function.
+}
+
+
+\item Compute compute the mean, standard deviation and variance of this dataset. Verify that the variance = (standard deviation) squared.
+  
+  
+\begin{solution}[10mm]
+\begin{codeChunk}
+\begin{codeIn}
+mean(fish)
+\end{codeIn}
+\begin{codeOut}
+[1] 50.4654
+\end{codeOut}
+\begin{codeIn}
+sd(fish)
+\end{codeIn}
+\begin{codeOut}
+[1] 14.69231
+\end{codeOut}
+\begin{codeIn}
+var(fish)
+\end{codeIn}
+\begin{codeOut}
+[1] 215.8639
+\end{codeOut}
+\begin{codeIn}
+sd(fish)^2
+\end{codeIn}
+\begin{codeOut}
+[1] 215.8639
+\end{codeOut}
+\end{codeChunk}
+\end{solution}
+
+\item What percentage of the sample are smaller than the legal limit of 30cm?
+\begin{solution}[20mm]
+\begin{codeChunk}
+\begin{codeIn}
+ table(fish<30)
+\end{codeIn}
+\begin{codeOut}
+FALSE  TRUE 
+   94     6 
+\end{codeOut}
+\end{codeChunk}
+6\% of the sample are smaller than the legal limit of 30cm.
+\end{solution}
+
+\item Write three sentences describing this dataset.
+
+\begin{solution}[50mm]
+\textit{Multiple answers are possible.}\\
+
+A sample of 100 snapper from the Hauraki Gulf were measured and it was found that their lengths ranged from 7.13cm up to 89.96cm. The snapper lengths appear to be approximately symmetrical with a very similar mean (50.47cm) and median (50.44cm). This data suggests that snapper in the Hauraki Gulf are varied in their size, with approximately 6\% being below the legal limit of 30cm.
+
+\end{solution}
+
+\end{enumerate}
+
+
+\item Download the file \codett{STAT500\_week02\_lab\_birthdays.csv} from Blackboard.  This dataset contains the number of live births in NZ by day between 1980 and 2013.
+\tutorNotes{Some students may require guidance about how to work with this dataset.}
+
+
+
+\begin{enumerate}
+\item Open the csv file and LOOK at the data. Notice the number of columns and rows.
+
+\item Load the data into R.\\
+In RStudio choose ``Import dataset''
+or use the code \texttt{read.csv(file.choose())}
+
+\begin{solution}[10mm]
+This dataset is from: 
+\url{http://www.stats.govt.nz/browse_for_stats/population/pop-birthdays-table.aspx}
+\end{solution}
+
+\item Plot the data using R.  What do you observe?
+
+\begin{code}
+plot(birthdays$dayOfYear,birthdays$numbirths, type="l")
+\end{code}
+
+\begin{solution}[10mm]
+There is a dramatic drop around day 60 - looking at the data we can see that this occurs on February 29th. Most days have around 5000 -- 5500 births.
+
+\begin{code}
+> birthdays[55:65, ]
+   dayOfYear month day numbirths
+55        55     2  24      5216
+56        56     2  25      5494
+57        57     2  26      5372
+58        58     2  27      5334
+59        59     2  28      5232
+60        60     2  29      1387
+61        61     3   1      5334
+62        62     3   2      5240
+63        63     3   3      5422
+64        64     3   4      5300
+65        65     3   5      5408
+\end{code}
+
+\end{solution}
+\item What date is the most common birthday?
+The command may be useful.
+\begin{codeIn}
+birthdays[order(birthdays$numbirths), ] 
+\end{codeIn}
+%$
+
+\begin{solution}[10mm]
+28th September
+\end{solution}
+
+\item What date is the least common birthday?
+\begin{solution}[10mm]
+29th February (leap years only occur every 4 years), followed by 25th December.
+\end{solution}
+
+\item What do you notice about the top 10 most common birthdays?
+
+\begin{solution}[10mm]
+They all occur between 22nd September and 4th October.
+\end{solution}
+
+
+\end{enumerate}
+
+
+
+\item Download the data \codett{STAT500\_week02\_global.csv} from Blackboard. This datasets contains a range of information about countries. 
+
+\begin{enumerate}
+\item Open the file in Excel and look at the data. Notice that there are a lot of missing values.
+\item Open the file in R \codett{global = read.csv(file.choose(), header=TRUE)}
+
+\item How many countries are represented in this dataset? (Hint: Use \codett{dim(x)})
+
+\begin{solution}[10mm]
+214
+
+\tutorNotes{The students have seen \codett{length(x)}, but have not yet seen \codett{dim(x)}. Explain that the latter function is used when the data has more than 1 column. Encourage them to check \codett{?dim}}
+\end{solution}
+
+\item What type of graph would be appropriate for displaying the GDP variable? Discuss. Construct this graph and describe what it shows.
+
+\begin{solution}[10mm]
+\tutorNotes{Encourage a discussion amongst students sitting near each other about this and the next few questions. I would like the students to practice providing justification for using certain graphs and summary statistics.}
+\end{solution}
+
+
+\item Compute the mean and median GDP. Compare the two numbers and comment on what this tells you about the distribution of the GDP.  Note you will need to add the option \codett{na.rm=TRUE} to the mean and median commands.
+
+\begin{solution}[10mm]
+\begin{codeIn}
+mean(global$GDP, na.rm=TRUE)
+[1] 3.85364e+11
+median(global$GDP, na.rm=TRUE)
+[1] 28248632096
+\end{codeIn}
+
+These numbers are quite different which suggests that data has a positive skew. This is confirmed by the histogram/boxplot constructed above.
+
+\tutorNotes{If students complete this lab quickly, you could suggest they compute the mean and median without USA.
+}
+\end{solution}
+
+
+\item What type of graph would be appropriate for displaying the relationship between male and female literacy rates? Discuss. Construct this graph and describe the relationship shown.
+
+\begin{solution}[10mm]
+\begin{codeIn}
+plot(global$Female.Literacy.rate, global$Male.Literacy.rate)
+abline(0,1)
+\end{codeIn}
+
+\textit{Various descriptions are possible.}
+\tutorNotes{
+Scatterplots are often used to show the relationship between two variables. 
+You may wish to comment on the fact that by adding a line at x=y, it becomes obvious that most points are above the line. This suggests that male literacy is greater than female literacy in many countries (especially for those with lower literacy rates).
+}
+\end{solution}
+
+
+
+\item What type of graph would be appropriate for displaying the relationship between female literacy across continents? Discuss. Construct this graph and describe the relationship shown.
+
+\begin{solution}[10mm]
+\begin{codeIn}
+boxplot(global$Female.Literacy.rate~global$Continents)
+\end{codeIn}
+\tutorNotes{
+Boxplots are good for comparing a numeric variable across a few groups. You may wish to highlight how the spread of the data varies across the continents. 
+}
+
+\end{solution}
+
+
+\item Explore the function \texttt{by} in the R help pages. Apply this function to explore summary statistics for female literacy rate \textit{by} continent.
+
+\begin{solution}[50mm]
+\begin{codeIn}
+by(global$LiteracyRate, global$Continent, summary)
+\end{codeIn}
+\end{solution}
+
+
+\item Explore other variables in this dataset using the techniques from this week and last week. 
+
+\begin{solution}[20mm]
+\tutorNotes{
+Encourage the students to explore relationships of interest to them.
+}
+\end{solution}
+
+
+
+\end{enumerate}
+
+
+%\item Download the \codett{WebSurvey.csv} file from Blackboard.  This dataset contains data from a survey of over 600 students.
+%\begin{enumerate}
+%\item How many students are represented in this dataset? (Hint: Use \codett{dim(x)})
+%
+%\begin{solution}
+%641 students.
+%
+%\tutorNotes{The students have seen \codett{length(x)}, but have not yet seen \codett{dim(x)}. Explain that the latter function is used when the data has more than 1 column. Encourage them to check \codett{?dim}}
+%\end{solution}
+%
+%\item What type of graph would be appropriate for displaying the Ethnicity variable? Construct this graph.
+%\begin{solution}
+%Ethnicity is a categorical variable, so a bar chart could be appropriate as this will show the frequency of each ethnic group.  
+%
+%\codett{barplot(table(WebSurvey\$ethnicity))} 
+%
+%\tutorNotes{Encourage a class discussion about this and the next few questions. I would like the students to practice providing justification for using certain graphs and summary statistics.}
+%\end{solution}
+%
+%\item The units of the actual weight variable are not included in the data file. How could you determine what units this variable is measured in?
+%\begin{solution}
+%
+%\tutorNotes{Constructing a histogram shows that the values of actualweight range from 35 to 173, with most between 50 - 70.  
+%If it was measured in pounds these values would be too light.  If it was measured in stones, they would be too heavy.  If it was measured in kilograms, then this range seems about right. Also, this is NZ data and weight is normally measured in kilograms.
+%
+%\textbf{Note: take care not to make any judgemental comments about particular weights.}
+%}
+%\end{solution}
+%
+%\item What type of graph would be appropriate for displaying the relationship between actual weight and ideal weight?
+%\end{enumerate}
+
+
+
+
+\end{enumerate}
+
+
+
+
+\end{document}
