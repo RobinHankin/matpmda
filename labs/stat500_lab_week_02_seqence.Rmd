@@ -1,0 +1,190 @@
+---
+title: "STAT500: lab handout for week 2"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+#  Getting help in R
+
+There are a lot of resources available within R and on the web to help you learn to program in R.
+
+* Typing  `?functionname` opens a webpage about the named function, e.g. `?plot` or `?seq`.
+* Using two question marks broadens the search; `??searchterm` or `help.search("searchterm")` open a webpage with matches to a named search term
+* Simply typing your query into google can often help.
+
+# Vectors
+
+Recall that in R, a _vector_ is a sequence of numbers that can be
+treated as a single unit.  This can be a very effective and
+time-saving technique.
+
+Vectors can be created in a number of ways.  Make sure you understand
+the following by either typing them out on the R commandline, or
+editing this file and processing it directly.
+
+First, the colon operator:
+
+```{r}
+1:10   
+10:1    # decreasing sequence
+```
+
+we can vary the first number to start the sequence with a different number:
+
+```{r}
+1000:1020
+```
+
+Now the `seq()` and `c()` functions.  Remember to type `?seq` to get
+help on this function, which includes a large number of arguments.
+
+```{r}
+seq(0, 20, 2) #  sequence from 0 to 20 by 2
+c(1, 2, 5, 6)  # direct data entry
+seq(from=100,to=83,by=-3)
+```
+
+## Extraction and replacement
+
+If we want to extract a particular element of a vector, we use square
+brackets:
+
+```{r}
+x <- c(17,3:10,100,7:2)
+x
+x[3]         # element number 3
+x[4:7]       # elements 4 through 7
+x[c(5,3,6)]  # elements 5,3,6
+```
+
+This gives the fourth element of x through to the sixth.  Remember to
+check that R in fact does this.
+
+We can also assign a particular element:
+
+```{r}
+x
+x[5] <- 1000
+x
+```
+
+The assignment then changes the fifth element of x to 1000.  We can do more sophisticated replacement:
+
+
+```{r}
+(x <- 1:10)
+y <- c(50,55)
+x[7:8] <- y
+x
+```
+
+# Negative indices
+
+Negative indices mean to omit elements:
+
+
+```{r}
+x <- 1:30
+x
+x[-5]
+```
+
+See how the fifth element of x is omitted.    Negative indices can be used to exclude more than one element:
+
+```{r}
+x <- 1:100
+y <- x[-(50:70)]
+```
+
+# Summary  statistics
+
+R includes many summary statistics:
+
+```{r}
+x <- c(1:19,4:6,100:101)
+x
+mean(x)
+length(x)
+sum(x)
+```
+
+# Logical Operators
+
+R can also be used to answer questions using logical operations.
+
+
+```{r}
+2>5   # is 2 greater than 5?
+```
+
+Of course not.  It is `FALSE`.  The technique also works with vectors:
+
+
+```{r}
+(1:10) > 4.4
+```
+
+
+See how we get a vector of logicals.  Each element of the result is
+the comparison of the vector on the left hand side `1:10`
+with the right hand side `4.4`.
+
+
+# Functions in R
+
+Earlier we met the `sqrt()` function for square roots.  R has a lot of
+in-built functions that can be used to analyse data, some of which are:
+
+
+* `mean(x)`
+* `median(x)`
+* `table(x)`
+* `diff(range(x))`
+* `sd(x)`
+* `var(x)`
+* `min(x)`
+* `max(x)`
+* `summary(x)`
+
+
+To explore these commands we will use the \texttt{mtcars} dataset which we saw last week.
+
+First, compute the mean, median, and standard deviation of the
+variable miles per gallon. Recall that the column of a dataframe can
+be extracted using  the dollar, for example `mtcars$mpg`.
+
+```{r}
+summary(mtcars$mpg)
+mean(mtcars$mpg)
+median(mtcars$mpg)
+sd(mtcars$mpg)
+```
+
+But we can compute the same statistics for just the first 9 cars using the extraction methods:
+
+```{r}
+summary(mtcars$mpg[1:9])
+mean(mtcars$mpg[1:9])
+median(mtcars$mpg[1:9])
+sd(mtcars$mpg[1:9])
+```
+
+
+# Further Exercises
+
+* Create the sequence $1, 4, 9, \ldots, 81, 100$
+* Create the sequence  $200, 175, 150, \ldots, 25, 0$
+* Define a sequence of integers starting from 14 and ending at 19.
+* Define a sequence of integers $2,4,6,\ldots,20$.
+* Define a sequence of integers $14,16,18,\ldots,100$.
+* Define a sequence of integers $1,3,5,7,9,\ldots,101$.
+* Define a sequence of integers $1,2,3,4,\ldots,98, 99, 100,102,104,106,108,\ldots, 138, 140$.
+
+
+
+Explore the dataset `Titanic`.  Were first class passengers more
+likely to survive than third class passengers?  Were male passengers
+more likely to survive than female passengers?  
