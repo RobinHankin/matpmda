@@ -301,7 +301,7 @@ SEM
 ```
 
 * *STEP 5*.  Calculate the p-value.  We can see that the p-value has
-  two pieces, and the area of one piece is just  ```1-pnorm(mean(kiwi),mean=1,sd=SEM)```
+  two pieces, and the area of one piece is just  `1-pnorm(mean(kiwi),mean=1,sd=SEM)`
   so the total p-value is twice this, or 
 
 ```{r}

@@ -121,7 +121,7 @@ x <- 19
 x
 ```
 
-In the above, the variable ```x``` is assigned the value 19, and on
+In the above, the variable `x` is assigned the value 19, and on
 the next line we print x just to check.
 
 ```{r}
@@ -129,7 +129,7 @@ y <- x+5
 y 
 ```
 
-There are some in-built functions (e.g. ```mean()```) that can be used
+There are some in-built functions (e.g. `mean()`) that can be used
 in your computations.
 
 ```{r}
@@ -145,16 +145,16 @@ that may be useful.
 
 R can be used to prepare visual and numerical summaries of datasets.
 R includes a large number of builtin datasets, and we will use the
-```cars``` dataset first.
+`cars` dataset first.
 
 ```{r}
 data(mtcars)
 mtcars
 ```
 
-In the above, the dataset ```mtcars``` is a dataset of cars taken from
+In the above, the dataset `mtcars` is a dataset of cars taken from
 the 1974 Motor Trend magazine; to get more information, type
-```?mtcars``` at the R command prompt which will fire up R's help
+`?mtcars` at the R command prompt which will fire up R's help
 system.  See how each row corresponds to a car and each column
 corresponds to a property of that car.  We can extract a single column
 with the dollar operator:
@@ -196,7 +196,7 @@ But sometimes we use the summation notation:
 \]
 
 (see the Appendix for an explanation of the $\sum$ notation).  It is
-easy to calculate the mean in R using the ```mean()``` function:
+easy to calculate the mean in R using the `mean()` function:
 
 
 ```{r}
@@ -207,7 +207,7 @@ mean(mtcars$mpg)
 
 The _median_ is the middle point of the data: half the datapoints are
 larger than the median and half are smaller.  Calculating this is easy
-with R function ```median()```:
+with R function `median()`:
 
 ```{r}
 median(mtcars$mpg)
@@ -224,7 +224,7 @@ mtcars$cyl
 ```
 
 It's not clear from the above which is the most common number of
-cylinders, but we can summarise the dataset using ```table()```:
+cylinders, but we can summarise the dataset using `table()`:
 
 ```{r}
 table(mtcars$cyl)
@@ -248,14 +248,14 @@ min(x)
 max(x)
 ```
 
-(In the above, I have used a variable ```x``` to save typing).  Thus
+(In the above, I have used a variable `x` to save typing).  Thus
 the range is from 10.4 to 33.09.
 
 Other measures of spread are the _standard deviation_ which has a
 rather technical definition but is understandable as an average
 distance from the mean (we will discuss this when we learn about the
 Gaussian distribution).  It is easy to calculate in R with the
-```sd()``` command:
+`sd()` command:
 
 ```{r}
 sd(x)
@@ -263,7 +263,7 @@ sd(x)
 
 Other measures are the interquartile range, which gives the range
 within which half the data lies.  This is most easily calculated
-using the ```summary()``` command, which gives other information too:
+using the `summary()` command, which gives other information too:
 
 ```{r}
 summary(x)
@@ -277,7 +277,7 @@ informative, presenting data visually is often a powerful medium for
 understanding and communicating datasets.  Visual analysis is made
 easy in R with a very wide range of functionality.  Here we will
 discuss a few techniques.  We can produce a histogram using the
-```hist()``` function:
+`hist()` function:
 
 ```{r}
 hist(mtcars$mpg)
@@ -285,9 +285,9 @@ hist(mtcars$mpg)
 
 This produces a rather plain histogram.  R provides ways to make the
 histogram more colourful, and we can use constructions such as
-```hist(mtcars$mpg,col="red")```.  See the help page (```?hist```) for
+`hist(mtcars$mpg,col="red")`.  See the help page (`?hist`) for
 details.  We can produce a slightly more informative, but simpler,
-presentation, using the ```stem()``` function:
+presentation, using the `stem()` function:
 
 
 ```{r}
@@ -333,22 +333,22 @@ terms of a scattergraph:
 plot(disp~hp,data=mtcars)
 ```
 
-In the above, the R command plots ```disp``` (displacement, the volume
-of the car engine) on the vertical axis against ```hp``` (horsepower,
+In the above, the R command plots `disp` (displacement, the volume
+of the car engine) on the vertical axis against `hp` (horsepower,
 a measure of the engine power) on the y axis.  The tilde symbol
-("```~```") is read "is a function of"; thus the command reads "plot
-```disp```, as a function of ```hp```, for dataset ```mtcars```".
-Also Note that we need to specify the datasource with the ```data=```
-argument to the ```plot()``` command.  Later in the course we will see
+("`~`") is read "is a function of"; thus the command reads "plot
+`disp`, as a function of `hp`, for dataset `mtcars`".
+Also Note that we need to specify the datasource with the `data=`
+argument to the `plot()` command.  Later in the course we will see
 ways in which we can analyse such datasets more deeply.
 
-Boxplots are produced using the ```boxplot()``` command:
+Boxplots are produced using the `boxplot()` command:
 
 ```{r}
 boxplot(hp~cyl,data=mtcars)
 ```
 
-The above plot shows how hp varies with ```cyl```, the number of
+The above plot shows how hp varies with `cyl`, the number of
 cylinders in the car.  We will discuss the boxplot in more detail
 later in the course, but for now see how cars with more cylinders
 produce more horsepower.

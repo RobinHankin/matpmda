@@ -27,7 +27,7 @@ If we construct an interval from $\overline{x} +
 \alpha\frac{\sigma}{\sqrt{n}}$ then this will (in very loose language)
 "capture" the true value of the mean $\mu$ with a certain probability.
 We want this probability to be 0.95, or 95\%, so we choose $\alpha$ to
-be ```qnorm(0.975)``` (that is, about 1.96) which leaves 2.5\%
+be `qnorm(0.975)` (that is, about 1.96) which leaves 2.5\%
 probability on either side, as in figure \@ref(fig:confidenceconcept).
 
 
@@ -87,7 +87,7 @@ c(mean(loaves) - qnorm(0.975)*SEM, mean(loaves) + qnorm(0.975)*SEM)
 
 To get a 99\% confidence interval instead of the default 95\%, we have
 exactly the same construction except we need to use
-```qnorm(0.995)```:
+`qnorm(0.995)`:
 
 ```{r}
 c(mean(loaves) - qnorm(0.995)*SEM, mean(loaves) + qnorm(0.995)*SEM)
@@ -114,7 +114,7 @@ heart <- c(66,73,72,80,84,60)
 Calculate a 95\% confidece interval for this data.
 
 There are only six datapoints, so the $Z$-score method is
-inapplicable.  The ```t.test()``` in R gives:
+inapplicable.  The `t.test()` in R gives:
 
 ```{r}
 t.test(heart)

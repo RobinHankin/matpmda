@@ -51,7 +51,7 @@ the sampled apples is:
 apples <- c(95, 104, 101, 100, 99, 102, 98, 94, 94, 93)
 ```
 
-*Quesion:* is there any evidence to suggest that these apples differ
+*Question:* is there any evidence to suggest that these apples differ
 from the known mean?  It is not known whether these apples are lighter
 or heavier than average.
 
@@ -145,7 +145,7 @@ Note that the *sample* means $\overline{x_A}$ and $\overline{x_B}$ are
 quantities is mathematically difficult.  Here the test statistic is
 the difference in sample means $\overline{x_A}-\overline{x_B}$.  The
 mathematical details are all taken care of in the R function
-```t.test()```.
+`t.test()`.
 
 ## Example: Vitamin C
 

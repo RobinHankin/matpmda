@@ -34,9 +34,9 @@ because we have random variability which is adding noise.
 ## The Sampling distribution
 
 As we saw above, each time we sample from the Normal distribution
-using ```rnorm(10)``` we get a different sample mean, even the though
+using `rnorm(10)` we get a different sample mean, even the though
 the population mean is 0.  The distribution of these sample means is
-called the *sampling distribution*.  The command ```replicate()``` is
+called the *sampling distribution*.  The command `replicate()` is
 useful for repeating a command a certain number of times.  For
 example, we can draw 5 samples of size 10 from $N(7,1)$:
 
@@ -94,9 +94,9 @@ Quite often, we want to know how bad the error is likely to be.  We
 would like to specify a "worst credible" error, and the standard way
 to do this is to give a value for the error that is exceeded only
 rarely, in particular 5\% of the time.  This is equivalent to
-```qnorm(0.975)``` (the value of 0.975 comes from the fact that we
+`qnorm(0.975)` (the value of 0.975 comes from the fact that we
 specify two tails of total size 5\%, so each one is 2.5\%=0.025.  And
-then because ```qnorm()``` takes the area to the left, we need to
+then because `qnorm()` takes the area to the left, we need to
 specify $1-0.025=0.975$).
 
 
@@ -127,7 +127,7 @@ But how accurate is this estimate?  The true mean might be 0.93kg or
 1.01kg or some other value.  To find the error in this estimate we use
 the standard erro of the mean, given by the formula $\sigma/\sqrt{n}$;
 here $n=30$ is the number of observations, and $\sigma$ is given by
-the ```sd()``` function, which estimates the standard deviation:
+the `sd()` function, which estimates the standard deviation:
 
 ```{r}
 sd(kiwi)
@@ -143,7 +143,7 @@ SEM
 and this shows us that the SEM is about 0.04kg.  This is the
 uncertainty of our estimate, caused by random variability.
 
-To give a confidence interval we can use ```qnorm()```:
+To give a confidence interval we can use `qnorm()`:
 
 ```{r}
 lower_limit <- qnorm(0.025,mean(kiwi),SEM)

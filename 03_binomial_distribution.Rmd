@@ -40,8 +40,8 @@ probability is harder to specify but we could take a good guess.
 ## Simulating Bernoulli trials
 
 We can simulate a series of Bernoulli variables using the
-```rbinom()``` function of R.  Remember that you can type
-```?rbinom``` at the R prompt to get help on this function.  The
+`rbinom()` function of R.  Remember that you can type
+`?rbinom` at the R prompt to get help on this function.  The
 following command shows how to simulate 100 trials with probability
 0.5:
     
@@ -50,7 +50,7 @@ rbinom(100,1,0.5)
 ```
 
 In the above, the R output is coded in terms of "0" for a failure and
-"1" for a success (in the ```rbinom()``` command, the _arguments_ are
+"1" for a success (in the `rbinom()` command, the _arguments_ are
 the three numbers 100,1,0.5.  The 100 means to simulate 100 trials,
 the "1" means to toss the coin once, and the 0.5 gives the probability
 of success).  See how about half the trials are successes.
@@ -130,7 +130,7 @@ surprising because of the high probability of success.
 
 ## Tabulating results of random simulations
 
-It is possible to make a table of the results using the ```table()```
+It is possible to make a table of the results using the `table()`
 function in R.  To simulate 100 students each tossing a coin 5 times
 with probability of heads = 0.5, we can use the following:
 
@@ -140,7 +140,7 @@ x <- (rbinom(100,5,0.5))
 table(x)
 ```
 
-(the ```set.seed()``` command ensures reproducible result).  Thus, out
+(the `set.seed()` command ensures reproducible result).  Thus, out
 of 100 students, 2 scored 0 heads out of 5 tosses, 11 scored 1 head,
 39 scored 2 heads, and so on.
 
@@ -160,7 +160,7 @@ one head, and so on.
 ## Plotting the results
 
 It is possible to plot this table in R; see figure
-  \@ref(fig:binomialplot).  Remember that you may type ```?plot``` at
+  \@ref(fig:binomialplot).  Remember that you may type `?plot` at
   the R prompt to get help.
 
 ```{r binomialplot,fig.cap="Tabulated observations from the binomial distribution", echo=FALSE,message=FALSE,warning=FALSE}
@@ -215,7 +215,7 @@ factorial(5)/(factorial(2)*factorial(3)) *  0.3^2 * (1-0.3)^(5-2)
 ```
 
 which means a probability of a little over 30\%.  We can calculate
-this more simply using the ```dbinom()``` function:
+this more simply using the `dbinom()` function:
     
     
 ```{r}
@@ -288,10 +288,10 @@ which gives the same answer.
 In general, a random distribution (here the binomial) has four R
 functions associated with it:
 
-* ```dbinom()``` Probability mass function, $P(X = x)$
-* ```pbinom()``` Cumulative distribution function, $P(X \leq x)$
-* ```rbinom()``` Random sample from the binomial distribution
-* ```qbinom()``` Quantile function
+* `dbinom()` Probability mass function, $P(X = x)$
+* `pbinom()` Cumulative distribution function, $P(X \leq x)$
+* `rbinom()` Random sample from the binomial distribution
+* `qbinom()` Quantile function
 
 (sometimes one or more of these functions may be absent, typically if
 the distribution is very complicated or difficult to work with; but
@@ -398,7 +398,7 @@ rbinom(100,30,0.4)
 
 for a Bin(30,0.4) distribution.  We can plot the density of the
 binomial distribution with size 30 and probability 0.4 using the
-```dbinom()``` function directly:
+`dbinom()` function directly:
 
 ```{r binplot,fig.cap="The binomial distribution", echo=FALSE,message=FALSE,warning=FALSE}
 plot(0:30,dbinom(0:30,30,0.4),type='h')
@@ -408,7 +408,7 @@ Suppose we ask a slightly different question.  We might be looking at
 a Bin(30,0.4) distribution and wonder what the probability of
 obtaining 15 or more successes, i.e. $P(X \geq 15)$.  We can calculate
 the probability of obtaining 15,16,17,\ldots successes using the
-```dbinom()``` command:
+`dbinom()` command:
 
 
 ```{r}
