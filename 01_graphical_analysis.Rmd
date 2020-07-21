@@ -137,10 +137,6 @@ v <- c(2,5,4,3,4,3,2,3,2,3)
 mean(v)
 ```
 
-There is a list of commonly-used commands at the end of the manual
-that may be useful.
-
-
 ## Data visualization and summary with R
 
 R can be used to prepare visual and numerical summaries of datasets.
@@ -192,11 +188,10 @@ $\overline{x}$ for the mean and calculate it as follows:
 But sometimes we use the summation notation:
 
 \[
-\overline{x} = \frac{1}{n}\sum_{i=1}^n
+\overline{x} = \frac{1}{n}\sum_{i=1}^n x_i
 \]
 
-(see the Appendix for an explanation of the $\sum$ notation).  It is
-easy to calculate the mean in R using the `mean()` function:
+It is easy to calculate the mean in R using the `mean()` function:
 
 
 ```{r}
@@ -335,7 +330,7 @@ plot(disp~hp,data=mtcars)
 
 In the above, the R command plots `disp` (displacement, the volume
 of the car engine) on the vertical axis against `hp` (horsepower,
-a measure of the engine power) on the y axis.  The tilde symbol
+a measure of the engine power) on the x axis.  The tilde symbol
 ("`~`") is read "is a function of"; thus the command reads "plot
 `disp`, as a function of `hp`, for dataset `mtcars`".
 Also Note that we need to specify the datasource with the `data=`
