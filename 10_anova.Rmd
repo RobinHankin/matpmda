@@ -17,7 +17,7 @@ letters[c(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,
 head(light)
 ```
 
-This is a modified version of a dataset documented at ```?morley``` in
+This is a modified version of a dataset documented at `?morley` in
 the R system.  It shows the speed of light as measured in five
 tdifferent experiments in the nineteenth century.  The speed column
 shows the discrepancy between the measured speed of light and a
@@ -41,20 +41,20 @@ H_0\colon\mu_A=\mu_B=\mu_C=\mu_D=\mu_E
 
 (that is, the mean speed of light is the same for all five
 experiments).  We need to calculate a $p$-value for this null, and
-this is provided by the ```aov()``` function ("AOV" stands for
+this is provided by the `aov()` function ("AOV" stands for
 "Analysis of variance"):
  
 ```{r} 
 summary(aov(speed~experiment,data=light))
 ```
 
-Note that we take the summary of the result of ```aov()``` as this
+Note that we take the summary of the result of `aov()` as this
 gives us more information.  Although the output is a little cryptic,
 we can see the $p$-value for our null is 0.00311, well below the 5\%
 threshold.  We may reject the null hypothesis and conclude that the
 experiments exhibited bias.
 
-It is possible to use the ```lm()``` function, which gives us slightly
+It is possible to use the `lm()` function, which gives us slightly
 different information:
 
 ```{r}
@@ -65,6 +65,6 @@ The format is very similar to that of scatterplot linear regression
 but the "intercept" is experiment "a" (R puts the factors in
 alphabetic order) and the other lines give the difference between
 experiment= "a" and the other experiments "b" through "e".  The
-overall $p$-value of 0.00311 is the same as in ```aov()```, because it
+overall $p$-value of 0.00311 is the same as in `aov()`, because it
 refers to the same null.
 

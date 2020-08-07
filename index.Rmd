@@ -24,15 +24,15 @@ including assessment and timetables, may be found on AUTonline.  The
 whole course is based around R and RStudio which may be downloaded
 from
 
-```https://cran.r-project.org/```
+[https://cran.r-project.org/]
 
 and
 
-```https://www.rstudio.com/```
+[https://www.rstudio.com/]
 
 On AUTonline, clicking
 
-```content system -> institution -> learn -> maths```
+`content system -> institution -> learn -> maths`
 
 takes you to a number of mathematical resources, including a wide
 range of instructional videos prepared for AUT students.  Details will
@@ -46,7 +46,6 @@ Please feel free to send corrections, bug reports, fanmail, etc to the
 issues page.
 
 [https://github.com/RobinHankin/stat500/issues](https://github.com/RobinHankin/stat500/issues)
-
 
 
 \includegraphics{stat601/ornamental20}

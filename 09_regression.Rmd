@@ -3,10 +3,10 @@
 All methods we have looked at so far have a single variable.  Here we
 consider methods for two variables.  If you have more than one
 variable, you may find that they are related in some kind of way.
-Consider the ```mtcars``` dataframe, provided with R.  Looking at the
-help page (type ```?mtcars``` at the R prompt), we see that each row
+Consider the `mtcars` dataframe, provided with R.  Looking at the
+help page (type `?mtcars` at the R prompt), we see that each row
 is a type of car, and each column is a feature of that car such as
-fuel efficiency (miles per gallon, ```mpg```), number of cylinders,
+fuel efficiency (miles per gallon, `mpg`), number of cylinders,
 and so on.
 
 
@@ -15,16 +15,16 @@ head(mtcars)
 ``` 
 
 We might wonder if there is a relationship between fuel efficiency
-(```mpg```) and the car's weight (```wt```).  The first step would be
+(`mpg`) and the car's weight (`wt`).  The first step would be
 to plot a scattergraph:
 
 ```{r}
 plot(mpg~wt,data=mtcars,main="Efficiency as a function of car weight")
 ```
 
-In the above, we use the tilde ("```~```") to mean "is a function of".
-So the line reads "plot ```mpg``` as-a-function-of ```wt```, with data
-from ```mtcars```".  We can see that high weight cars are associated
+In the above, we use the tilde ("`~`") to mean "is a function of".
+So the line reads "plot `mpg` as-a-function-of `wt`, with data
+from `mtcars`".  We can see that high weight cars are associated
 with low fuel efficiency.  We would like to describe this relationship
 mathematically.
 
@@ -50,7 +50,7 @@ where
 Finding $A$ and $B$ is the mathematical equivalent of "making the line
 go through the points". The process is mathematically involved (it
 requires matrix algebra) but fortunately it is possible to
-estimate $A, B$  using the ```lm()``` function built in to R:
+estimate $A, B$  using the `lm()` function built in to R:
 
 
 ```{r}
@@ -63,7 +63,7 @@ for the equation of the straight line.  The intercept is the value of
 $y$ when $x=0$ (that is, where the line intercepts the $y$ axis), and
 the slope is the increase in $y$ for a unit increase in $x$.  It is
 easy to add the fitted straight line on to the scatterplot using the
-```abline()``` function:
+`abline()` function:
 
 ```{r}
 plot(mpg~wt,data=mtcars,main="Efficiency as a function of car weight")
@@ -143,15 +143,15 @@ association between the variabfferent correlation coefficients.
 ## Finding the $p$-value in R
 
 To find the $p$-value for a linear regression we need to use the
-```summary()``` command:
+`summary()` command:
 
 ```{r}
 summary(lm(mpg~wt,data=mtcars))
 ```
 
-We can see that the $p$-value is ```1.294e-10```, much smaller than
+We can see that the $p$-value is `1.294e-10`, much smaller than
 the required 5\%: this means that the regression slope is significant
-and we can infer that the variables ```mpg``` and ```wt``` really are
+and we can infer that the variables `mpg` and `wt` really are
 correlated.  The adjusted R-squared of 0.7746 would indicate a
 reasonably tight relationship.
 
@@ -211,11 +211,11 @@ It is possible to apply linear regression to more than one independent
 variable.  The simplest such case is two independent variables, which
 are plotted on the x and y axes, the dependent variable being plotted
 on the z (vertical) axis; see figure \@ref(fig:plot3d), taken from the
-```plot3d``` R package.  This which shows a visual representation of a
-regression using the ```mtcars``` dataset we considered in week 1 in
-which ```mpg``` is regressed against ```wt``` and ```disp```.
+`plot3d` R package.  This which shows a visual representation of a
+regression using the `mtcars` dataset we considered in week 1 in
+which `mpg` is regressed against `wt` and `disp`.
 
-```{r, plot3d, fig.cap="Visual representation of multivariate linear regression, taken from the plot3D package.  Variable ```mpg``` is shown on the vertical axis; variables ```wt``` and ```disp``` on the two horizontal axes.  The regression itself is a plane, rather than a line", echo=FALSE}
+```{r, plot3d, fig.cap="Visual representation of multivariate linear regression, taken from the plot3D package.  Variable `mpg` is shown on the vertical axis; variables `wt` and `disp` on the two horizontal axes.  The regression itself is a plane, rather than a line", echo=FALSE}
 library("plot3D")
 # Following code taken from scatter.Rd in the plot3D package
 with (mtcars, {
@@ -261,10 +261,10 @@ coefficients is straightforward in R:
 summary(lm(mpg~wt+disp,data=mtcars))
 ```
 
-In the R commands and output above, note that the "```+```" symbol
+In the R commands and output above, note that the "`+`" symbol
 does not mean "plus"; it means "add this variable to the list of
 regressors".  Thus the input line reads in English "summary of a
-linear model of ```mpg``` as-a-function-of ```wt``` and ```disp```".
+linear model of `mpg` as-a-function-of `wt` and `disp`".
 Looking at the output we see the estimated coefficients for weight and
 displacement.  While the weight is significant, with a $p$-value of
 0.00743, the coefficient for displacement has a $p$-value of 0.06362

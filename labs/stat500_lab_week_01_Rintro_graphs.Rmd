@@ -1,0 +1,377 @@
+---
+title: "STAT500: lab handout for week 1"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Introduction
+
+The R programming language is a very powerful system for statistical
+analysis that has many features and abilities.  We will start by
+getting used to the R interface and use it to accomplish simple tasks.
+
+Use the labs in conjunction with the course handbook, and other
+resources such as videos and screencasts which are available on
+Blackboard under the "resources" tab.
+
+
+# Using R as a calculator
+
+Fire up R or Rstudio (ask your tutor if you are not sure where to find
+RStudio).  Type your commands at the command prompt.  R will respond
+with the result of its computation.  RStudio includes other ways of
+working which many people find more convenient.
+
+When using R (or any other language), it is important to try simple
+things first:
+```{r,label=twoplustwo}
+2+2
+```
+
+The basic idea with R is that we can type stuff into it (in this case
+`2 + 2`) and then get some output (4).  The `R>` is known as the R
+prompt.  Text after that is typed by the user, using the keyboard.
+The response ("`4`") is given by R.  We will discover the meaning of
+the `[1]` later.
+
+Try some more examples and when you are confident with the addition
+examples, try something harder:
+
+```{r,label=morecompl}
+(1+4)*(3-2)
+```
+
+Observe how round brackets are used to evaluate the arithmetic in a
+specific order.  Try some more examples using the following symbols.
+
+
+*  `+` Addition
+*  `-` Subtraction
+*  `*` Multiplication 
+*  `/` Division
+*  `^` Powers
+
+In mathematics, operations are performed in a specific order.  This is
+referred to as _Order of Operations_.  You may remember acronyms like
+*BEMA* or *BEDMAS*. These stand for: Brackets, Exponents,
+Multiplication/Division, Addition/Subtraction.  The operations should
+be performed in this order.
+
+## Use common sense as an ongoing check
+
+Always use common sense to anticipate the rough value of the answer
+_before_ you execute a command in R.  When using R, stop and think.
+Ask , "_Is R doing what I think it is doing?_"  It is a good
+idea to verify *every single thing* you do.
+
+
+### Example 1
+
+Suppose we have \$1000 and want to divide it between 7 people. How much will each person get?
+
+```{r,dividebyseven}
+1000/7
+```
+
+Does this answer make sense? How can we check?  Here is an example of
+the type of logic we could use to check R's responses.  You might not
+know what~$1000/7$ is exactly, but you will have an approximate idea.
+You will know that $1000/10=100$, and maybe that $1000/8=112.5$, so
+you might guess that $1000/7$ is a little bit bigger than 112.5 but
+less than, say, $1000/5=200$.  So basically we can _estimate_ the
+answer and verify that R is giving something close to the correct
+answer. 
+
+### Example 2
+
+R has some inbuilt commands, like `sqrt()`, which is the square root
+operator.  Suppose we want to know the square root of 60.  We can
+compute this in R, but we can also estimate the answer. How could we
+estimate it?  
+
+```{r}
+sqrt(60)
+```
+
+Here is an example of how we could estimate it: we do not know what
+the square root of 60 is exactly.  But it is bigger than 7 (because
+$7^2=49$ which is less than 60) and it's smaller than 8 (because
+$8^2=64$ which is bigger).  We could guess that it will be about 7.5.
+And our guess is not too far off.
+
+### Example 3
+
+R also has a command for ``special'' numbers like $\pi$.  The command
+`pi` will give us the value of 3.141593\ldots.  Suppose we want to
+know the value of $\pi^2$.  Since $\pi$ is just over 3, and $3^2=9$,
+we could estimate that $\pi^2$ is about 10.  Check with R.
+
+        
+```{r}
+pi
+pi^2
+```
+
+### Example 4
+
+Going back to the first example, imagine you made a typo (and this is an easy mistake to make):
+
+```{r}
+1000/.7
+```
+
+
+Does this answer make sense?  Will each person get \$1428.57?!  Now if
+you have an idea of the rough size of any answer, you can catch this
+error straight away (the technical term is _recovery_).  But if you do
+not have an estimate, errors like this can creep in, making any
+analysis meaningless.
+
+# Large numbers and small numbers
+
+Remember that the caret ("`^`") gives powers.  Try the following:
+
+```{r}
+10
+10^2
+10^3
+10^4
+10^5
+10^6
+10^7
+10^8
+10^9
+10^10
+10^11
+10^12
+```
+
+
+The first few are straightforward, but see how `10^6` (ie one million)
+is displayed as `1e+06`.  This means that the decimal point moves 6
+places to the right.
+
+Try some of these:
+
+```{r}
+20.3^23
+0.3^-65
+```
+
+and see if you can understand the output.  Small numbers work in a similar way:
+
+
+```{r}
+0.1^30
+10^-30
+```
+
+# Variables
+
+Suppose we want to define a variable `x` and use its value in the future:
+
+
+```{r,usex}
+x <- 4.5
+x
+x^2
+1/x
+```
+
+In the above, `x` is a variable whose value is 4.5 (the symbol "`<-`"
+is read "becomes", so the first line reads "x becomes 4.5").  See how
+we can use the value of `x` to avoid retyping its value.  We can go on
+to assign other variables.  A variable name has to begin with a letter
+or a dot, and may contain underscores.  Variable names are
+case-sensitive, so `x` differs from `X`.
+
+
+# Vectors
+
+A _vector_ is a sequence of numbers that behaves as a single unit.
+
+
+```{r,vectorusage}
+v <- c(1,5,4,1,1,2)
+v
+```
+
+Object `v` thus holds six numbers and we can treat them together:
+
+```{r}
+v + 1000
+v^2
+1/v
+```
+
+See how each element of `v` is manipulated separately.  By far the
+most common vector is a simple sequence of numbers, which can be
+created using the colon:
+
+
+```{r}
+1:9
+100:120
+```
+
+
+## Including Plots
+
+It is easy to create plots using the `plot()` command:
+
+
+
+```{r plotv, echo=TRUE}
+v
+plot(v)
+```
+
+We can combine ideas from the previous examples:
+
+```{r}
+x <- 1:30
+plot(x,x^2)
+```
+
+# Data analysis
+
+We will now explore the Motor Trend Cars Dataset discussed in
+lectures.  This dataset is part of R so it is already installed.
+```{r,usemtcars}
+mtcars        #prints whole dataset
+head(mtcars)  #prints first 6 rows
+tail(mtcars)  #prints last 6 rows
+```
+
+You can find more information about the dataset by typing `?mtcars` at
+the command line.  To access specific columns of the dataset you can use a variety of commands
+
+
+```{r}
+mtcars$mpg        #prints mpg column - note $ is proceeded by a column name
+mtcars[,"mpg"]    #prints mpg column - note that " " are required
+mtcars[,1]        #prints the first column, which in this case is mpg
+```
+
+We can now create a scatter plot to investigate the relationship
+between miles per gallon and vehicle weight.  What do you observe?
+
+```{r}
+plot(mtcars[,"wt"], mtcars[,"mpg"], xlab="Weight (lb/1000)", ylab="Miles per gallon", pch=16)
+```
+
+(the above could be accomplished by typing `plot(mpg~wt,
+data=mtcars)`).  The scatterplot shows that as vehicle weight
+increases, miles per gallon decreases.  This indicates that there is a
+negative relationship between vehicle weight and miles per gallon for
+the cars in the mtcars dataset.
+
+Try plotting other variables in the dataset against one another in the
+same way.  You may find `boxplot()` useful.
+
+# Frequency tables
+
+Sometimes we might be interested in discrete variables, and ask
+questions such as "How many manual and automatic cars are in the
+dataset?".  We can construct a table to show the frequencies.
+
+```{r}
+table(mtcars$am)
+```
+
+Create a table to show the number of cars with  either 3, 4 or 5 gears:
+
+
+```{r}
+gears <- table(mtcars[,"gear"])
+gears
+```
+
+Which number of gears is most common?  We can present this information
+graphically using `barplot()`:
+
+```{r}
+barplot(gears)
+```
+
+
+Modify your code in the previous question to add labels on the $x$ and $y$ axes and a title.
+
+
+## Stem and Leaf Plots
+
+A stem and leaf plot is a useful way to visualise moderate sized data
+sets, use the `stem()` function:
+
+```{r}
+stem(mtcars$hp)  #recall $ can be used to access the column called hp
+```
+
+We see that most of the vehicles have a horsepower of between 50 and
+200.  There are a small number of cars with a horsepower of more than
+200.
+
+
+The size of the categories can be adjusted using the `scale`
+parameter.  The default value is 1.  Try different values and see what
+the impact is on the graph.
+
+```{r}
+stem(mtcars[,"hp"], scale=1)
+```
+
+
+# Histograms
+
+As datasets get bigger, histograms provide a better choice for visualising numeric data.
+We can create a histogram of the horsepower data:
+
+```{r}
+hist(mtcars[,"hp"])
+```
+
+It is possible to customise the histogram by adding a title, axis labels and axis scales:
+
+
+```{r}
+hist(mtcars[,"hp"],  xlab="gross horsepower", 
+   main="Histogram of Horsepower for Vehicles\n 
+   in the 1974 Motor Trend Magazine ", ylim=c(0, 12), xlim=c(0, 400))
+```
+
+Compare the number of cars in each ``bin'' in your histogram with the
+stem and leaf plot above (scale=1). Do you notice anything odd?
+
+\begin{solution}[3cm]
+
+
+# Boxplots 
+
+Boxplots are also very useful to displaying numeric data.
+
+
+```{r}
+boxplot(hp~gear, data=mtcars, main="Horsepower for Vehicles \n  
+             in the 1974 Motor Trend Magazine (n=32)")
+```
+
+
+
+## Further work
+
+Your task is to analys the trees dataset which is built in to R.  Type
+`?trees` to find out more about the dataset.  Use R commands similar
+to those above to answer the following questions:
+
+* How many trees in the sample?
+* What range of values do each of the variables take?
+* Is there a relationship between Girth and Height?
+* Is there are relationship between Girth and Volume?
+
+R has many other in-built datasets.  To see a list of the datasets
+type `library(help = "datasets")`, or `data()`.  For the remainder of
+the lab, apply the techniques in this lab to a new data set.
+

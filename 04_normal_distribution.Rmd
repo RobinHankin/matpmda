@@ -153,17 +153,17 @@ for(i in -4:4){
 
 There are four functions in R that are useful for understanding the Normal distribution.  These are:
 
-* ```rnorm()``` gives random samples from the Normal distribution.
-* ```dnorm()``` gives the density of the Normal (that is, the vertical coordinate of the Bell curve)
-* ```pnorm()``` gives the area to the right of the Normal
-* ```qnorm()``` the quantile function (see below).
+* `rnorm()` gives random samples from the Normal distribution.
+* `dnorm()` gives the density of the Normal (that is, the vertical coordinate of the Bell curve)
+* `pnorm()` gives the area to the right of the Normal
+* `qnorm()` the quantile function (see below).
 
-You can get help on these at the R prompt by typing ```?dnorm```
+You can get help on these at the R prompt by typing `?dnorm`
 
-###  Random samples from the Normal: ```rnorm()```
+###  Random samples from the Normal: `rnorm()`
 
 The R system can furnish random variables easily.  You can get random
-samples from a Normal distribution using ```rnorm()```
+samples from a Normal distribution using `rnorm()`
   
 ```{r}
 rnorm(10)    # standard Normal
@@ -183,7 +183,7 @@ rnorm(20,mean=10,sd=0.03)
 
 In the figure above, we specified the mean and standard deviation
 explicitly, but naming them is optional.  We could have said
-```rnorm(20,10,0.03)``` and obtained the same result.  Graphical plots
+`rnorm(20,10,0.03)` and obtained the same result.  Graphical plots
 are always informative; see the figure below for an example.
 
 ```{r}
@@ -192,7 +192,7 @@ plot(rnorm(1000),main="1000 random normal observations")
 
 In the figure above, most of the observations are between $-2$ and
 $+2$ but there are occasional outliers.  It is possible to produce a
-histogram using ```hist()``` as in the figure below:
+histogram using `hist()` as in the figure below:
 
 
 ```{r}
@@ -203,10 +203,10 @@ The figure above shows a histogram of random observations from the
 standard normal distribution.  See how most of the observations are
 between $-2$ and $+2$ but there are occasional outliers.
 
-## Density: ```dnorm()```
+## Density: `dnorm()`
 
-Function ```dnorm(x)``` gives the density of the standard Normal
-distribution at ```x```.  Thus
+Function `dnorm(x)` gives the density of the standard Normal
+distribution at `x`.  Thus
 
 ```{r}
 dnorm(0)
@@ -223,7 +223,7 @@ plot(x,dnorm(x),main="Density function of the standard normal distribution")
 ```
 
 
-## The cumulative distribution function, ```pnorm()```
+## The cumulative distribution function, `pnorm()`
 If $X\sim N(0,1)$, we quite often need to find the probability that
 $X$ is less than a particular value, as in the figure below:
 
@@ -236,7 +236,7 @@ polygon(x=c(x,rev(x)),y=dnorm(c(x+1e100,rev(x))),border=NA,col="gray")
 
 The figure above shows the probability that $X\leq 1.3$ is given by
 the gray area.  To give a numerical value that $X\leq x$ we use the
-```pnorm()``` command in R:
+`pnorm()` command in R:
 
 ```{r}
 pnorm(1.3)
@@ -252,9 +252,9 @@ such results numerically by random sampling:
 ```{r}
 table(rnorm(1e6) < 1.3)
 ```
-Thus 903503 out of one million (```1e6```) samples are less than 1.3.
+Thus 903503 out of one million (`1e6`) samples are less than 1.3.
 
-The four normal functions all take a ```mean``` and ```sd``` argument,
+The four normal functions all take a `mean` and `sd` argument,
 so we can specify these in our call.  Suppose we ask what the
 probability that a $N(5,2.2)$ Gaussian random variable is less than 6.1:
 
@@ -289,13 +289,13 @@ table((x>11.2) & (x<11.9))
 
 
 
-## The quantile function ```qnorm()```
+## The quantile function `qnorm()`
 
-The quantile function ```qnorm()``` inverts the cumulative
+The quantile function `qnorm()` inverts the cumulative
 distribution function.  Suppose we have a standard normal variable and
 wish to find the point $x$ which is exceeded with a probability of
 5\%.  This would mean that $P(X\leq x) = 0.9$.  To find this point we
-use ```qnorm()```:
+use `qnorm()`:
 
 ```{r}
 qnorm(0.95)
@@ -316,7 +316,7 @@ table(rnorm(1e6) < qnorm(0.95))/1e6
 ```
 
 showing close agreement with the expected 5\% / 95\% split.  Remember
-that ```qnorm()``` takes ```mean``` and ```sd``` arguments which can
+that `qnorm()` takes `mean` and `sd` arguments which can
 be used to override the default values of 0 and 1.  It is possible to
 graph the quantile function:
 
@@ -354,7 +354,7 @@ deviation is then $\sqrt{npq}$.  The variance, being the square of the
 standard deviation, is $npq$.  We can verify these statements
 numerically.  Suppose we havve $n=10$ and $p=0.3$.  Then
 $E(X)=np=10\times 0.3=3$, and $\operatorname{sd}(X)=\sqrt{10\times
-0.3\times 0.7}=1.45$.  To check these values we use ```rbinom()```:
+0.3\times 0.7}=1.45$.  To check these values we use `rbinom()`:
 
 
 ```{r}

@@ -43,7 +43,7 @@ What is the distribution of the number of white balls drawn without
 replacement?  Well, it has a particular distribution known as the
 *hypergeometric distribution*.  This is similar to the binomial
 distribution in that it is discrete, non-negative, and has a known
-maximum.  The R idiom for this distribution is ```dhyper()``` which
+maximum.  The R idiom for this distribution is `dhyper()` which
 calculates the density function; we will not need this because R
 calculates the $p$-value for us.  We can make the following mapping
 between drawing balls out of a urn and left/right male/female dataset
@@ -85,13 +85,13 @@ plot(x,dhyper(x,7,20,11),type='h',lwd=4,col=c(rep("black",5),rep("red",3)))
 legend("topright",lwd=4, col=c("black","red"),legend=c("regular points","more extreme"))
 ```
 
-Fortunately, R can deal with all this with the ```fisher.test()``` function:
+Fortunately, R can deal with all this with the `fisher.test()` function:
 
 ```{r}
 fisher.test(a, alternative="greater")
 ```
 
-(recall that R variable ```a``` was defined at the beginning of the
+(recall that R variable `a` was defined at the beginning of the
 chapter).  We can see from the $p$-value of about 7\% that the result
 is not significant: there is no evidence for a difference in
 handedness between male and female students.
@@ -126,7 +126,7 @@ M <- matrix(c(2,5,4,2),2,2)
 M
 ```
 
-The above is fine but is easier to understand if we modify ```M``` so
+The above is fine but is easier to understand if we modify `M` so
 that the rows and columns are named.  The R idiom to do this is nice,
 but not part of the learning objectives of the course and you will not
 be tested on it.  It is just cosmetic.
@@ -137,7 +137,7 @@ dimnames(M) <- list(treatment=c("new","old"),cured=c(TRUE,FALSE))
 M
 ```
 
-In the above, the matrix ```M``` is unchanged but has new information
+In the above, the matrix `M` is unchanged but has new information
 in the rownames and columnnames.  
 
 The second step is to formulate a null: $H_0\colon
