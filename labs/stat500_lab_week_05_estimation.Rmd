@@ -1,0 +1,211 @@
+---
+title: "stat500 lab, week 5, estimation"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(include = FALSE) # change to TRUE when rendering solutions; this changes
+                                      # the default visibility (which is overridden by explicitly
+                                      # setting  include=TRUE in chunk options)
+```
+
+
+### Question
+
+In an electrolysis experiment each student in a class of 30 chemistry
+students measured the amount of copper precipitated from a saturated
+solution of copper sulphate over a 30-minute period.  The sample mean
+for all students was equal to 0.145 mole.  It is known that the
+population standard deviation is 0.0051 mole.
+
+* Compute the standard error of the mean.
+
+```{asis}
+Suppose $X$ is the amount of copper sulphate. 
+
+There are 30 students, $n=30$.
+
+The sample mean from 30 students is $\bar{x} = 0.145$
+
+The population standard deviation $\sigma = 0.0051$.
+
+The standard error of the mean is $SE[\bar{X}]=
+\frac{0.0051}{\sqrt{30}}$
+```
+
+
+```{r}
+0.0051/sqrt(30)
+```
+
+* Verify your result numerically
+
+```{r}
+sd(replicate(1e5,mean(rnorm(30,0.145,0.0051))))
+```
+
+* Find a 95\% confidence interval for the mean amount of copper
+  precipitated from the solution of a 30-minute period 
+
+```{r}
+SEM <- 0.0051/sqrt(30)
+c(0.145 + qnorm(0.975)*SEM, 0.145 - qnorm(0.975)*SEM)
+```
+
+### Question
+
+An electric scale gives a reading equal to the true mass of an
+object plus a random error that is normally distributed with mean 0
+and standard deviation $\sigma = 0.1$ grams. Suppose that the results
+of five successive weighings of the same object are as follows:
+
+```{r,include=TRUE}
+mass <- c(3.142, 3.163, 3.155, 3.150, 3.141)
+```
+
+* Determine a 95 percent confidence interval estimate of the true
+mass (note that the standard deviation is known to be 0.1g).
+
+```{r}
+n <- 5 # number of observations
+SEM <- 0.1/sqrt(n)
+mean(mass) + c(-1,1)*qnorm(0.975)*0.1/sqrt(n)
+```
+
+* Determine a 99 percent confidence interval estimate of the true mass
+
+```{r}
+mean(mass) + c(-1,1)*qnorm(0.995)*0.1/sqrt(n)
+```
+```{asis}
+
+The 99\% confidence interval is wider than the 95\% CI
+```
+
+### Question
+
+The standard deviation of test scores on a certain achievement test is
+11.3.  A random sample of 81 students had a sample mean score of 74.6.
+
+* Find a 90 percent confidence interval estimate for the average score
+of all students.
+
+```{r}
+74.6 + c(-1,1)*qnorm(0.95)*11.3/sqrt(81)
+```
+
+### Question
+
+We wish to estimate $p$, the proportion of all newborn babies who are
+male.  The gender of 10000 newborn babies was noted and  5061 were
+male.
+
+* Determine a 95 percent confidence interval for $p$.
+
+```{r}
+phat <- 5061/10000 # best estimate
+phat + c(-1,1)*qnorm(0.975)*sqrt(phat*(1-phat)/n)
+```
+
+* Find the 99\% percent confidence interval 
+
+```{r}
+phat + c(-1,1)*qnorm(0.995)*sqrt(phat*(1-phat)/n)
+```
+
+
+### Question
+
+From past experience it is known that the weights of salmon grown at a
+commercial hatchery are normal with a mean that varies from season to
+season but with a standard deviation that remains fixed at 0.18kg. 
+
+* If we want to be 90 percent certain that our estimate of the mean
+weight of a salmon is correct to within $\pm 0.05kg$, how large a
+sample is needed? What if we want to be 99 percent certain?
+
+```{asis}
+\[\bar{X} \pm  z_{\alpha/2} \sigma/\sqrt{n}\]
+
+If the margin of error is $MoE$ we might write
+
+\[MoE = z_{\alpha/2} \sigma/\sqrt{n}\]
+
+We can now solve for $n$ in R:
+```
+```{r}
+sigma <- 0.18
+z <- qnorm(0.95)
+MoE <- 0.05
+(z*sigma/MoE)^2
+ceiling((z*sigma/MoE)^2)
+```
+
+* What would the answer be if we wanted to be 99\% certain?
+
+```{r}
+ceiling((qnorm(0.995)*sigma/MoE)^2)
+```
+
+### Question
+
+A wine importer has the opportunity to purchase a large consignment of
+a 1947 vintage wine.  Because of the wine's age, some of the bottles
+may have turned to vinegar.  However, the only way to determine
+whether a bottle is still good is to open it and drink some.  As a
+result, the importer has arranged with the seller to randomly select
+and open 20 bottles.  Suppose 7 of these bottles are spoiled. 
+
+* Find the 95 percent confidence interval estimate of the proportion
+of the entire consignment that is spoiled.
+
+```{r}
+n <-  20
+phat = 7/n  # best estimate
+z <-  qnorm(0.975)
+phat + c(-1,1)*z*sqrt(phat*(1-phat)/n)
+```
+
+
+### Question
+
+The dataset `Nile` is one of R's inbuilt datasets and shows historic
+flow rates of the river Nile.  Type `?Nile` to get help on this
+dataset.
+
+* Estimate the mean annual flow of the river Nile and its standard deviation.
+
+```{r}
+mean(Nile)
+sd(Nile)
+```
+
+* Construct a histogram of the flow and describe the distribution.
+
+```{r}
+hist(Nile)
+```
+
+```{asis}
+looks reasonably normal
+````
+
+* Estimate the standard error of the mean
+
+```{r}
+n <- length(Nile) # number of observations
+SEM <- sd(Nile)/sqrt(n)
+SEM
+```
+
+* Compute a 95\% confidence interval for the mean flow of the river Nile.
+
+```{r}
+mean(Nile) + c(-1, 1)*qnorm(0.975)*sd(Nile)/sqrt(length(Nile))
+```
+
+NB: climate change will mean that this methodology is questionable as
+the analysis assumes that the observations are not subject to
+systematic drift.
+
+
