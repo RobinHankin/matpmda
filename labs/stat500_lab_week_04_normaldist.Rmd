@@ -1,0 +1,184 @@
+---
+title: "stat500 lab, week 4, normal distribution"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(include = FALSE) # change to TRUE when rendering solutions; this changes
+                                      # the default visibility (which is overridden by explicitly
+                                      # setting  include=TRUE in chunk options)
+```
+
+
+### Question
+
+ Let $Z$ be a standard normal random variable.
+
+* Find $p(Z \leq 1.1)$ 
+
+```{r}
+pnorm(1.1,mean=0,sd=1)
+pnorm(1.1)  # using defaults; see ?pnorm
+```
+
+* Check your answer using random sampling
+
+```{r}
+table(rnorm(1e6) <= 1.1)
+table(rnorm(1e6) <= 1.1)
+```
+
+```{asis}
+Observe that the results above differ slightly due to random variability
+```
+
+* Find $p(Z \leq 2.25)$
+
+```{r}
+pnorm(2.25,mean=0,sd=1)
+pnorm(2.25)  # using defaults; see ?pnorm
+table(rnorm(1e6) <= 2.25)
+table(rnorm(1e6) <= 2.25)
+```
+
+* Find $p(Z > 0.6)$
+
+```{r}
+1-pnorm(0.6)
+table(rnorm(1e6) > 0.6)
+```
+
+* Find $p(0.4 \leq Z\leq 1.3)$ and verify numerically
+
+```{r}
+pnorm(1.3) - pnorm(0.4)
+
+## numerical verification slightly harder:
+
+z <- rnorm(1e6)
+table((z <= 1.3) & ( z >= 0.4))
+table((z <= 1.3) & ( z >= 0.4))
+```
+
+
+### Question
+
+Now suppose we change the mean and standard deviation from the default
+values to $\mu = 11.1, \sigma=2.4$; so now random variable $X\sim N(11.1,2.4)$.
+Calculate:
+
+* $p(X<12)$
+
+```{r}
+pnorm(12,mean=11.1,sd=2.4)
+pnorm(12,11.1,2.4)   # naming of arguments optional
+table(rnorm(1e6,11.1,2.4) < 12)
+table(rnorm(1e6,11.1,2.4) < 12)
+```
+
+* $p(10.1\leq X\leq 10.3)$
+
+```{r}
+pnorm(10.3,11.1,2.4)-pnorm(10.1,11.1,2.4)
+
+z <- rnorm(1e6,11.1,2.4)
+table((z<10.3) & (z>10.1))
+table((z<10.3) & (z>10.1))
+```
+
+* Transform $X$ to a random variable with standard normal distribution
+and perform the same calculations.
+  
+```{r}
+Z <- (12-11.1)/2.4
+pnorm(Z)
+
+z1 <- (10.1-11)/2.4
+z2 <- (10.3-11)/2.4
+pnorm(z2)-pnorm(z1)
+
+ran <- rnorm(1e6)
+table((ran<z2) & (ran>z1))
+table((ran<z2) & (ran>z1))
+```
+
+### Question
+
+Let $Z \sim N(0, 1)$, a standard normal distribution.
+
+* Find the value of $z$ such that $P(Z \leq z) = 0.95$. 
+
+```{r}
+qnorm(0.925)
+```
+
+* Find the value of $z$ such that $P(Z > z) = 0.025$
+
+```{r}
+qnorm(1-0.025, 0, 1)
+```
+
+* Find the value of $z$ such that $P(Z < z) = 0.9$; verify numerically
+
+```{r}
+qnorm(0.9)
+table(rnorm(1e6) < qnorm(0.9))
+```
+
+
+### Question
+
+
+A particular brand of chocolate bar has an advertised weight of 45g.
+On average the weight is 45g, however there is some variation between
+individual chocolate bars.  Suppose that the weight of the chocolate
+bars is normally distributed. If 15\% of the time the chocolate bars
+weigh more than 50g, what is the standard deviation of the weight of
+the chocolate bars?
+
+```{asis}
+
+$Z = \frac{X - \mu}{\sigma}$
+
+$Z=\mathrm{qnorm(0.85)}$ or about 1.036433
+
+We have $1.036433 = \frac{50 - 45}{\sigma}$, so we
+can say $\sigma = 5/1.036433 = 4.824$.
+```
+```{r}
+(50-45)/qnorm(.85)
+
+# verify
+
+z <- rnorm(1e6,mean=45,sd=(50-45)/qnorm(.85))
+table(z>50)  # should be about 85%
+```
+
+### Question
+
+Cerebral blood flow (CBF) in the brains of healthy people is normally
+distributed with a mean of 74 and a variance of 256, as measured by a
+particular type of medical machine.  Note that this means the standard
+deviation is $\sqrt{256}=16$.
+
+* What proportion of healthy people will have CBF readings between 60 and 80?
+
+```{r}
+mu <- 74
+sd <- sqrt(256)
+pnorm(80, mu, sd) - pnorm(60, mu, sd)
+```
+
+* What proportion of healthy people will have CBF readings above 100?
+
+```{r}
+1-pnorm(100, mu, sd) 
+```
+
+* If a person has a CBF reading below 40, he or she is classified as
+at risk for a stroke.  What proportion of healthy people will be
+mistakenly  diagnosed as ``at-risk''?
+
+```{r}
+pnorm(40, mu, sd) 
+```
