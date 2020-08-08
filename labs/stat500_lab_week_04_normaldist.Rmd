@@ -21,15 +21,17 @@ pnorm(1.1,mean=0,sd=1)
 pnorm(1.1)  # using defaults; see ?pnorm
 ```
 
-* Check your answer using random sampling
+* Check your answer using random sampling and visual graphics
 
 ```{r}
 table(rnorm(1e6) <= 1.1)
 table(rnorm(1e6) <= 1.1)
+hist(rnorm(1e6),nclass=40)
+abline(v=1.1,lwd=5)
 ```
 
 ```{asis}
-Observe that the results above differ slightly due to random variability
+Observe that the numerical results above differ slightly due to random variability
 ```
 
 * Find $p(Z \leq 2.25)$
