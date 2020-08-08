@@ -1,5 +1,5 @@
 ---
-title: "stat500 lab, week 3, probability"
+title: "stat500 lab, week 2, probability"
 output: html_document
 ---
 
