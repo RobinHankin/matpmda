@@ -8,9 +8,9 @@ intervals*.
 
 We want to give an upper and lower bound for the population mean; we
 specify that we want to be "95\% sure" that the true value is between
-our two bounds.  The technical details of the precise definition of
-confidence interval are not emphasised this course.  Some of the
-theory is given in the more advanced courses.
+our two bounds.  We have seen confidence intervals used in this course
+previously but only in an informal way.  In this chapter we will give
+the precise definition of confidence interval.
 
 ## Confidence Intervals for the Population Mean with a Known Population Variance
 

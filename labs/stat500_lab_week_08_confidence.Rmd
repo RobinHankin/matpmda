@@ -1,0 +1,93 @@
+---
+title: "stat500 lab, week 8, confidence intervals"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(include = TRUE) # change to TRUE when rendering solutions; this changes
+                                      # the default visibility (which is overridden by explicitly
+                                      # setting  include=TRUE in chunk options)
+```
+
+
+### Question
+
+A manufacturer produces matchboxes.  The weights of the boxes are
+normally distributed with a standard deviation of 0.9g, but unknown
+mean.  He samples 10 matchboxes and finds their mean weight to be
+10.1g.
+
+* Give a 95\% confidence interval for the mean box weight.
+
+```{r}
+SEM <- 0.9/sqrt(10)
+qnorm(c(0.025,0.975),10.1,SEM)
+```
+
+* Give a 99.9\% confidence interval for the mean box weight.
+
+```{r}
+qnorm(c(0.0005,0.9995),10.1,SEM)
+```
+
+### Question
+
+
+Sunglasses of a particular make are measured for the UVA
+transmittance, with the following results
+
+```{r,include=TRUE}
+sunnies <- c(1.24, 1.29, 1.4, 1.51, 1.31, 1.17, 1.35, 1.27, 1.33, 1.19)
+```
+
+* Calculate the sample mean and standard deviation
+
+```{r}
+mean(sunnies)
+sd(sunnies)
+```
+
+* Use `t.test()` to give a 95\% confidence interval for the UVA
+  transmittance.
+
+```{r}
+t.test(sunnies)
+t.test(sunnies)$conf.int
+```
+
+* Give a 99\% CI
+
+```{r}
+t.test(sunnies,conf.level=0.99)$conf.int
+```
+
+* The manufacturer claims that the transmittance is less than 1.25\%.
+Does the data support this?
+  
+```{asis}
+One-sided test.
+```
+
+```{r}
+t.test(sunnies,mu=1.25,alternative="greater")
+```
+
+```{asis}
+No reason to reject the null
+```
+
+### Question
+
+You will recall Baz and Bob from week 7.  These guys swim 100m and
+record their times in seconds:
+
+```{r,include=TRUE}
+baz <- c(14.2, 14.4, 12.3, 14.3, 12.6, 13.9, 12.1, 11.9, 15.2, 12.3)
+bob <- c(13.7, 14.9, 13.6, 17.5, 13.9, 13.5)
+```
+
+* Give a 95\% confidence interval for the difference in times between Baz and Bob
+
+```{r}
+t.test(baz,bob)
+```
