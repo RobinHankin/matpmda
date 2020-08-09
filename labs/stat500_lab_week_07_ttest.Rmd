@@ -1,0 +1,176 @@
+---
+title: "stat500 lab, week 7, Student t-test"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(include = TRUE) # change to TRUE when rendering solutions; this changes
+                                      # the default visibility (which is overridden by explicitly
+                                      # setting  include=TRUE in chunk options)
+```
+### Question
+
+Thirteen babies are born in a maternity ward. Their lengths in centimetres are
+
+
+```{r,include=TRUE}
+babies <- c(49, 50, 45, 51, 47, 49, 48, 54, 53, 55, 45, 50, 48)
+```
+
+Over long previous experience the mean length at birth at this
+hospital has been 50cm. Does this sample suggest that this mean has
+changed?  Use a t-test to assess the evidence, with a 5\% level of
+significance.
+
+* Specify a null hypothesis $H_0$ and the alternative hypothesis $H_1$. 
+
+```{asis}
+The null hypothesis would be that the mean length of babies born in
+this maternity ward is 50\,cm exactly.
+
+(The null hypothesis is that the effect is absent, no difference,
+nothing going on.)
+```
+
+* state the precise definition of $p$-value and explain what "more extreme" means in this context
+
+
+```{asis}
+The p-value is the probability, if the null is true, of
+obtaining the observation (in this case, the sample mean) or an
+observation more extreme.  Here, "more extreme" means "further away
+from the hypothesised population mean".
+```
+
+* Use `t.test()` to assess the claim.
+
+```{r}
+t.test(babies, mu=50, alternative="two.sided")
+```
+
+* Interpret the results
+	
+```{asis}
+The p-value exceeds the significance level of 5\%, therefore we fail
+to reject the null hypothesis.  We conclude that the data are
+consistent with a mean length at birth of 50\,cm.  There is no
+evidence for any difference. 
+```
+  
+### Question
+
+* Baz decides to train himself as a life-saver and as part of his
+fitness campaign he has to race against another swimmer, Bob.  The
+times for swimming 100m are as follows:
+
+```{r,include=TRUE}
+baz <- c(14.2, 14.4, 12.3, 14.3, 12.6, 13.9, 12.1, 11.9, 15.2, 12.3)
+bob <- c(13.7, 14.9, 13.6, 17.5, 13.9, 13.5)
+```
+
+We seek to determine whether there is a significant difference between
+the two swimmers.  You may assume that the t-test is appropriate.
+
+* Is a one-sided or two-sided test appropriate?   Justify your answer
+```{asis}
+A two-sided test is appropriate because the situation is symmetric
+between the swimmers.  We have no reason to expect Baz to be
+faster or slower than Bob.
+```
+
+* State a sensible null hypotheses.
+
+```{asis}
+Let $\mu_1$ denote Baz's mean time and $\mu_2$ denote Bob's mean time.\\
+
+$H_0\colon\mu_1=\mu_2$\\
+$H_1: \mu_1 \neq \mu_2$
+
+```
+
+* Is a paired or unpaired test indicated?
+```{asis}
+Unpaired: there is no natural pairing between the datasets
+
+Furthermore, the sample sizes are different, which means we cannot do a paired test.
+```
+
+* What is the mean time for the two datasets?
+```{r}
+mean(baz)
+mean(bob)
+```
+
+* Perform a t-test, and indicate whether there is a significant
+difference at the 5\% level between the two swimmers.
+
+```{r}
+t.test(baz,bob,alternative="two.sided")
+```
+
+* Interpret the result of the t-test in a way that Baz and Bob
+(who are not statisticians) could understand.
+
+```{asis}
+The p-value exceeds 5\% therefore there is not enough evidence to establish a difference between the swimmers.
+```
+
+### Question
+
+A physics student measures the speed of light in a laboratory.  His results are as follows:
+
+```{r,include=TRUE}
+x <- c(299792459.1, 299792457.87, 299792457.59, 299792459.6, 299792457.74, 
+299792460.08, 299792459.27)
+```
+
+
+(Note: all figures in meters per second; if you type
+`options(digits=14)` on the commandline, you will see more the
+significant figure on the output).  The true value of the speed of
+light is known to be 299792458 exactly.  The student's professor says
+that the equipment generally gives readings that are too high.
+
+* State a sensible null hypothesis for this situation and an alternative
+
+```{asis}
+Null: the  mean value of all the student's readings is the true
+speed of light exactly, namely 299792458.
+
+Let $\mu$ denote the mean value of the speed of light obtained by the equipment in the lab.
+
+$H_0\colon\mu = 299792458$
+
+$H_1\colon\mu > 299792458$
+
+See how poorly the English language deals with this issue.  The null
+refers to the _ensemble_, not the dataset.  Also observe how difficult
+it is to precisely state exactly what ensemble you are dealing with.
+
+```
+
+* State the precise definition of p-value and state what the
+observation is, and what ``more extreme'' means in this context
+
+```{asis}
+The pvalue is the probability, if the null is true, of obtaining
+the observation or a value more extreme.  Here, the observation is
+the sample mean of 299792458.75.  In this context, "more
+extreme" means "the sample mean is higher than 299792458.75".
+```
+
+* Conduct a t test and interpret.
+
+```{asis}
+The professor said that the equipment tended to over-read so a one-sided test is needed.
+```
+
+```{r}
+t.test(x, mu=299792458,alternative="greater")
+```
+
+```{asis}
+The p-value is less than 5\% so the test is significant and we may
+reject the null.  There is evidence that the equipment is
+over-reading.
+```
