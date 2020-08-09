@@ -1,0 +1,202 @@
+---
+title: "stat500 lab, week 10, ANOVA"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(include = FALSE) # change to TRUE when rendering solutions; this changes
+                                      # the default visibility (which is overridden by explicitly
+                                      # setting  include=TRUE in chunk options)
+```
+
+### Question
+
+Consider the following dataset:
+
+```{r,include=TRUE}
+
+dd  <- data.frame(
+  HairColour = structure(c(3, 3, 3, 3, 3, 1, 1, 1, 1, 1, 4, 4, 4, 
+                           4, 4, 2, 2, 2, 2, 2), 
+                           .Label = c("DarkBlond", "DarkBrunette", 
+                           "LightBlond", "LightBrunette"), class = "factor"),
+  Pain = c(62, 60, 71, 55, 48, 63, 57, 52, 41, 43, 
+           42, 50, 41, 37, 45, 32, 39, 51, 30, 35)
+)
+head(dd,3)
+tail(dd,3)
+```
+This dataset shows pain sensitivity as a function of hair colour.
+
+* plot the dataset
+
+
+```{r}
+boxplot(Pain ~ HairColour, data=dd, 
+     main="Pain sensitivity as a function of hair colour")
+```
+
+* State a sensible null hypothesis
+
+
+```{asis}
+
+In the case of an ANOVA, the null hypothesis is
+that the mean value for each group ($i=1,2,3,4$) is identical.
+The hypotheses can be written:
+
+$H_0\colon\mu_1=\mu_2=\mu_3=\mu_4$ 
+
+$H_1 \colon\mbox{at least one mean differs from the others}$.
+```
+
+* Perform an ANOVA analysis and interpret
+
+```{r}
+summary(aov(Pain~HairColour, data=dd))
+```
+
+```{asis}
+pvalue less than 5\%, significant.  There is strong evidence that pain threshhold depends on hair colour.
+```
+
+### Question
+
+The `npk` dataset is built into R.  To access it, type `npk` on the command line:
+
+```{r,include=TRUE}
+head(npk)
+```
+
+* Plot the data by block; use `boxplot()`.
+
+```{r}
+plot(yield~block,data=npk)
+```
+
+* From the graph, say whether there appears to be any evidence
+  that yield depends on block.
+
+```{asis}
+Doubtful dependence; note the large difference in ranges between the block.
+```
+```{r}
+boxplot(rnorm(24)~rep(1:4,6))
+```
+
+* Use ANOVA to assess whether the yield is a function of the block, and interpret.
+
+```{asis}
+Let $\mu_i$ denote the mean yield of peas (in
+pounds/plot) for block $i$, $i=1, \ldots, 6$.
+
+The hypotheses can be written:
+
+$H_0\colon\mu_1=\mu_2=\mu_3=\mu_4 = \mu_5 = \mu_6$ 
+
+$H_1 \colon\mbox{at least one mean differs from the others}$.
+```
+
+```{r}
+summary(aov(yield~block,data=npk))
+```
+
+```{asis}
+
+The p-value exceeds the 5\% cut-off so the result is _not_
+  significant.  There is no evidence to suggest that the yield
+depends on the block.
+```
+
+
+### Question
+
+The _OrchardSprays_ dataset is built into R and refers to
+effectiveness of different insecticide treatments on orchard trees;
+read the R help page.
+
+* Plot the decrease as a function of treatment.
+
+```{r}
+plot(decrease~treatment,data=OrchardSprays)
+```
+
+* Say whether it seems that the treatments have different effectiveness
+
+```{asis}
+From the plot, there appears to be a clear dependence.
+```
+
+* State a null hypothesis
+```{asis}
+Let $\mu_i$ denote the mean decrease in the volume of the solution for
+treatment $i$, $i=1, \ldots, 8$,
+	
+The hypotheses can be written:
+
+$H_0\colon \mu_1=\mu_2=\mu_3=\mu_4 = \mu_5 = \mu_6 = \mu_7=\mu_8$ 
+
+$H_1 \colon\mbox{at least one mean differs from the others}$.
+```
+
+
+*  use ANOVA to assess whether the treatment affects the behaviour of bees.  
+
+```{r}
+summary(aov(decrease~treatment,data=OrchardSprays))
+```
+
+* Interpret your findings
+
+```{asis}
+The p-value less than 5\% therefore significant.
+
+
+There are statistically significant differences in the average
+solutions decrease between the different orchard spray
+treatments. This implies that different orchard sprays do have
+different impacts on repelling honey bees.
+```
+
+### Question
+
+Look at the _warpbreaks_ dataset, which is about wool loom
+performance, and read the helppage by typing `?warpbreaks` on the
+command line.
+
+```{r,include=TRUE}
+head(warpbreaks,3)
+tail(warpbreaks,3)
+```
+
+* Plot breaks as a function of wool type
+
+```{r}
+plot(breaks~wool,data=warpbreaks)
+```
+
+* State a sensible null
+
+```{asis}
+
+Let $\mu_i$ denote the mean number of breakages per loom
+for wool type $i$, $i=A, B$.
+
+$H_0\colon \mu_A = \mu_B$ 
+
+$H_1 \colon\mbox{at least one mean differs from the others}$.
+```
+
+* Assess the dataset using `aov()`
+
+```{r}
+summary(aov(breaks~wool,data=warpbreaks))
+```
+
+* Interpret your findings
+
+```{asis}
+p-value = 10.8\% thus not significant.  There is no evidence for any
+dependence between type of wool and the number of breaks per loom.
+```
+
