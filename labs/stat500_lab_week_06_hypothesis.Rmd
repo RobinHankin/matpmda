@@ -1,0 +1,321 @@
+---
+title: "stat500 lab, week 6, hypothesis testing"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(include = FALSE) # change to TRUE when rendering solutions; this changes
+                                      # the default visibility (which is overridden by explicitly
+                                      # setting  include=TRUE in chunk options)
+```
+
+
+### Question
+
+To test a null hypothesis $H_0\colon \mu=\mu_0$ for a population that
+is $N(\mu, \sigma^2)$, it is usual to use the test statistic $Z =
+\frac{\bar{X} - \mu_0}{\sigma/\sqrt{n}}$ where $\bar{X}$ is mean of a
+random sample of size $n$ from the population.
+
+* Find the interval of $Z$ values that is the critical region (or
+rejection region) for $\alpha=0.05$ (one-sided test).
+
+```{r}
+qnorm(0.05)
+```
+
+```{asis}
+Therefore the critical region is the interval $(-\infty, -1.645)$.
+```
+
+* Find the critcial region for $\alpha=0.01$
+
+```{r}
+qnorm(0.01)
+```
+
+* Now instead assume that the alternative hypothesis is $H_1\colon \mu
+  \neq \mu_0$.  This is a two-sided test.
+
+```{r}
+alpha <- 0.05
+qnorm(alpha/2, 0, 1)
+qnorm(1-alpha/2, 0, 1)
+```
+
+```{asis}
+Therefore the critical region is the interval $(-\infty, -1.96) \cup
+(1.96, \infty) $ or~$\{z\colon\left|z\right| > 1.96\}$
+```
+
+### Question
+
+A army office is interested in the horizontal distance from the target
+of a set of rifle shots, measured in centimetres.  It is known from
+previous studies that the standard deviation of the horizontal
+distance is 0.6\,cm.
+
+```{r,include=TRUE}
+x <- c(-0.67, -0.03, 0.37, 1.87, 0.35, -0.47, 0.92, 0.95, 0.55, 0.16,
+0.47, -0.44, 0.2, 0.11, 1.91, 1.06, -0.49, -0.93, 1.78, -0.31,
+1.28, 0.26, 0.18, -0.26, 0.7, -0.37, -0.73, -1, 0.4, 1.03)
+```
+
+* Calculate the sample mean for this dataset.
+
+```{r}
+mean(x)
+```
+
+* Calculate the standard error for this dataset, using the known population standard deviation $\sigma=0.6$
+
+```{r}
+sigma <- 0.6
+n <- length(x)
+n
+SEM <- sigma/sqrt(n)
+SEM
+```
+
+* State a sensible null and alternative hypothesis to be used in this situation, in words and in mathematical symbols.
+
+```{asis}
+$H_0\colon \mu = 0$\\
+$H_1\colon \mu \neq 0$
+
+In words:
+
+$H_0\colon$ the rifle shots have a mean horizontal distance of zero\\
+$H_1\colon$ the rifle shots do not have a mean horizontal distance of zero
+```
+
+* Compute the test statistic, i.e. $Z = \frac{\bar{X}-\mu_0}{\sigma/\sqrt{n}}$
+
+```{r}
+mu0 <- 0
+z <- (mean(x)-mu0)/SEM
+z
+```
+
+* Using a significance level of 5\%, identify the critical region.
+
+```{asis}
+
+This is a two-tailed test, so the critical region is values of the
+test statistic which are greater than $c$ or less than $-c$.  In this
+case, we have a significance level of 5\% so $P(Z > c) = 0.025$ and
+thus $P(|Z| > c) = P(Z>c)+P(Z<-c) = 0.05$.
+```
+
+```{r}
+qnorm(0.975, 0, 1)
+
+```{asis}
+
+The Critical region is values of $Z$ which are greater than 1.96 or less
+than -1.96, i.e $\{z\colon |z| > 1.96\}$
+
+* Is the test statistic within the critical region? What conclusion can we draw?
+
+```{asis}
+
+Yes, it is in the upper tail.  Therefore, we should reject the null
+hypothesis and conclude that the mean horizontal distance of the rifle
+shots is not equal to 0.
+```
+
+* Assess the evidence provided by the data calculating a p-value.  NB:
+  a typical exam question will ask you to state the precise definition
+  of p-value and explain what ``more extreme'' means in this context.
+
+```{asis}
+
+The p-value is the probability, if the null is true, of obtaining the
+observation or one more extreme. In this context, ``more extreme''
+means ``the sample mean of the dataset is further away from zero than
+0.295''.
+
+```{r}
+1-pnorm(z, 0, sd=1)
+2*pnorm(abs(mean(x)), mu0, SEM, lower.tail=FALSE)
+```
+
+```{asis} 
+
+The p-value less than the significance level of 5\%,
+therefore the result of the hypothesis test is significant.  We may
+reject the null hypothesis and infer that the rifle is indeed biased.
+```
+
+* Compute a 95\% confidence interval for the mean horizontal deviation of the rifle shots.
+
+```{r}
+qnorm(c(0.025, 0.975), mean(x), sd=SEM)
+mean(x) + c(-1,1)*qnorm(0.975, 0, 1)*sigma/sqrt(n)
+```
+
+```{asis}
+
+We are 95\% confident that the true mean $\mu$ is within the interval
+(0.0803, 0.5097).  Notice that this interval does not contain
+$\mu_0=0$.
+```
+
+### Question
+
+Regardless of age, about 20\% of American adults participate in
+fitness activities (the criterion was activity taking place at least
+twice a week).  A random sample of 100 adults over 40 years old found
+15 who exercised at least twice a week.  Is this evidence of a decline
+in participation after age 40?  We will use~$\alpha = 0.05$.
+
+* State the null and alternative hypotheses.
+
+```{asis}
+$H_0\colon \pi=0.2$\\
+$H_0\colon\pi <0.2$
+```
+
+* Using the normal approximation for the binomial, compute the test
+  statistic $z$. Recall that $z = \frac{\hat{p} -
+  \pi_0}{\sqrt{\frac{\pi_0(1-\pi_0)}{n}}}$
+
+```{r}
+x <- 15
+n <- 100
+phat <- x/n
+pi0 <- 0.2   # null
+z <- (phat - pi0)/(sqrt(pi0*(1-pi0)/n))
+z
+```
+
+```{asis}
+Observe that the mean and variance are calculated using the {\em true}
+value of $p$, not the estimate $\hat{p}=r/n$.  What would you do if
+your information about~$p$ came purely from observing $r$ successes
+out of $n$ trials?
+```
+
+* Compute the critical region for this test, stating whether and why
+  you are using a one-sided or two-sided test.
+
+
+```{r}
+qnorm(0.05, 0, 1)
+```
+
+```{asis} 
+The difference betwen the t test and the Z
+test is the use of the estimated standard deviation $\hat{\sigma}$
+rather than the true value $\sigma$ in the denominator.  By far the
+hardest part of deriving the t distribution is proving that the sample
+mean and the sample variance are independent
+```
+
+* Is the test statistic in the critical region? What conclusion can we draw?
+
+```{asis}
+No, the test statistic is not in the critical
+region. Therefore we fail to reject the null hypothesis.  There is
+insufficient evidence to conclude that the percentage of adults over
+40 who participate in fitness activities twice a week is less than
+20\%.  There is no evidence that the percentage of adults over 40 who
+participate in fitness activities twice a week is less than 20\%.
+```
+
+* Use R to compute the p-value for the test statistic $z$.
+
+```{r}
+pnorm(z, 0, 1)
+```
+
+```{asis}
+The p-value is greater than the significance level of 5\%, therefore we fail to reject $H_0$.
+```
+
+* Use R to compute the exact p-value using `dbinom()`.
+
+```{r}
+sum(dbinom(0:15,100, 0.2))
+```
+
+### Question
+
+The following dataset shows the level of lake Huron over 98 years:
+
+```{r,inclide=TRUE}
+huron <- 
+c(580.92, 581.86, 580.97, 580.8, 579.79, 580.39, 580.42, 580.82, 
+581.4, 581.32, 581.44, 581.68, 581.17, 580.53, 580.01, 579.91, 
+579.14, 579.16, 579.55, 579.67, 578.44, 578.24, 579.1, 579.09, 
+579.35, 578.82, 579.32, 579.01, 579, 579.8, 579.83, 579.72, 579.89, 
+580.01, 579.37, 578.69, 580.33, 578.67, 579.55, 578.92, 578.09, 
+579.37, 580.13, 580.14, 579.51, 579.24, 578.66, 578.86, 578.05, 
+577.79, 576.75, 576.75, 577.82, 578.64, 580.58, 579.48, 577.38, 
+576.9, 576.94, 576.24, 576.84, 576.85, 576.9, 577.79, 578.18, 
+577.51, 577.23, 578.42, 579.61, 579.05, 579.26, 579.22, 579.38, 
+579.1, 577.95, 578.12, 579.75, 580.85, 580.41, 579.96, 579.61, 
+578.76, 578.18, 577.21, 577.13, 579.1, 578.25, 577.91, 576.89, 
+575.96, 578.4, 577.68, 578.38, 578.52, 579.74, 579.31, 579.89, 
+579.96)
+```
+
+Climate scientists are looking for evidence that global climate change has increased the level of the lake.
+Historically, the level of the lake has been 579.3cm.
+
+* State a sensible null and alternative hypothesis.
+
+```{asis}
+Let $\mu$ denote the mean level of the Lake Huron.
+
+$H_0: \mu = 579.3$\\
+$H_1: \mu > 579.3$
+
+Note that the null hypothesis corresponds to the situation in which the lake level
+has not changed from the historical value of  579.3cm.
+```
+
+* Calculate the sample mean of the dataset
+
+```{r}
+mean(huron)
+```
+
+* Calculate the standard error of the mean
+
+```{r}
+SEM <- sd(huron)/sqrt(length(huron))
+SEM
+```
+
+*  State the precise definition of p-value and state what ``more extreme'' means in this context
+
+```{asis}
+
+The p-value is the probability, if the null is true, of obtaining the
+observation or one more extreme.  In this context, ``more extreme''
+means ``the sample mean of the dataset is higher than the observed
+sample mean of 579''
+```
+
+* Calculate the p-value and interpret
+
+```{r}
+pnorm(mean(huron),mean=579.3,sd=sd(huron)/sqrt(length(huron)))
+```
+
+```{asis}
+
+$p<0.05$ so there is evidence that the level has increased
+```
+
+* A historian suggests that the later observations are flawed.  Perform a similar analysis on the first 70 observations.
+
+```{r}
+huron_older <- huron[1:70]
+pnorm(mean(huron_older),mean=579.3,sd=sd(huron_older)/sqrt(length(huron_older)))
+```
+
+```{asis}
+No evidence!
+```
