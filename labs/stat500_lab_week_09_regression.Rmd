@@ -1,0 +1,203 @@
+---
+title: "stat500 lab, week 9, regression"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(include = FALSE) # change to TRUE when rendering solutions; this changes
+                                      # the default visibility (which is overridden by explicitly
+                                      # setting  include=TRUE in chunk options)
+```
+
+# remember to include a scattergraph with any regression analysis
+
+# no scattergraph = no course credit
+
+
+
+### Question
+
+A computer scientist in Auckland has a large number of computers in
+his laboratory and suspects that more failures occur when the
+temperature outside is higher.
+
+The dataset is as follows:
+
+```{r,include=TRUE}
+temp <- c(16.1, 18.2, 16.5, 14.1, 15.2, 17.2, 17.9, 17.5, 16.8, 14.3)
+fail <- c(9.90, 9.21, 10.01, 8.22, 9.33, 8.89, 9.58, 10.97, 10.38, 8.96)
+```
+
+The first dataset is the temperature in Auckland in Centigrade, the
+second is the percentage of computers that have a failure.
+
+* Construct a scatterplot of the data and describe the relationship that you observe.
+
+```{r}
+plot(fail~temp)
+```
+
+* Using `lm()`, perform a linear regression and interpret
+
+```{r}
+summary(lm(fail~temp))
+```
+
+```{asis}
+pvalue exceeds 5\%, no evidence
+```
+
+
+* Interpret your findings in a way that a computer scientist with
+a flaky air conditioning plant, who is not a statistician, could
+understand. 
+
+```{asis}
+
+The p-value for the regression model as a whole is 0.1317, which
+exceeds the usual significance level of $0.05$.
+
+Whilst there appears to be a moderate positive relationship between
+temperature and the number of failures, there is no statistical
+evidence for this relationship.  The pattern observed in the graph is
+likely due to random variation.
+```
+
+### Question
+
+
+The following R commands define two datasets:
+
+```{r,include=TRUE}
+length <- c(0.111, 6.061, 0.171, 0.228, 0.802, 0.039, 0.64, 0.238, 0.603, 0.337)
+conc <- c(0.093, 0.102, 0.087, 0.085, 0.015, 0.107, 0.044, 0.08, 0.026, 0.073)
+```
+
+Here, `length` is the length of a beetle measured in centimeters, and
+`conc` is the concentration of a certain hormone found in a tissue
+sample.  The researchers are studying whether there is a relationship
+between the size of the beetle and the concentration of hormone
+present.  The beetles are a small species and are known to always be
+under 1cm in length.
+
+[helpful hint: commands such as `plot(conc~length)` and might be
+helpful here; to remove a single observation use a command like
+`plot(conc[-2]~length[-2])`, which will remove the second observation
+(ie observation number 2)]
+
+* Plot the data and describe the relationship you observe.
+
+```{r}
+plot(length, conc)
+plot(length[-2],conc[-2])
+```
+
+```{asis}
+In the first graph, there is a clear outlier. Further inspection
+reveals that this value may be an error, since beetles are known to be
+under 1cm in length and observation 2 is over 6cm.
+```
+
+```{r}
+plot(length[-2],conc[-2])
+```
+
+```{asis}
+
+There appears to be a strong negative relationship between beetle
+length and the concentration of the horomone.
+```
+
+* Perform the appropriate regression analysis.  Report the p-value and
+  interpret the output.
+
+```{r}
+conc_new = conc[-2]
+length_new = length[-2]
+plot(conc_new~length_new)
+fit <- lm(conc_new~length_new)
+abline(fit)
+summary(fit)
+```
+
+```{asis}
+The p-value (2.62e-06) is less than 5\% therefore
+significant.   There is statistically significant
+evidence that there is a relationship between beetle
+length and the concentration of the hormone.
+```
+
+*  Write the regression equation and use it to predict the level of
+   hormone for a beetle measuring 0.5cm in length.
+
+```{asis}
+The equation is:
+$\widehat{\mathrm{Hormone}} = 0.109 -0.118 \mathrm{Length}$
+```
+
+```{r}
+0.109 - 0.118*0.5
+```
+
+```{asis}
+The predicted hormone concentration is 0.05 units.
+```
+
+* Interpret the slope of the regression model.
+
+```{asis}
+The slope is -0.118. Therefore for a 1cm increase in beetle length we predict a decrease in the hormone concentration of 0.118.
+
+Given what is known about the beetles (i.e. their maximum length is
+1cm), we shouldn't use our model to predict hormone concentration for
+beetles above this length.
+```
+
+### Question
+
+* Load the household savings data (on Blackboard, file `HouseholdSavingsSurvey.csv'):
+
+```{r,include=TRUE}
+d <- read.csv("HouseholdSavingsSurvey.csv", head=TRUE)
+head(d)
+```
+
+* Policy makers are interested in whether there is a relationship
+between age and income level.  Construct a scatter plot of these two
+variables.
+
+```{r}
+plot(Income~Age, data=d)
+```
+
+
+* Describe the relationship between these two variables.
+```{asis}
+There is a positive relationship between these two variables, however
+as age increase, there is a wider range of incomes.
+```
+
+* Compute the correlation coefficient $r$ using the command 
+
+```{r}
+cor(d$Income,d$Age)
+```
+
+* Perform linear regression to assess the impact of age on income.
+
+```{r}
+summary(lm(Income~Age, data=d))
+```
+
+* What is the regression equation?
+```{asis}
+Income = -52792.7 + 2638.1 Age
+```
+
+* Interpret the value of the intercept. Does this make sense?
+
+```{asis}
+The intercept is -52792.7, this is the income which corresponds to someone with age 0.  This does not make sense.  Extrapolating results outside the range of data is often not a good idea (in this case age is from about 20 - 50).
+```
+
+
