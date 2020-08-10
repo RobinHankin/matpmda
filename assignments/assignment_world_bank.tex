@@ -1,0 +1,514 @@
+% This template provides the standardised look required by the DCT
+% central examination control committee.  The template is provided for
+% staff of the School Computer and Mathematical Sciences, Faculty of
+% Design and Creative Technologies, AUT.  The template uses exam.cls,
+% which is based on article.cls so environments available to the
+% latter should be able to be used in the former, except where they
+% have been redefined in exam.cls.  Refer to exam.cls for specifics on
+% how to achieve certain requirements.  exam.cls is part of the
+% TeXLive installation that should be installed on all SCMS computers.
+% I have included a number of questions as examples, if these are
+% needed. Merely delete what is not required and use the rest.
+%
+% Original by:
+%     Alan T Litchfield, 21 August, 2012
+% Some enhancements by:
+%     Guy K. Kloss, 20 September, 2012
+% Some more enhancements by:
+%	  Sarah Marshall, 19 August 2014
+% Modification to fit an assignment template by:
+%	 Sarah Marshall, 29 August 2014
+
+% Produces the exam, comment out as necessary
+\documentclass[11pt]{exam}
+% Produces the marking guide, comment out as necessary
+%\documentclass[11pt, answers]{exam}
+
+ % Change page parameters
+\usepackage[paper=a4paper, bmargin=2cm, tmargin=2cm, heightrounded]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{fourier}
+\usepackage[english, british]{babel}
+\usepackage{graphicx}
+\usepackage{epstopdf}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{varioref}
+\usepackage{multicol, ragged2e}
+%\usepackage{fullpage}
+
+\setlength{\hoffset}{-1.5cm}
+%\setlength{\voffset}{-10mm}
+%\setlength{\textheight}{25cm}
+\setlength{\textwidth}{16.5cm}
+%%\setlength{\headsep}{-5mm}
+%%\setlength{\footskip}{2cm}
+%\setlength{\parskip}{2mm}
+%\setlength{\parindent}{0mm}
+
+
+\SolutionEmphasis{\color{blue}}
+
+%\usepackage{mymath}
+
+\usepackage{xcolor}
+\hyphenpenalty = 10000
+
+%% Exam class specific commands
+
+%%% Settings for this particular exam %%%
+\newcommand{\papercode}{STAT500} % Six digit paper code.
+% Title of paper:
+\newcommand{\papertitle}{Applied Statistics}
+\newcommand{\assessmenttype}{Assignment 2}
+
+
+% Header information
+\extraheadheight{0.25cm} % gives space for multi-line headers
+\headrule
+
+%  \makebox[2in][l]{
+%Student ID:\enspace 
+%\ifprintanswers\qquad-- Outline Solutions --\else\hrulefill\fi}
+
+
+\chead{}
+
+\lhead{%
+  \ifcontinuation{\papercode\ \papertitle\ -- \assessmenttype\\[2ex]
+    \emph{Question \ContinuedQuestion\ continues \ldots}}
+  {\papercode\ \papertitle\ -- \assessmenttype \\[2ex]
+    \quad{}}
+}
+
+% Footer information
+\footrule
+\lfoot{}
+\cfoot{Page \thepage\ of \numpages}
+\rfoot{}
+
+% Adds points and creates the grading table
+\addpoints
+
+% Prints points in the right margin
+% \pointsinrightmargin
+
+% Stops the printing of marks in the right margin
+\pointsdroppedatright
+\marksnotpoints
+\marginpointname{\emph{\points}}
+
+% Changes ``Points'' to ``Marks'' on each question
+\pointpoints{mark}{ marks}
+
+% Changes ``Points'' to ``Marks'' in the grade table
+\hpword{Marks:}
+
+% Sets line thickness for answer sections
+\setlength\linefillthickness{0.1pt}
+
+% Set a gap between marks and margins
+\setlength{\rightpointsmargin}{.5cm}
+
+
+
+% %Sarah's R code commands
+\usepackage{verbatim,dsfont}
+\usepackage{fancyvrb}
+\usepackage{xcolor}
+%\definecolor{codecol}{RGB}{0,0,250} %blue
+\definecolor{codecol}{RGB}{0,0,0} %black
+\newenvironment{codeChunk}{}{}
+\DefineVerbatimEnvironment{codeIn}{Verbatim} {formatcom=\color{codecol}, baselinestretch=1}
+\DefineVerbatimEnvironment{codeOut}{Verbatim} {formatcom=\color{codecol}, baselinestretch=1}
+\newcommand{\code}[1]{\textsl{\textcolor{black}{\texttt{#1}}}}
+\usepackage{enumerate}
+\usepackage[hyphens]{url}
+%\usepackage{hyperref}
+\usepackage[hidelinks]{hyperref}
+\usepackage{longtable}
+
+
+%\newcommand{\MarkingNotes}[1]{\textcolor{purple}{#1}}
+\newcommand{\MarkingNotes}[1]{}
+
+
+\begin{document}
+
+%%% Cover page. %%%
+%\begin{coverpages}
+% \begin{tabular}{p{0.4\linewidth}p{0.6\linewidth}}
+%    & Student ID Number:\qquad\hrulefill \\[3ex]
+%     & Number of additional sheets:\enspace\hrulefill
+% \end{tabular}
+  
+ \begin{center}
+% \hrule
+%    \vspace{1em}
+    %\includegraphics[width=0.75\linewidth]{SCMS_Logo}
+%\vspace*{-2.25cm}
+%\includegraphics[width=\linewidth]{AUT_COMP_MATH_CMYK} %Check file is current logo (see i drive)
+
+\vspace{-2em}
+
+
+   % \vspace{-2em}
+    {\LARGE Auckland University of Technology}
+    \vspace{1em}
+    
+    {\LARGE \papercode\ \papertitle}
+    
+    \vspace{1em}
+
+    
+    \vspace{1em}
+    {\LARGE \assessmenttype}
+\hrule
+    \ifprintanswers\vspace{1em}\textbf{\huge -- Marking Guide --}\fi
+ \end{center}
+  
+
+%\bigskip
+
+%  \vfill
+
+
+
+  % Alter these instructions as they apply to the paper requirements.
+  \textbf{{ Instructions:}} % (Read all of these instructions carefully).
+   \begin{itemize}
+    \item Due date:  Submit to Blackboard (AUTonline) by the date specified
+     %   \item Time allowed: \emph{2 hours}, plus 5 minutes    reading time.
+
+\item Assignments should be submitted to Blackboard as a \textbf{pdf
+  or word document}.
+
+\item The dataset is available on Blackboard (AUTonline).  All data
+  has been obtained from the World Bank, with the exception of the
+  "Region" variable.
+
+  You can read the dataset into R using a command like
+
+  \verb+ a <- read.csv(file.choose(), header=TRUE)+
+
+  
+\item R code should be formatted in a \texttt{fixed-width font} such
+  as \texttt{Courier New}.
+
+\item \textbf{Originality:} The assignment is an \textbf{individual
+  piece of work}. You are encouraged to discuss the assignment with
+  your lecturers and classmates, however, the work you submit must be
+  your own.  Assignments that show similarities to work submitted by
+  other students will be investigated for \textbf{plagiarism}; we
+  treat this issue very seriously.  Plagiarism software, such as
+  TurnItIn, may be used to electronically compare submissions to those
+  of other students and to documents on the internet.  Talk to your
+  tutor or lecturer if you have any questions about this.
+
+
+ \end{itemize}
+
+
+\vfill
+
+ \begin{center}
+ % \settabletotalpoints{100}
+    \gradetable[h][questions]   %    table for marks? 
+ \end{center}
+\vfill
+
+
+\newpage
+\noindent
+This assignment will follow the statistical enquiry cycle discussed in
+lectures.  Your analysis should be written as a report (2-4 pages of
+A4 is about right) and should follow the structure outlined in
+questions 1 -- 6 below.
+
+\begin{questions}
+\question[10]  \textbf{Problem} \droptotalpoints
+
+Consult the list of variables provided in the dataset and choose a
+topic to explore (if your dataset is called \verb+a+, typing
+\verb+names(a)+ on the command line tells you the variable names you
+have available; in Rstudio, you can see the details of a dataset which
+you have read in the `environment' pane).
+
+You should choose a broad overall topic, and then
+write two specific questions to investigate.  You should also
+provide a brief explanation (about 100-150 words) about why you think
+these questions are interesting.
+
+Two \emph{examples} of topics and questions are provided below
+({\bf\em do not choose these examples!}).  The questions must be able
+to be answered using data in the dataset.
+
+Example 1: \\
+Topic: What factors impact literacy?
+
+Two specific questions:
+\begin{itemize}
+\item Do countries with a higher GDP also have a higher literacy rate? 
+\item Does this relationship differ by geographic region? 
+\end{itemize}
+
+Example 2: \\
+Topic: How do CO$_2$ emissions vary globally?
+
+Two specific questions:
+\begin{itemize}
+\item Do countries with higher CO$_2$ emissions also have large agricultural sectors?
+\item Do CO$_2$ emissions vary by geographic region? 
+\end{itemize}
+
+Marks will be awarded for a clear definition of the investigative
+question/s and for a thoughtful explanation about why this question is
+interesting.  Simply listing the questions will score about 4/10,
+providing the questions are sensible and can be answered with the
+dataset (otherwise a lower mark will be awarded).  The remaining 6/10
+marks are awarded for the explanation.  Students who state appropriate
+questions and provide a sensible and coherent explanation will get
+full marks.
+
+\question[5] \textbf{Plan} \droptotalpoints
+
+What variables will be required to answer your questions?  Provide a
+brief explanation (in your own words) about each of your chosen
+variables. You are encouraged to refer to the World Bank website for
+details about variables.  If you need to compute an additional
+variable in order to answer one of your questions, the code used to do
+this should be provided.
+
+{\it Example: \\
+%
+\begin{tabular}{llll}
+Short Name & Full Name  & Brief Description \\\hline
+
+Female Literacy Rate &\parbox[t]{4cm}{Literacy rate, adult female (\% of females ages 15 and above)} & \parbox[t]{7cm}{The percentage of females, 15 years and above, who are able to read and write simple statements.}\\
+Male Literacy Rate  & \ldots  &\ldots  \\
+Literacy Rate  & \ldots   &\ldots  \\
+GDP & \ldots  & \ldots  \\
+%Geographic Region & \ldots  & \ldots &\ldots  \\
+\end{tabular}
+%Note: this example shows the explanation for one of the required variables. You should explain all of the variables that you will use.
+}
+
+
+\begin{solution}[5mm]
+Marks will be awarded for correct identification of the appropriate variables and a clear explanation (similar to the "Brief Description") about the meaning of each variable.  The description should be written in the student's own words, not copied directly form the World Bank website.
+%The world bank code is not important, though students should not be penalised for including it. 
+
+Award 1 mark per variable up to a maximum of 5 marks. If students explain all relevant variables clearly and correctly, then full marks should be awarded.
+
+\end{solution}
+
+
+\question[5] \textbf{Data}  \droptotalpoints
+
+Read the dataset into R and extract the data that you will need for
+this analysis.  You can extract the columns by referring to them by
+name or by number.  Provide the code that you use to do this.
+
+\textit{Example:}
+\begin{codeChunk}
+\begin{codeIn}
+#Read CSV file
+allglobal <- read.csv(file.choose())
+
+#Extract chosen columns using names
+global <- allglobal[, c("Country", "Region", "GDP", "TaxRevenue")]
+
+#Extract chosen columns using column numbers
+global <- allglobal[, c(1, 3, 12, 30)]
+
+#Inspect data
+head(global)
+\end{codeIn}
+\end{codeChunk}
+
+\begin{solution}[5mm]
+Marks will be awarded if correct code is provided.  %Most students will get full marks here.
+\end{solution}
+
+\question[45] \textbf{Analysis} \droptotalpoints
+Explore your two questions using appropriate summary statistics and graphs.
+The following structure is recommended for each question:
+\begin{itemize}
+\item Clearly state the question being analysed (e.g. with a heading) %(\textit{1 mark})
+\item Summary statistics and graphs.    In the example above, you might use R idiom such as
+
+  \begin{itemize}
+  \item  \verb+mean(global$GDP)+ or maybe \verb+median(global$GDP)+  (why the difference)?
+  \item  \verb+hist(global$GDP)+
+  \item \verb+boxplot(GDP~Region, data=global)+ \ldots although in this
+    case you might be better off using logarithmic axes,
+    \verb+boxplot(GDP~Region, data=global, log='y')+
+  \end{itemize}
+  
+
+\item 50-150 words explaining the \textbf{key messages} of your summary statistics and graphs. % (\textit{8 marks})
+\end{itemize}
+
+Across the analysis of the two questions, you should include at
+least~3 \textit{different} types of graphs and~4 \textit{different}
+summary statistics.  Marks will only be awarded if the graphs, summary
+statistics and explanations are correct and appropriate.
+
+\begin{solution}[5mm]
+There are 15 marks available for each of the 3 questions.  A mark out
+of 15 should be provided for each question.  The allocation of the 15
+marks is as follows:
+\begin{itemize}
+\item 1 mark for clearly stating the question
+\item 5 marks for summary statistics and graphs
+\item 9 marks for 150-250 words explaining the \textbf{key messages} of the summary statistics and graphs.
+\end{itemize}
+This means that if a student clearly indicates the question (e.g. using a heading) and creates sensible graphs and summary statistics but does not explain them, then they will get 6/15 for that question.
+
+\MarkingNotes{
+
+  The students are expected to apply the analysis from weeks~1
+  and~2.  However if they have done this and also apply some other
+  technique (e.g. maps), then credit should be given.  }
+
+\MarkingNotes{Markers do not need to replicate the analysis that the
+  students perform, but should "eyeball".}
+
+The analysis should
+\begin{itemize}
+\item be appropriate for the question
+\item be correct
+\item follow a clear structure and provide insight
+\item be explained clearly and correctly.
+\end{itemize}
+
+\end{solution}
+
+\question[15] \textbf{Conclusion.} \droptotalpoints
+
+Write one or two paragraphs (approximately 100-200 words) to summarise
+your findings. You should answer your question by referring to the
+appropriate analysis conducted in part 4. You should also mention
+further analysis that could be conducted.
+%Remember to relate your findings to the context!
+
+\begin{solution}[5mm]
+Marks will be awarded for clear and insightful comments.
+\end{solution}
+
+\question[10] \textbf{Critique}
+\droptotalpoints
+
+Choose two of the graphs that you used in part 4. For each graph,
+explain why that type of graph was appropriate for the analysis that
+you conducted (approximately 100 - 150 words total).
+
+
+\begin{solution}[5mm]
+5 marks per graph.
+
+The graph which is being discussed should be clearly identified.  The
+critique could mention like issues such as: the type of data (numeric
+vs categorical) and the need to compare across categories, the range
+of values etc.
+
+\end{solution}
+
+\question[10]  \textbf{Presentation and Grammar}
+\droptotalpoints
+Your report should be professionally presented and should be free of spelling and grammar errors, and all sources should be clearly referenced. %
+Therefore, 10 marks will be allocated based on the overall presentation of your assignment.
+    
+
+%10 marks are awarded for presentation, style and grammar.
+
+\begin{solution}[5mm] %\vspace{4cm}
+Presentation marks include, but are not limited to: including a title
+page, spelling, grammar, use of full sentences, use of mathematical
+notation, clearly formatted answers, graphs with original aspect ratio
+(e.g. not squashed), appropriate use of colour, correct referencing
+etc.
+\end{solution}
+
+%\question
+%\begin{parts}
+%%\part It is often easier to work with a sample instead of an entire population. Given the larger dataset has 300 individuals, how would you create a random sample of 50?
+%
+%\part Can you find evidence in the sample dataset that either supports or contradicts this article? (Hint: classify the ages into age groups, and use some descriptive statistics to compare)
+% 
+%
+%
+%\end{parts}
+
+\end{questions}
+\nomorequestions
+
+
+\newpage
+\begin{longtable}{clp{6cm}l}
+Column	&	Short Name	&	Long Name	&	World Bank Code	\\ \hline
+1	&	Country	&	Country Name	&		\\
+2	&	CountryCode	&	Country Code	&		\\
+3	&	Region	&	Region	&		\\
+4	&	AdolescentFertility	&	Adolescent fertility rate (births per 1,000 women ages 15-19)	&	[SP.ADO.TFRT]	\\
+5	&	Agriculture	&	Agriculture, value added (\% of GDP)	&	[NV.AGR.TOTL.ZS]	\\
+6	&	CO2	&	CO2 emissions (metric tons per capita)	&	[EN.ATM.CO2E.PC]	\\
+7	&	Electric	&	Electric power consumption (kWh per capita)	&	[EG.USE.ELEC.KH.PC]	\\
+8	&	Energy	&	Energy use (kg of oil equivalent per capita)	&	[EG.USE.PCAP.KG.OE]	\\
+9	&	Exports	&	Exports of goods and services (\% of GDP)	&	[NE.EXP.GNFS.ZS]	\\
+10	&	Fertility	&	Fertility rate, total (births per woman)	&	[SP.DYN.TFRT.IN]	\\
+11	&	Forest	&	Forest area (sq. km)	&	[AG.LND.FRST.K2]	\\
+12	&	GDP	&	GDP (current US\$)	&	[NY.GDP.MKTP.CD]	\\
+13	&	GDPGrowth	&	GDP growth (annual \%)	&	[NY.GDP.MKTP.KD.ZG]	\\
+14	&	TechExports	&	High-technology exports (\% of manufactured exports)	&	[TX.VAL.TECH.MF.ZS]	\\
+15	&	Immunization	&	Immunization, measles (\% of children ages 12-23 months)	&	[SH.IMM.MEAS]	\\
+16	&	Imports	&	Imports of goods and services (\% of GDP)	&	[NE.IMP.GNFS.ZS]	\\
+17	&	Industry	&	Industry, value added (\% of GDP)	&	[NV.IND.TOTL.ZS]	\\
+18	&	Internet	&	Internet users (per 100 people)	&	[IT.NET.USER.P2]	\\
+19	&	LifeExpectancy	&	Life expectancy at birth, total (years)	&	[SP.DYN.LE00.IN]	\\
+20	&	Military	&	Military expenditure (\% of GDP)	&	[MS.MIL.XPND.GD.ZS]	\\
+21	&	Mobile	&	Mobile cellular subscriptions (per 100 people)	&	[IT.CEL.SETS.P2]	\\
+22	&	Mortality	&	Mortality rate, under-5 (per 1,000 live births)	&	[SH.DYN.MORT]	\\
+23	&	StatisticalCapacity	&	Overall level of statistical capacity (scale 0 - 100)	&	[IQ.SCI.OVRL]	\\
+24	&	PopulationDensity	&	Population density (people per sq. km of land area)	&	[EN.POP.DNST]	\\
+25	&	PopulationGrowth	&	Population growth (annual \%)	&	[SP.POP.GROW]	\\
+26	&	Population	&	Population, total	&	[SP.POP.TOTL]	\\
+27	&	HIV	&	Prevalence of HIV, total (\% of population ages 15-49)	&	[SH.DYN.AIDS.ZS]	\\
+28	&	SecondarySchool	&	School enrollment, secondary (\% gross)	&	[SE.SEC.ENRR]	\\
+29	&	SurfaceArea	&	Surface area (sq. km)	&	[AG.SRF.TOTL.K2]	\\
+30	&	TaxRevenue	&	Tax revenue (\% of GDP)	&	[GC.TAX.TOTL.GD.ZS]	\\
+31	&	PopulationGrowthUrban	&	Urban population growth (annual \%)	&	[SP.URB.GROW]	\\
+32	&	AgeDependency	&	Age dependency ratio (\% of working-age population)	&	[SP.POP.DPND]	\\
+33	&	Agricultural	&	Agricultural land (sq. km)	&	[AG.LND.AGRI.K2]	\\
+34	&	AirPassengers	&	Air transport, passengers carried	&	[IS.AIR.PSGR]	\\
+35	&	AirDepartures	&	Air transport, registered carrier departures worldwide	&	[IS.AIR.DPRT]	\\
+36	&	ArmedForces	&	Armed forces personnel (\% of total labor force)	&	[MS.MIL.TOTL.TF.ZS]	\\
+37	&	ATM	&	Automated teller machines (ATMs) (per 100,000 adults)	&	[FB.ATM.TOTL.P5]	\\
+38	&	BirthRate	&	Birth rate, crude (per 1,000 people)	&	[SP.DYN.CBRT.IN]	\\
+39	&	Cereal	&	Cereal production (metric tons)	&	[AG.PRD.CREL.MT]	\\
+40	&	ComputerExports	&	Computer, communications and other services (\% of commercial service exports)	&	[TX.VAL.OTHR.ZS.WT]	\\
+41	&	ComputerImports	&	Computer, communications and other services (\% of commercial service imports)	&	[TM.VAL.OTHR.ZS.WT]	\\
+42	&	DeathRate	&	Death rate, crude (per 1,000 people)	&	[SP.DYN.CDRT.IN]	\\
+43	&	Broadband	&	Fixed (wired) broadband subscriptions	&	[IT.NET.BBND]	\\
+44	&	BroadbandPer100	&	Fixed (wired) broadband subscriptions (per 100 people)	&	[IT.NET.BBND.P2]	\\
+45	&	Telephone	&	Fixed telephone subscriptions	&	[IT.MLT.MAIN]	\\
+46	&	GDPperCapita	&	GDP per capita (current US\$)	&	[NY.GDP.PCAP.CD]	\\
+47	&	Hospital	&	Hospital beds (per 1,000 people)	&	[SH.MED.BEDS.ZS]	\\
+48	&	TechExportsUSD	&	High-technology exports (current US\$)	&	[TX.VAL.TECH.CD]	\\
+49	&	Household	&	Household final consumption expenditure (current US\$)	&	[NE.CON.PRVT.CD]	\\
+50	&	HouseholdAdj	&	Household final consumption expenditure, etc. (current US\$)	&	[NE.CON.PETC.CD]	\\
+51	&	ICTServiceExports	&	ICT service exports (\% of service exports, BoP)	&	[BX.GSR.CCIS.ZS]	\\
+52	&	ICTServiceExportsUSD	&	ICT service exports (BoP, current US\$)	&	[BX.GSR.CCIS.CD]	\\
+53	&	ICTGoodsImports	&	ICT goods imports (\% total goods imports)	&	[TM.VAL.ICTG.ZS.UN]	\\
+54	&	ICTGoodsExports	&	ICT goods exports (\% of total goods exports)	&	[TX.VAL.ICTG.ZS.UN]	\\
+55	&	Unemployment	&	Long-term unemployment (\% of total unemployment)	&	[SL.UEM.LTRM.ZS]	\\
+56	&	Nurses	&	Nurses and midwives (per 1,000 people)	&	[SH.MED.NUMW.P3]	\\
+57	&	PopulationChildren	&	Population ages 0-14 (\% of total)	&	[SP.POP.0014.TO.ZS]	\\
+58	&	PopulationAdult	&	Population ages 15-64 (\% of total)	&	[SP.POP.1564.TO.ZS]	\\
+59	&	PopulationElderly	&	Population ages 65 and above (\% of total)	&	[SP.POP.65UP.TO.ZS]	\\
+60	&	Renewable	&	Renewable energy consumption (\% of total final energy consumption)	&	[EG.FEC.RNEW.ZS]	\\
+61	&	SecureInternetTotal	&	Secure Internet servers	&	[IT.NET.SECR]	\\
+62	&	SecureInternet	&	Secure Internet servers (per 1 million people)	&	[IT.NET.SECR.P6]	\\
+\end{longtable}
+
+\end{document}
