@@ -18,7 +18,7 @@ builds on chapter 3 of the course manual.
 
 ### Question
 
-Let $X\sim\operatorname{bin}{13,0.8}$.  This means that we have 13 independent
+Let $X\sim\operatorname{bin}(13,0.8)$.  This means that we have 13 independent
   Bernoulli trials, each with a probability of 0.8 of success.
 
 Compute the following probabilities using the R function
@@ -85,7 +85,7 @@ to texting while driving.  If $X$ is modelled by a binomial random
 variable, state $n$ and $p$.
 
 ```{asis}
-$X \sim\bin{10}{0.47}$.\\
+$X \sim\operatorname{bin}(10,0.47)$.\\
 ```
 
 * Compute the probability mass function for all values of $X$ using R.
