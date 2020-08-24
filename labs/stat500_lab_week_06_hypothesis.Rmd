@@ -1,6 +1,8 @@
 ---
 title: "stat500 lab, week 6, hypothesis testing"
-output: html_document
+output:
+  pdf_document: default
+  html_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -44,16 +46,15 @@ qnorm(1-alpha/2, 0, 1)
 ```
 
 ```{asis}
-Therefore the critical region is the interval $(-\infty, -1.96) \cup
-(1.96, \infty) $ or~$\{z\colon\left|z\right| > 1.96\}$
+Therefore the critical region is the interval $(-\infty, -1.96) \cup(1.96, \infty)$ or~$\{z\colon\left|z\right| > 1.96\}$
 ```
 
 ### Question
 
-A army office is interested in the horizontal distance from the target
+An army office is interested in the horizontal distance from the target
 of a set of rifle shots, measured in centimetres.  It is known from
 previous studies that the standard deviation of the horizontal
-distance is 0.6\,cm.
+distance is 0.6 centimeters.
 
 ```{r,include=TRUE}
 x <- c(-0.67, -0.03, 0.37, 1.87, 0.35, -0.47, 0.92, 0.95, 0.55, 0.16,
@@ -126,14 +127,15 @@ shots is not equal to 0.
 
 * Assess the evidence provided by the data calculating a p-value.  NB:
   a typical exam question will ask you to state the precise definition
-  of p-value and explain what ``more extreme'' means in this context.
+  of p-value and explain what "more extreme" means in this context.
 
 ```{asis}
 
 The p-value is the probability, if the null is true, of obtaining the
-observation or one more extreme. In this context, ``more extreme''
-means ``the sample mean of the dataset is further away from zero than
-0.295''.
+observation or one more extreme.  In this context, "more extreme"
+means "the sample mean of the dataset is further away from zero than
+0.295".
+```
 
 ```{r}
 1-pnorm(z, 0, sd=1)
@@ -167,7 +169,7 @@ Regardless of age, about 20\% of American adults participate in
 fitness activities (the criterion was activity taking place at least
 twice a week).  A random sample of 100 adults over 40 years old found
 15 who exercised at least twice a week.  Is this evidence of a decline
-in participation after age 40?  We will use~$\alpha = 0.05$.
+in participation after age 40?  We will use $\alpha = 0.05$.
 
 * State the null and alternative hypotheses.
 
@@ -190,9 +192,9 @@ z
 ```
 
 ```{asis}
-Observe that the mean and variance are calculated using the {\em true}
+Observe that the mean and variance are calculated using the  *true*
 value of $p$, not the estimate $\hat{p}=r/n$.  What would you do if
-your information about~$p$ came purely from observing $r$ successes
+your information about $p$ came purely from observing $r$ successes
 out of $n$ trials?
 ```
 
@@ -243,7 +245,7 @@ sum(dbinom(0:15,100, 0.2))
 
 The following dataset shows the level of lake Huron over 98 years:
 
-```{r,inclide=TRUE}
+```{r,include=TRUE}
 huron <- 
 c(580.92, 581.86, 580.97, 580.8, 579.79, 580.39, 580.42, 580.82, 
 581.4, 581.32, 581.44, 581.68, 581.17, 580.53, 580.01, 579.91, 
@@ -268,8 +270,8 @@ Historically, the level of the lake has been 579.3cm.
 ```{asis}
 Let $\mu$ denote the mean level of the Lake Huron.
 
-$H_0: \mu = 579.3$\\
-$H_1: \mu > 579.3$
+* $H_0: \mu = 579.3$
+* $H_1: \mu > 579.3$
 
 Note that the null hypothesis corresponds to the situation in which the lake level
 has not changed from the historical value of  579.3cm.
