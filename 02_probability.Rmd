@@ -521,6 +521,6 @@ x_3=\$ 10$ and we would have
 \mathbb{E}(X) = x_1*p(X=x_1)+x_2*p(X=x_2)+x_3*p(X=x_3)=\$ 0*0.9 + \$1*0.09 + \$10*0.01 = \$0+\$0.09+\$0.10=\$0.19
 \]
 
-Thus you would expect to win $\$0.10$ per play or 10 cents.
+Thus you would expect to win $\$0.19$ per play or 19 cents.
 
 
