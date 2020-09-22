@@ -82,7 +82,7 @@ assessed its uncertainty.
 ## Example: acid rain (single-sample, one-sided test)
 
 Historical data show that the pH level of a lake in a particular area
-is 6.7.  It is expected that the pH level will fall as a result of
+is 6.5.  It is expected that the pH level will fall as a result of
 recent increasses to acidic rain from polluting industries nearby. The
 acidity levels of the lake have been tested 12 times over the past
 year with the following results:
