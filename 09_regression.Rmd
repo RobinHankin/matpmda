@@ -102,9 +102,10 @@ plot(x,x+rnorm(100)*7,ylab="y")
 plot(x,x+rnorm(100)*30,ylab="y")
 ```
 
-It is clear that the first scattergraph is "weaker" in some sense, and
-the second is "stronger".  There are two ways to quantify this: the
-$p$-value, and the correlation coefficient.
+It is clear that the lower scattergraph is "weaker" in some sense, and
+the top one is "stronger".  The top scattergraph has points which are
+closer to a fitted straight line.  There are two ways to quantify
+this: the $p$-value, and the correlation coefficient.
 
 Recall the definition of $p$-value: "the probability, if the null is
 true, of obtaining the observation or an observation more extreme".
