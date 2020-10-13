@@ -20,6 +20,75 @@ year, and 15 subjects are found to have higher bone density.  Of these
 follows:
 
 
+
+```{r,include=TRUE}
+M <- matrix(c(12,3,5,14),2,2)
+dimnames(M) <- list(increased=c(T,F),given=c("calcium","placebo"))
+M
+```
+
+* State a sensible null hypothesis
+
+```{asis}
+
+The null hypothesis is that the probability of having increased
+bone density is the same for the treatment and placebo group. 
+
+Symbolically
+
+$$\operatorname{Prob}(\mathrm{increase}|\mathrm{calcium}) = 
+  \operatorname{Prob}(\mathrm{increase}|\mathrm{placebo})
+  $$
+```
+
+* State the precise definition of pvalue.  State what "more extreme" means in this context.
+
+
+```{asis}
+pvalue is the probability, if the null is true, of obtaining the observation 
+or an observation more extreme.
+
+Given the marginal totals, ``more extreme'' means more than 12 patients increasing bone density with calcium
+```
+
+* Perform a Fisher test and interpret
+
+
+```{r}
+fisher.test(M,alternative="greater")
+```
+
+```{asis}
+pvalue significant so we can infer that calcium increases bone density
+```
+
+
+
+
+* (harder) Suppose only 11 of the 15 given calcium exhibited an
+  improvement.  Does your conclusion change?
+  
+```{r}
+M <- matrix(c(11,4,6,13),2,2)
+dimnames(M) <- list(increased=c(T,F),given=c("calcium","placebo"))
+M
+fisher.test(M,alternative="greater")
+```
+
+```{asis}
+still significant; result unchanged.
+```
+
+### Question
+
+An engineering competition for undergraduate students challenges
+entrants to construct a bridge with given materials.  
+A total of 30 students enter the competition, of whom 10 are from AUT
+and 20 from UoA.  Each student's bridge is tested, and 13 bridges pass
+the test and 17 fail.  Of the 10 AUT students, 7 of them build bridges
+that pass the test.  We may represent the data in R as follows:
+
+
 ```{r,include=TRUE}
 M <- matrix(c(12,3,5,14),2,2)
 dimnames(M) <- list(increased=c(T,F),given=c("calcium","placebo"))
