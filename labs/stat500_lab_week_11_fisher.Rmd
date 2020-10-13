@@ -1,0 +1,80 @@
+---
+title: "stat500 lab, week 11, Fisher's exact test"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(include =FALSE) # change to TRUE when rendering solutions; this changes
+                                      # the default visibility (which is overridden by explicitly
+                                      # setting  include=TRUE in chunk options)
+```
+
+### Question
+
+A Medical researcher is investigating whether calcium supplements
+increase bone density.  He takes a sample of 32 subjects, of whom 15
+are given calcium and 19 a placebo (a "placebo" is a dummy pill that
+has no medical effect).  The researcher tests the subjects after a
+year, and 15 subjects are found to have higher bone density.  Of these
+15 subjects, 12 were given calcium.  We may represent the data in R as
+follows:
+
+
+```{r,include=TRUE}
+M <- matrix(c(12,3,5,14),2,2)
+dimnames(M) <- list(increased=c(T,F),given=c("calcium","placebo"))
+M
+```
+
+* State a sensible null hypothesis
+
+```{asis}
+
+The null hypothesis is that the probability of having increased
+bone density is the same for the treatment and placebo group. 
+
+Symbolically
+
+$$\operatorname{Prob}(\mathrm{increase}|\mathrm{calcium}) = 
+  \operatorname{Prob}(\mathrm{increase}|\mathrm{placebo})
+  $$
+```
+
+* State the precise definition of pvalue.  State what "more extreme" means in this context.
+
+
+```{asis}
+pvalue is the probability, if the null is true, of obtaining the observation 
+or an observation more extreme.
+
+Given the marginal totals, ``more extreme'' means more than 12 patients increasing bone density with calcium
+```
+
+* Perform a Fisher test and interpret
+
+
+```{r}
+fisher.test(M,alternative="greater")
+```
+
+```{asis}
+pvalue significant so we can infer that calcium increases bone density
+```
+
+
+
+
+* (harder) Suppose only 11 of the 15 given calcium exhibited an
+  improvement.  Does your conclusion change?
+  
+```{r}
+M <- matrix(c(11,4,6,13),2,2)
+dimnames(M) <- list(increased=c(T,F),given=c("calcium","placebo"))
+M
+fisher.test(M,alternative="greater")
+```
+
+```{asis}
+still significant; result unchanged.
+```
+
