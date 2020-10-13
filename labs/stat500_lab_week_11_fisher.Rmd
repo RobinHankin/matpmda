@@ -4,7 +4,7 @@ output: html_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(include =FALSE) # change to TRUE when rendering solutions; this changes
+knitr::opts_chunk$set(include = TRUE) # change to TRUE when rendering solutions; this changes
                                       # the default visibility (which is overridden by explicitly
                                       # setting  include=TRUE in chunk options)
 ```
@@ -43,12 +43,17 @@ $$\operatorname{Prob}(\mathrm{increase}|\mathrm{calcium}) =
 
 * State the precise definition of pvalue.  State what "more extreme" means in this context.
 
-
 ```{asis}
 pvalue is the probability, if the null is true, of obtaining the observation 
 or an observation more extreme.
 
 Given the marginal totals, ``more extreme'' means more than 12 patients increasing bone density with calcium
+```
+
+* One-sided or two?  Justify
+
+```{asis}
+One-sided; we expect the calcium to increase bone density
 ```
 
 * Perform a Fisher test and interpret
@@ -61,9 +66,6 @@ fisher.test(M,alternative="greater")
 ```{asis}
 pvalue significant so we can infer that calcium increases bone density
 ```
-
-
-
 
 * (harder) Suppose only 11 of the 15 given calcium exhibited an
   improvement.  Does your conclusion change?
@@ -90,8 +92,8 @@ that pass the test.  We may represent the data in R as follows:
 
 
 ```{r,include=TRUE}
-M <- matrix(c(12,3,5,14),2,2)
-dimnames(M) <- list(increased=c(T,F),given=c("calcium","placebo"))
+M <- matrix(c(7,6,3,14),2,2)
+dimnames(M) <- list(uni=c("AUT","UoA"),test=c("passes","fails"))
 M
 ```
 
@@ -111,12 +113,89 @@ $$\operatorname{Prob}(\mathrm{increase}|\mathrm{calcium}) =
 
 * State the precise definition of pvalue.  State what "more extreme" means in this context.
 
+```{asis}
+pvalue is the probability, if the null is true, of obtaining the observation 
+or an observation more extreme.
+
+Given the marginal totals, ``more extreme'' means a
+smaller probability than observed, if the null is true.
+```
+
+* One-sided or two?  Justify
+```{asis}
+
+Sidedness unclear in this case.  We might argue that
+we seek a difference between the universities, in which case
+we would use a two-sided test.  Or we might argue that it is self-evident 
+that AUT will have better students than UoA.
+
+However, it is *not* acceptable to choose sidedness on the basis
+of the observations.
+```
+
+
+* Perform a Fisher test and interpret
+
+
+```{r}
+fisher.test(M)  # two-sided by default
+```
+
+```{asis}
+pvalue not significant so we can make no conclusion.
+```
+
+* (harder) Suppose that one of the AUT students whose bridge failed
+the test is allowed to submit another bridge which passes (perhaps the
+first test was unfair in some way).  Do your conclusions change?
+  
+```{r}
+M <- matrix(c(8,6,2,14),2,2)
+dimnames(M) <- list(uni=c("AUT","UoA"),test=c("passes","fails"))
+M
+```
+
+```{asis}
+significant; AUT is better.
+```
+
+### Question
+
+A certain lady claims to be able to detect whether milk is added first
+or last to her tea.  She is given 8 cups of tea of which 4 have had
+milk added first and 4 milk second.  Of the 4 with milk first, she
+identifies 3 correctly, and of the 4 with milk added second, also
+identifies 3 correctly.  We may represent this as follows:
+
+
+```{r,include=TRUE}
+M <- matrix(c(3,1,1,3),2,2)
+dimnames(M) <- list(milk_first_actual=c(T,F),milk_first_guess=c(T,F))
+M
+```
+
+
+
+* State a sensible null hypothesis
+
+```{asis}
+
+The lady guesses at random.
+```
+
+* State the precise definition of pvalue.  State what "more extreme" means in this context.
 
 ```{asis}
 pvalue is the probability, if the null is true, of obtaining the observation 
 or an observation more extreme.
 
-Given the marginal totals, ``more extreme'' means more than 12 patients increasing bone density with calcium
+Given the marginal totals, ``more extreme'' means fewer errors.
+```
+
+* One-sided or two?  Justify
+```{asis}
+
+One-sided, she aims to guess correctly more often.
 ```
 
 * Perform a Fisher test and interpret
@@ -127,23 +206,17 @@ fisher.test(M,alternative="greater")
 ```
 
 ```{asis}
-pvalue significant so we can infer that calcium increases bone density
+pvalue not significant so we can make no conclusion.
 ```
 
-
-
-
-* (harder) Suppose only 11 of the 15 given calcium exhibited an
-  improvement.  Does your conclusion change?
+* (harder) Suppose she got all 8 cups correct.  Would your conclusion change?
   
 ```{r}
-M <- matrix(c(11,4,6,13),2,2)
-dimnames(M) <- list(increased=c(T,F),given=c("calcium","placebo"))
+M[] <- c(4,0,0,4)
 M
 fisher.test(M,alternative="greater")
 ```
 
 ```{asis}
-still significant; result unchanged.
+significant; she is a better guesser than chance would suggest
 ```
-
