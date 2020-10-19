@@ -12,7 +12,7 @@ knitr::opts_chunk$set(include = TRUE) # change to TRUE when rendering solutions;
 ### Question
 
 A Medical researcher is investigating whether calcium supplements
-increase bone density.  He takes a sample of 32 subjects, of whom 15
+increase bone density.  He takes a sample of 34 subjects, of whom 15
 are given calcium and 19 a placebo (a "placebo" is a dummy pill that
 has no medical effect).  The researcher tests the subjects after a
 year, and 15 subjects are found to have higher bone density.  Of these
