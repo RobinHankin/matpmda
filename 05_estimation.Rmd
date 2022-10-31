@@ -88,20 +88,16 @@ Then we can equally say
 \]
 
 and so the error in using $\overline{x}$ instead of the true
-value~$\mu$ is Gaussian with standard deviation $\sigma/\sqrt{n}$.
+value $\mu$ is Gaussian with standard deviation $\sigma/\sqrt{n}$.
 
 Quite often, we want to know how bad the error is likely to be.  We
 would like to specify a "worst credible" error, and the standard way
 to do this is to give a value for the error that is exceeded only
 rarely, in particular 5\% of the time.  This is equivalent to
-`qnorm(0.975)` (the value of 0.975 comes from the fact that we
-specify two tails of total size 5\%, so each one is 2.5\%=0.025.  And
-then because `qnorm()` takes the area to the left, we need to
-specify $1-0.025=0.975$).
-
-
-
-
+`qnorm(0.975)` (the value of 0.975 comes from the fact that we specify
+two tails of total size 5\%, so each one is half of this, or
+2.5\%=0.025.  And then because `qnorm()` takes the area to the left,
+we need to specify $1-0.025=0.975$).
 
 ## Example
 
