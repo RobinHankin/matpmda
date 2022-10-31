@@ -205,13 +205,15 @@ R functionality.
 One way to consider the test statistic (here the sample mean) is to
 convert it to a quantity, conventionally called $Z$, which has a
 standard normal distribution if the null is true.  To do this, we need
-to subtract the null mean, and scale by dividing by the standard
-deviation:
-
+to subtract the null mean, and scale by dividing by the standard error
+of the mean:
 
 \[
-Z=\frac{\overline{x}-\mu}{\sigma}
+Z=\frac{\overline{x}-\mu}{\sigma/\sqrt{n}}
 \]
+
+Then, if the null is true, $Z$ will be normally distributed, $Z\sim
+N(0,1)$.
 
 ##  Example:  Passing with excellence in NCEA
 
