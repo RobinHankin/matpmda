@@ -48,4 +48,4 @@ issues page.
 [https://github.com/RobinHankin/stat500/issues](https://github.com/RobinHankin/stat500/issues)
 
 
-\includegraphics{stat601/ornamental20}
+\includegraphics{ornamental20}
