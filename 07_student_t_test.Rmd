@@ -131,7 +131,7 @@ t.test(acid,mu=6.5,alternative="less")
 ```
 
 (note that we set the mean pH as specified in the null, and also
-specify ```alternative="less"``` to ensure R carries out a
+specify `alternative="less"` to ensure R carries out a
 one-sided test).
 
 * step 4.  Interpret.  Because the p-value is less than 5\%, there is
@@ -259,9 +259,9 @@ t.test(patients$before,patients$after,alternative="less",paired=TRUE)
 ```
 
 Note that we have used the dollar construction to extract the
-variables from the ```patients``` dataframe, and also note how we have
-passed argument ```alternative``` to ```t.test()``` to specify a
-one-sided test; and also passed ```paired=TRUE``` to indicate that the
+variables from the `patients` dataframe, and also note how we have
+passed argument `alternative` to `t.test()` to specify a
+one-sided test; and also passed `paired=TRUE` to indicate that the
 observations are paired with one another.
 
 Here the $p$-value is less than 5\% so we reject the null.  There is
