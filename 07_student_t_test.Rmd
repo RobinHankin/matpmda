@@ -1,3 +1,8 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+---
 # The Student t test 
 
 In the previous chapter, we considered the null that the data was
@@ -13,33 +18,52 @@ we want to test if the mean $\mu$ is equal to some value $\mu_0$, that
 is $\mu=\mu_0$ against the alternative that $\mu\neq\mu_0$.  Since we
 are testing to see if the mean is equal to some value $\mu_0$, it
 makes sense to use the sample mean $\bar{x}$.  Then, if $\bar{x}$ is a
-``long way away'' from $\mu_0$, we would reject $H_0$.  To compute the
-test statistic, we use the $Z$-score technique but call it $T$:
+"long way away" from $\mu_0$, we would reject $H_0$.  We would like to
+compute $Z=\frac{\bar{X}-\mu}{\sigma/\sqrt{n}}$ as before, but this is
+not possible because we do not know the true value of $\sigma$.  We
+have to estimate $\sigma$ from the data [we can use R function `sd()`
+to give a value for this].  We usually denote an estimated value with
+a hat, as in $\hat{\sigma}$.  So we have to use $\frac{\bar{X} -
+\mu_0}{\hat{\sigma}/\sqrt{n}}$ instead [note the $\hat{\sigma}$ on the
+denominator!].  We call this $T$, not $Z$:
 
-
-\[T = \frac{\bar{X} - \mu_0}{SEM}
+\[T = \frac{\bar{X} - \mu_0}{\hat{\sigma}/\sqrt{n}}
 \]
 
+Since we have used $\hat{\sigma}$ rather than the true value $\sigma$
+in the denominator, $T$ is no longer normally distributed: $T$ is not
+Gaussian, but has a *Student $t$ distribution*.  The Student $t$
+distribution has a complicated mathematical structure and is difficult
+to work with.  But ***DO NOT PANIC!*** There are three facts that make
+our life very much easier when using $T$ as a test statistic:
 
-where $SEM$ is the estimated standard error of the mean, calculated
-using R function ```sd()``` and the formula
-$SEM=\frac{\sigma}{\sqrt{n}}$.  Since we have estimated $\sigma$ with
-the sample standard deviation $s$, the test statistic is no longer
-normally distributed.  The tails are fatter than the Gaussian and $T$
-has a *student $t$ distribution*.
+* All the concepts are identical to the Z-score analysis: the ideas of
+      null hypothesis, and $p$-value, and rejection of the null are
+      all the same whether you use $T$ or $Z$
+* The Student $t$-distribution is only very slightly different from
+      the Gaussian distribution.
+* The R language can carry out all the mathematical details for us,
+      with a single function.  All we have to do is interpret the
+      $p$-value that R gives us.
 
-The Student $t$-test (and the associated Student $t$ distribution) has
-a complicated mathematical structure and is difficult to work with.
-Fortunately the R language has functionality to carry out t tests.
-The structure of the t test is the same as the previous chapter: we
-define a null in the same way, define p-value in the same way, then
-compare the p-value with 5\% and accordingly reject, or fail to reject
-the null.  The only difference is that we use specialised $t$-test
-functionality (in R, this is ```t.test()```) to calculate the p-value.
-The ```t.test()``` function has a large number of options and settings
-which are documented under ```?t.test```.  I give a number of examples
-below.
+```{r studenttees, fig.cap="The Gaussian distribution and a Student t-distribution for comparison: the two are very similar", echo=FALSE,message=FALSE,warning=FALSE}
+x <- seq(from=-4,to=4,len=1000)
+plot(x,dnorm(x),type="l",lwd=6,ylab="probability density")
+points(x,dt(x,df=4),type="l",lwd=1,col='red')
+legend("topright",lty=1,lwd=c(6,1),col=c("black","red"),legend=c("Gaussian","student t"))
+```
 
+Figure \@ref(fig:studenttees) shows a standard normal distribution
+plotted with a Student $t$ distribution, and we can see that the two
+are very close.  The structure of the $t$-test is the same as the
+$Z$-test: we define a null in the same way as for $Z$, define
+$p$-value in the same way as for $Z$, and compare the $p$-value with
+5\% and accordingly reject, or fail to reject the null in the same way
+as for $Z$.  The only difference is that we use $T$ instead of $Z$.
+In R, function `t.test()` calculates $T$ for us, and also gives us a
+$p$-value.  The `t.test()` function has a large number of options and
+settings which are documented under `?t.test`.  I give a number of
+examples below.
 
 ## Example: attainment scores (single sample, two-sided test)
 
