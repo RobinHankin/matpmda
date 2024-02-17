@@ -285,20 +285,20 @@ we consider the Student t-test.
 
 
 
-##  Example:  Passing with excellence in NCEA
+##  Example:  Passing with grade A
 
-Now suppose that we are interested in student pass rates at NCEA
-level.  For a particular NCEA exam, we know that 20\% of New Zealand
-students pass the exam with an "excellence" grade.  We are interested
+Now suppose that we are interested in students passing an exam with a grade A.
+For a particular exam, we know that 20\% of New Zealand
+students pass the exam with an "A" grade.  We are interested
 in a particular school in which 150 students took the exam.  Of these
 150 students, 21 pass with excellence.
 
 *Question:* is there evidence for this school having a lower
-probability of passing with excellence than the national New Zealand
+probability of passing with grade A than the national New Zealand
 rate?
 
 * _Step 1_.  Realize that passing with excellence is a Bernoulli random
-  variable, with success meaning "pass with excellence" and failure
+  variable, with success meaning "pass with grade A" and failure
   meaning any other result.
 * _Step 2_. State a null hypothesis.  Here we would say that the null is
   that this school has a probability of passing with excellence of the
@@ -307,14 +307,14 @@ rate?
   passing with excellence.  The alternative hypothesis is $p<0.2$.
 * _Step 3_.  Realize that the null hypothesis implies that the number of
   excellence students will be binomial with size $n=150$ and probability
-  $p=0.2$.  So the number of students with excellence will be
+  $p=0.2$.  So the number of students grade A will be
   $\sim\operatorname{Bin}(150,0.2)$.  The expected number of excellence
-  students will be $150\times 0.2=30$.   We can use the results from chapter 4 to say that, if the null is true, the number of excellence students will be Gaussian with mean $np=150\times 0.2=30$ and standard deviation $\sqrt{np(1-p)} = 4.9$.
+  students will be $150\times 0.2=30$.   We can use the results from chapter 4 to say that, if the null is true, the number of grade A students will be Gaussian with mean $np=150\times 0.2=30$ and standard deviation $\sqrt{np(1-p)} = 4.9$.
 
 * _Step 4_.  State the precise definition of *p-value*: "the
   probability, if the null is true, of obtaining the observation or an
   observation more extreme".  Here "more extreme" means that the
-  number of excellence students is lower than the observed number, 21.
+  number of grade A students is lower than the observed number, 21.
 * _Step 5_. Use R to calculate the $Z$-score and thence the p-value:
 
 ```{r}
@@ -325,11 +325,11 @@ pnorm(Z)
 * _Step 6_.  Compare the pvalue of about 3.3\% with the 5\% standard
   value.  This is less than 5\%, so we *reject* the null.
 * _Step 7_.  Interpret: we have strong evidence that this particular
-  school has a *lower* probability of passing with NCEA excellence
+  school has a *lower* probability of passing with grade A
   than the national average of 0.2
 
 
-### *NOTES* on NCEA example {-}
+### *NOTES* on exam example {-}
 
 In this case we might apply the definition of p-value directly
 to the null distribution of number of students using the binomial
