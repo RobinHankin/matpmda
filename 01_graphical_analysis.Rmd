@@ -62,9 +62,8 @@ content ourselves with giving some examples of data:
 
 Data may be collected from existing sources of information, it may be
 observed or it may be collected intentionally (e.g. through an
-experiment).  STAT500 is not going to focus on the collection of data;
-other AUT papers give it more attention.
-
+experiment).  Here we are not going to focus on the collection of
+data.
 
 ## Samples and populations
 

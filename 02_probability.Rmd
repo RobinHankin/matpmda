@@ -52,7 +52,7 @@ outcome of a random process.  For example:
 * $X$ = Number of defects on a randomly selected piece of furniture
 * $X$ = Number of girls in a randomly selected family with 3 children
 * $X$ = Number obtained when rolling a die
-* $X$ = The height of a randomly selected AUT student
+* $X$ = The height of a randomly selected undergraduate
 * $X$ = Time taken to respond to a randomly selected call to 111
 
 (the above definition is somewhat circular---it uses randomness to
@@ -131,7 +131,7 @@ population of more than 3 million, then $A\cap B$ is the set of all
 European cities with a population of more than 3 million.  If two sets
 have empty intersection (that is, $A\cap B=\varnothing$), we say that
 $A$ and $B$ are *disjoint*.  Thus if $A$ is the set of billionaire
-philanthropist playboy vigilantes, and $B$ is the set of AUT
+philanthropist playboy vigilantes, and $B$ is the set of
 statistics lecturers, then if a person is a member of set $A$ then he
 will not be a member of set $B$; and conversely.  The sets are
 disjoint^[Yup, definitely disjoint.  Absolutely empty intersection
