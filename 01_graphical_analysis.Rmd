@@ -167,12 +167,12 @@ It is often helpful to summarize a dataset using a single number that
 represents all the observations.  There are many ways to do this but
 the three most common are *mean*, *median* and *mode*.
 
-### Mean
+### Sample mean
 
 We have the mpg rating for each car but we can summarize the whole
-dataset by taking the *mean*.  Mathematically, the mean of a dataset
-is the sum of all the observations, divided by the number of
-observations.
+dataset by taking the *mean* of the dataset.  This is usually called
+the *sample mean*.  Mathematically, the sample mean is the sum of all
+the observations, divided by the number of observations.
 
 If we have observations $x_1,x_2,\ldots, x_n$ [that is, the first
 observation is $x_1$, the second observation is $x_2$, and so on, up
@@ -189,7 +189,8 @@ But sometimes we use the summation notation:
 \overline{x} = \frac{1}{n}\sum_{i=1}^n x_i
 \]
 
-It is easy to calculate the mean in R using the `mean()` function:
+It is easy to calculate the sample mean in R using the `mean()`
+function:
 
 
 ```{r}
@@ -198,9 +199,9 @@ mean(mtcars$mpg)
 
 ### Median
 
-The _median_ is the middle point of the data: half the datapoints are
-larger than the median and half are smaller.  Calculating this is easy
-with R function `median()`:
+The _median_ is the middle point of the observations: half the
+datapoints are larger than the median and half are smaller.
+Calculating this is easy with R function `median()`:
 
 ```{r}
 median(mtcars$mpg)
@@ -231,7 +232,7 @@ number of cylinders, more than any other number.
 
 We are often interested in the spread of data: what is the range of
 the datapoints? How widely are the observations distributed?  Are they
-all confined to a very narrow position, or are they widely scattered?
+all confined to a very narrow range, or are they widely scattered?
 
 One simple answer to this is to state the *range*:
 
@@ -245,7 +246,7 @@ max(x)
 the range is from 10.4 to 33.09.
 
 Other measures of spread are the _standard deviation_ which has a
-rather technical definition but is understandable as an average
+rather technical definition but is understandable as sort of average
 distance from the mean (we will discuss this when we learn about the
 Gaussian distribution).  It is easy to calculate in R with the
 `sd()` command:

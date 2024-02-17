@@ -2,10 +2,8 @@
 
 
 Probability and randomness are very difficult to define without using
-circular logic, but easy to recognise.
-
-In loose terms, probability is a measure of one's confidence that an
-event will occur.
+circular logic, but easy to recognise.  In loose terms, probability is
+a measure of one's confidence that an event will occur.
 
 *  What is the probability that it will rain tomorrow?
 *  What is the probability that I will pass my statistics exam?
@@ -18,11 +16,11 @@ Some of the questions above have well-defined and objective answers,
 some do not.  Probability and randomness are subtle concepts and there
 are different interpretations of probability statements.
 
-In this course, we will interpret probability as the long-run relative
+Here, we will interpret probability as the long-run relative
 frequency of an event occurring.  For example, suppose a fair coin is
 flipped, then the probability of getting a head can be interpreted as
 the relative frequency of getting a heads over a very large number of
-trials.  This will be close to one-half if the coin is truly fair.
+trials.  This will be close to half if the coin is truly fair.
 
 (An alternative interpretation is subjective probability.  This is a
 measure of an individual person's belief that an event will occur. We
@@ -36,14 +34,14 @@ terminology.
 ## Random variables
 
 A *variable* is a characteristic that changes or varies over time
-and/or for different individuals or objects under consideration
+and/or for different individuals or objects under consideration.
 
 Examples:
 
 * In a survey of university students, height, gender, income and age will all vary from person to person.
-* The number obtained when rolling a die will vary with each roll.
-* The price of ANZ shares will vary over time.
-* whether the All blacks in or not in a game will change from match to match
+* The number obtained when rolling a die will vary from roll to roll
+* The price of shares in a company will vary over time.
+* whether the All blacks win or not in a game will change from match to match
 
 A *random variable* (usually denoted with a capital letter, usually
 $X$) is a variable whose value is determined by the measuring the
@@ -53,7 +51,7 @@ outcome of a random process.  For example:
 * $X$ = Number of girls in a randomly selected family with 3 children
 * $X$ = Number obtained when rolling a die
 * $X$ = The height of a randomly selected undergraduate
-* $X$ = Time taken to respond to a randomly selected call to 111
+* $X$ = Time taken to respond to a randomly selected emergency 999 call
 
 (the above definition is somewhat circular---it uses randomness to
 define random---but giving a watertight definition requires several
@@ -119,7 +117,7 @@ I'm working on it).
 
 The *union* of $A$ and $B$ (written $A\cup B$) is the set of elements
 that are in either $A$ or in $B$, or in both.  Sometimes we say that
-the union is ``A or B''; but note that the English language is
+the union is ``A or B"; but note that the English language is
 somewhat imprecise here: if I say to my daughter that she can have an
 ice cream or a drink, I mean that she has to choose one or the other.
 She can't have both.
@@ -131,7 +129,7 @@ population of more than 3 million, then $A\cap B$ is the set of all
 European cities with a population of more than 3 million.  If two sets
 have empty intersection (that is, $A\cap B=\varnothing$), we say that
 $A$ and $B$ are *disjoint*.  Thus if $A$ is the set of billionaire
-philanthropist playboy vigilantes, and $B$ is the set of
+philanthropist vigilantes, and $B$ is the set of
 statistics lecturers, then if a person is a member of set $A$ then he
 will not be a member of set $B$; and conversely.  The sets are
 disjoint^[Yup, definitely disjoint.  Absolutely empty intersection
@@ -192,13 +190,12 @@ p(A\cup B\cup C)=p(A)+p(B)+p(C)-p(A\cap B)-p(A\cap C)-p(B\cap C)+p(A\cap B\cap C
 
 ### probability of set complement
 
-The *complement* of event $A$, denoted $\overline{A}$ (sometimes in
-books you will see $A'$ or $A^c$), is the set consisting of all
-outcomes in the sample space which are not in $A$.  For example, if we
-are sampling people in the street, we could define $A$ to be the event
-that the person is a smoker.  Then the complement, $\overline{A}$
-would be that the person is not a smoker.  Because $A$ and
-$\overline{A}$ are disjoint, we have that
+The *complement* of event $A$, denoted $\overline{A}$ is the set
+consisting of all outcomes in the sample space which are not in $A$.
+For example, if we are sampling people in the street, we could define
+$A$ to be the event that the person is a smoker.  Then the complement,
+$\overline{A}$ would be that the person is not a smoker.  Because $A$
+and $\overline{A}$ are disjoint, we have that
 
 \[
 p(A) + p(\overline{A})=p(A\cup\overline{A})=p(S)=1.
