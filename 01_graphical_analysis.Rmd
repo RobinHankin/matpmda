@@ -7,8 +7,7 @@ The R programming language is used extensively in this course.  The
 final exam and the midsemester test will require you to use R to
 perform statistical analyses.  R is free software, which means that
 you can download and install it at zero cost.  This also means that
-you are free to modify that code as you wish, although this will not
-be part of stat500.
+you are free to modify that code as you wish for your own use.
 
 You can download R from the CRAN website:
 
@@ -42,8 +41,8 @@ There are two main branches of statistics:
 * _Descriptive Statistics_: describing and summarizing of data
 * _Inferential Statistics_: drawing of conclusions from data
 
-The first part of STAT500 will discuss descriptive statistics and the
-second will discuss inferential statistics.
+First, we will descriptive statistics and later introduce
+inferential statistics.
 
 
 ## Data
