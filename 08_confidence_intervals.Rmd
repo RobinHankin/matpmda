@@ -9,27 +9,89 @@ intervals*.
 We want to give an upper and lower bound for the population mean; we
 specify that we want to be "95\% sure" that the true value is between
 our two bounds.  We have seen confidence intervals used in this course
-previously but only in an informal way.  In this chapter we will give
-the precise definition of confidence interval.
+previously but only in an informal way.
 
-## Confidence Intervals for the Population Mean with a Known Population Variance
+It is easiest to approach confidence intervals through a specific
+example: finding the population mean of Gaussian observations with
+unknown standard deviation; we will use a significance level of $0.05$
+[this is usually expressed as "95% confidence", for we are interested
+in the remainder $1-0.05=0.95$].  Suppose we have observations `1.5,
+2.3, -0.7, 1.4, 1.2`.  We might test, in turn,
+$\mu=-3,\mu=-2,\ldots,\mu=2,\mu=3$:
 
-Suppose we have observations $x_1,\ldots, x_n$ drawn from a Normal
-distribution $N(\mu,\sigma)$, where the standard deviation $\sigma$ is
-known.  To obtain a 95\% confidence interval for a mean, with a known
-population variance, we can compute these bounds as follows.  We know
-that the sample mean is normally distributed with mean $\mu$ and
-standard deviation given by the standard error of the mean
-$\sigma/\sqrt{n}$, i.e. $\bar{X} \sim N(\mu, \sigma/\sqrt{n})$.
+```{r}
+options(digits=3)
+x <- c(1.5, 2.3, -0.7, 1.4, 1.2)
+c(
+`-3` = t.test(x,mu=-3)$p.value,
+`-2` = t.test(x,mu=-2)$p.value,
+`-1` = t.test(x,mu=-1)$p.value,
+ `0` = t.test(x,mu= 0)$p.value,
+`+1` = t.test(x,mu=+1)$p.value,
+`+2` = t.test(x,mu=+2)$p.value,
+`+3` = t.test(x,mu=+3)$p.value)
+```
 
-If we construct an interval from $\overline{x} +
-\alpha\frac{\sigma}{\sqrt{n}}$ to $\overline{x} -
-\alpha\frac{\sigma}{\sqrt{n}}$ then this will (in very loose language)
-"capture" the true value of the mean $\mu$ with a certain probability.
-We want this probability to be 0.95, or 95\%, so we choose $\alpha$ to
-be `qnorm(0.975)` (that is, about 1.96) which leaves 2.5\%
-probability on either side, as in figure \@ref(fig:confidenceconcept).
+We see from the above R code that we reject $\mu=-3,-2,-1$; fail to
+reject $\mu=0,+1,+2$, and reject $\mu=+3$.  We can infer that
+$\mu=0,+1,+2$ are "reasonable" values for $\mu$, as we fail to reject
+nulls for these values of $\mu$.  In general, suppose we test a null
+$H_0\colon\mu=\mu_0$, and fail to reject $H_0$, then we say that
+$\mu_0$ is inside the confidence interval.  Confidence intervals are
+given by `t.test()`:
 
+
+```{r}
+t.test(x)
+```
+
+Above we see that the confidence interval is `(-0.239,2.519)`.  Thus
+we would reject any hypothesis that the mean is less than `-0.239` or
+greater than `2.519`.
+
+
+## Example: heart rates.
+
+A medical scientist takes six patients and measures their heart rate.
+The data is:
+
+```{r}
+heart <- c(66,73,72,80,84,60)
+```
+
+Calculate a 95\% confidence interval for this data.  The `t.test()` in
+R gives:
+
+```{r}
+t.test(heart)
+```
+
+So the 95\% confidence interval is about $(63.3, 81.7)$.  It is quite
+wide because we have so few observations.  We would reject any
+hypothesis that the true mean heart rate is outside this range.  For
+example, we would reject $H_0\colon\mu=63$ as this is less than the
+lower limit of 63.3.
+
+## Confidence intervals for normal data with known variance
+
+If we know the variance of our observations, this makes our life a
+little easier.  Suppose we have observations $x_1,\ldots, x_n$ drawn
+from a Normal distribution $N(\mu,\sigma)$, where the standard
+deviation $\sigma$ is known.  To obtain a 95\% confidence interval for
+a mean, with a known population variance, we can compute these bounds
+as follows.  We observe that
+$Z=\frac{\bar{x}-\mu}{\sigma/\sqrt{n}}\sim N(0,1)$.  If we choose a
+5\% level of significance, then because `pnorm(0.975) = 1.96` (figure
+\@ref(fig:confidenceconcept)) we fail to reject $\left|Z\right|\leq
+1.96$, which is the basis of our confidence interval: we would fail to
+reject any $\mu$ in the range
+
+\[
+\overline{x}\pm 1.96\frac{\sigma}{\sqrt{n}}
+\]
+
+
+(just invert the formula for $Z$ using algebra).
 
 ```{r confidenceconcept,fig.cap="Conceptual diagram of confidence interval", echo=FALSE}
 x <- seq(from=-4,to=4,len=100)
@@ -96,43 +158,6 @@ c(mean(loaves) - qnorm(0.995)*SEM, mean(loaves) + qnorm(0.995)*SEM)
 See how this interval is wider than the 95\% interval: the price one
 pays for more certainty is lower precision.  
 
-## Confidence intervals with the Student $t$-distribution
-
-The previous example had enough observations to be able to estimate
-the population standard deviation reasonably.  If that is not the
-case, then we have to use methods deriving from the Student $t$-test.
-R can do this easily.
-
-### Example: heart rates.
-
-A medical scientist takes six patients and measures their heart rate.  The data is:
-
-```{r}
-heart <- c(66,73,72,80,84,60)
-```
-
-Calculate a 95\% confidece interval for this data.
-
-There are only six datapoints, so the $Z$-score method is
-inapplicable.  The `t.test()` in R gives:
-
-```{r}
-t.test(heart)
-```
-
-So the 95\% confidence interval is about $(63.3, 81.7)$.  It is quite
-wide because we have so few observations.  Note that the Z-score
-method can also be used:
-
-```{r}
-c(
-mean(heart) - qnorm(0.975)*sd(heart)/sqrt(6),
-mean(heart) + qnorm(0.975)*sd(heart)/sqrt(6)
-)
-```
-
-This gives a confidence interval that is much narrower than given by
-the $t$-test, and should not be used.
 
 ## Frequentist interpretation of the confidence interval
 
@@ -143,7 +168,7 @@ mean of zero is indicated as a vertical line.  Most of the confidence
 intervals include the true value of zero; those that do not are shown
 in red.  The inference is that a particular confidence interval
 probably contains the true parameter, although the correct definition
-(the set of points $x$ for which $H_0\colon\mu=x$ would not be
+(viz, the set of points $x$ for which $H_0\colon\mu=x$ would not be
 rejected) is problematic.
 
 ```{r confidencefreq,fig.cap="Repeated confidence intervals with intervals missing the true value shown in red", echo=FALSE}
