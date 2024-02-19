@@ -217,34 +217,7 @@ regression using the `mtcars` dataset we considered in week 1 in
 which `mpg` is regressed against `wt` and `disp`.
 
 ```{r, plot3d, fig.cap="Visual representation of multivariate linear regression, taken from the plot3D package.  Variable `mpg` is shown on the vertical axis; variables `wt` and `disp` on the two horizontal axes.  The regression itself is a plane, rather than a line", echo=FALSE}
-library("plot3D")
-# Following code taken from scatter.Rd in the plot3D package
-with (mtcars, {
-
-  # linear regression
-   fit <- lm(mpg ~ wt + disp)
-
-  # predict values on regular xy grid
-   wt.pred <- seq(1.5, 5.5, length.out = 30)
-   disp.pred <- seq(71, 472, length.out = 30)
-   xy <- expand.grid(wt = wt.pred, 
-                     disp = disp.pred)
-
-   mpg.pred <- matrix (nrow = 30, ncol = 30, 
-      data = predict(fit, newdata = data.frame(xy), 
-      interval = "prediction"))
-
-# fitted points for droplines to surface
-   fitpoints <- predict(fit) 
-
-   scatter3D(z = mpg, x = wt, y = disp, pch = 18, cex = 2, 
-      theta = 20, phi = 20, ticktype = "detailed",
-      xlab = "wt", ylab = "disp", zlab = "mpg",  
-      surf = list(x = wt.pred, y = disp.pred, z = mpg.pred,  
-                  facets = NA, fit = fitpoints),
-      main = "mtcars")
-  
- })
+knitr::include_graphics("plot3d.png")
 ```
 
 There is no reason why we cannot have any number of regressors.
