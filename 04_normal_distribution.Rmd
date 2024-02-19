@@ -352,7 +352,7 @@ is given by $\sqrt{np(1-p)}$.  Sometimes textbooks will write $q=1-p$
 (that is, $q$ is the probability of failure) and the standard
 deviation is then $\sqrt{npq}$.  The variance, being the square of the
 standard deviation, is $npq$.  We can verify these statements
-numerically.  Suppose we havve $n=10$ and $p=0.3$.  Then
+numerically.  Suppose we have $n=10$ and $p=0.3$.  Then
 $E(X)=np=10\times 0.3=3$, and $\operatorname{sd}(X)=\sqrt{10\times
 0.3\times 0.7}=1.45$.  To check these values we use `rbinom()`:
 
