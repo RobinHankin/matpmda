@@ -75,9 +75,9 @@ the sampled apples is:
 apples <- c(95, 104, 101, 100, 99, 102, 98, 94, 94, 93)
 ```
 
-*Question:* is there any evidence to suggest that these apples differ
-from the known mean?  It is not known whether these apples are lighter
-or heavier than average.
+*Question:* is there any evidence to suggest that apples from this
+tree differ from the known mean?  It is not known whether these apples
+are lighter or heavier than average.
 
 *answer*
 
@@ -90,9 +90,9 @@ or heavier than average.
 t.test(apples,mu=100)
 ```
 
-* step 4.  Interpret.  Because the p-value exceeds 5\%, there is no
-  evidence for these apples differing from 100g.
-
+* step 4.  Interpret.  We see that the $p$-value is 0.133, or about
+  13%.  Because this exceeds 5\%, there is no evidence for these
+  apples differing from 100g.
 
 *Note* the mean mass of apples in the sample is:
 
