@@ -165,7 +165,7 @@ You can get help on these at the R prompt by typing `?dnorm`
 The R system can furnish random variables easily.  You can get random
 samples from a Normal distribution using `rnorm()`
   
-```{r}
+```{r rnorm10}
 rnorm(10)    # standard Normal
 ```
 
@@ -177,7 +177,7 @@ zero and the standard deviation is 1.  It is easy to change the mean
 and standard deviation.  Suppose we wanted 20 samples from a Normal
 distribution with a mean of 10 and a standard deviation of 0.03:
 
-```{r}
+```{r rnorm20}
 rnorm(20,mean=10,sd=0.03)
 ```
 
@@ -186,7 +186,7 @@ explicitly, but naming them is optional.  We could have said
 `rnorm(20,10,0.03)` and obtained the same result.  Graphical plots
 are always informative; see the figure below for an example.
 
-```{r}
+```{r plotrnormthousand}
 plot(rnorm(1000),main="1000 random normal observations")
 ```
 
@@ -195,7 +195,7 @@ $+2$ but there are occasional outliers.  It is possible to produce a
 histogram using `hist()` as in the figure below:
 
 
-```{r}
+```{r histrnormthousand}
 hist(rnorm(10000), col='lightblue',main="histogram of normal observations")
 ```
 
@@ -208,7 +208,7 @@ between $-2$ and $+2$ but there are occasional outliers.
 Function `dnorm(x)` gives the density of the standard Normal
 distribution at `x`.  Thus
 
-```{r}
+```{r dnorm013}
 dnorm(0)
 dnorm(1)
 dnorm(3)
@@ -217,7 +217,7 @@ dnorm(-3)
 
 It is easier to see this by plotting the curve:
 
-```{r}
+```{r firstdensityplot}
 x <- seq(from=-4,to=4,len=100)
 plot(x,dnorm(x),main="Density function of the standard normal distribution")
 ```
@@ -227,7 +227,7 @@ plot(x,dnorm(x),main="Density function of the standard normal distribution")
 If $X\sim N(0,1)$, we quite often need to find the probability that
 $X$ is less than a particular value, as in the figure below:
 
-```{r}
+```{r showpnorm}
 x <- seq(from=-3,to=3,len=100)
 plot(x,dnorm(x),type="l",main="The cumulative density function")
 x <- x[x<1.3]
@@ -238,18 +238,18 @@ The figure above shows the probability that $X\leq 1.3$ is given by
 the gray area.  To give a numerical value that $X\leq x$ we use the
 `pnorm()` command in R:
 
-```{r}
+```{r pnorm13}
 pnorm(1.3)
 ```
 
-```{r,echo=FALSE}
+```{r setseed,echo=FALSE}
 set.seed(0)
 ```
 
 so the probability is about 90\%.  It is always a good idea to verify
 such results numerically by random sampling:
 
-```{r}
+```{r tablemill}
 table(rnorm(1e6) < 1.3)
 ```
 Thus 903503 out of one million (`1e6`) samples are less than 1.3.
@@ -258,7 +258,7 @@ The four normal functions all take a `mean` and `sd` argument,
 so we can specify these in our call.  Suppose we ask what the
 probability that a $N(5,2.2)$ Gaussian random variable is less than 6.1:
 
-```{r}
+```{r pnorm6}
 pnorm(6.1,mean=5,sd=2.2)
 ```
 
@@ -267,7 +267,7 @@ to take one minus the probability that is is below.  Again if $X\sim
 N(5,2.2)$, suppose we seek the probability that $X$ is *greater* than
 4.3:
 
-```{r}
+```{r oneminuspnorm}
 1-pnorm(4.3,mean=5,sd=2.2)
 ```
 
@@ -276,18 +276,16 @@ If we want the probability that a Gaussian random variable lies
 Suppose we have $X\sim N(10,2.2)$ and we want the probability that $X$
 lies between say 11.2 and 11.9:
 
-```{r}
+```{r pnormdiff}
 pnorm(11.9,10,2.2)-pnorm(11.2,10,2.2)
 ```
 
 Verifying this numerically needs a little more work:
 
-```{r}
+```{r pnormnumerical}
 x <- rnorm(1e6,10,2.2)
 table((x>11.2) & (x<11.9))
 ```
-
-
 
 ## The quantile function `qnorm()`
 
@@ -297,7 +295,7 @@ wish to find the point $x$ which is exceeded with a probability of
 5\%.  This would mean that $P(X\leq x) = 0.9$.  To find this point we
 use `qnorm()`:
 
-```{r}
+```{r qnorm95}
 qnorm(0.95)
 ```
 
@@ -305,13 +303,13 @@ Thus the probability that a standard normal variable $X$ is less than
 about $1.64$ is is 95\%, and so the probability that $X>1.64$ is about
 5\%.  It is important to be able to check such findings:
 
-```{r}
+```{r invertpnorm}
 pnorm(1.644854)
 ```
 
 Or indeed numerically:
 
-```{r}
+```{r numericalinvert}
 table(rnorm(1e6) < qnorm(0.95))/1e6
 ```
 
@@ -320,7 +318,7 @@ that `qnorm()` takes `mean` and `sd` arguments which can
 be used to override the default values of 0 and 1.  It is possible to
 graph the quantile function:
 
-```{r}
+```{r plotquantilef}
 p <- seq(from=0.01,to=0.99,len=100)
 plot(p,qnorm(p))
 ```
@@ -357,7 +355,7 @@ $E(X)=np=10\times 0.3=3$, and $\operatorname{sd}(X)=\sqrt{10\times
 0.3\times 0.7}=1.45$.  To check these values we use `rbinom()`:
 
 
-```{r}
+```{r meansdbinom}
 mean(rbinom(1e6,10,0.3))
 sd(rbinom(1e6,10,0.3))
 ```
@@ -366,7 +364,7 @@ showing close agreement.  The figure below shows the cumulative
 distribution function for $\operatorname{Bin}(20,0.3)$ and that of
 $N(6,2.05)$ on the same axes:
 
-```{r}
+```{r plotbinomgauss}
 x <- seq(from=-3,to=10,len=100)
 plot(x,pnorm(x,6,sqrt(20*0.3*0.7)),type="l",ylab="cumulative probability")
 points(x,pbinom(x,20,0.3),type="l",col="red")
