@@ -19,7 +19,7 @@ head(light)
 
 This is a modified version of a dataset documented at `?morley` in
 the R system.  It shows the speed of light as measured in five
-tdifferent experiments in the nineteenth century.  The speed column
+different experiments in the nineteenth century.  The speed column
 shows the discrepancy between the measured speed of light and a
 standard benchmark speed.  Is there any evidence that the experiments
 have systematic bias?
@@ -50,7 +50,7 @@ summary(aov(speed~experiment,data=light))
 
 Note that we take the summary of the result of `aov()` as this
 gives us more information.  Although the output is a little cryptic,
-we can see the $p$-value for our null is 0.00311, well below the 5\%
+we can see the $p$-value for our null is 0.0031, well below the 5\%
 threshold.  We may reject the null hypothesis and conclude that the
 experiments exhibited bias.
 

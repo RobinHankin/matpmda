@@ -2,7 +2,7 @@
 	
 All methods we have looked at so far have a single variable.  Here we
 consider methods for two variables.  If you have more than one
-variable, you may find that they are related in some kind of way.
+variable, you may find that they are related in some way.
 Consider the `mtcars` dataframe, provided with R.  Looking at the
 help page (type `?mtcars` at the R prompt), we see that each row
 is a type of car, and each column is a feature of that car such as
@@ -228,7 +228,7 @@ y = \beta_0+\beta_1x_1 + \beta_2x_2+\ldots+\beta_nx_n + \epsilon
 \]
 
 where the $\beta_0,\ldots,\beta_n$ are the coefficients and
-$x_1,\ldots x_n$ the independent variables.  Estimating these
+$x_1,\ldots, x_n$ the independent variables.  Estimating these
 coefficients is straightforward in R:
 
 ```{r}
@@ -241,5 +241,5 @@ regressors".  Thus the input line reads in English "summary of a
 linear model of `mpg` as-a-function-of `wt` and `disp`".
 Looking at the output we see the estimated coefficients for weight and
 displacement.  While the weight is significant, with a $p$-value of
-0.00743, the coefficient for displacement has a $p$-value of 0.06362
+0.0074, the coefficient for displacement has a $p$-value of 0.0636
 and is not significant.
