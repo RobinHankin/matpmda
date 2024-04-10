@@ -4,7 +4,7 @@
 ## The R programming language
 
 The R programming language is used extensively in this course.  The
-final exam and the midsemester test will require you to use R to
+final exam and the other assessments will require you to use R to
 perform statistical analyses.  R is free software, which means that
 you can download and install it at zero cost.  This also means that
 you are free to modify that code as you wish for your own use.
@@ -51,7 +51,7 @@ Although we think we know what "data" means, it is difficult to pin
 down the term without using circular definitions.  Here we will
 content ourselves with giving some examples of data:
 
-* Bus arrival times at Britomart
+* Bus arrival times at a station
 * Number of packets of M\&Ms sold daily for a month
 * Length of time customers queue at Disneyland's Space Mountain
 * Amount of money spent on advertising by different organisations
@@ -180,7 +180,7 @@ to $x_n$ being the $n^\mathrm{th}$ observation], then we write
 $\overline{x}$ for the mean and calculate it as follows:
 
 \[
-\overline{x} = \frac{x_1+x_2+\ldots +x_n}{n}
+\overline{x} = \frac{x_1+x_2+\cdots +x_n}{n}
 \]
 
 But sometimes we use the summation notation:
