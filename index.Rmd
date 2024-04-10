@@ -20,7 +20,7 @@ description: "This is the course manual for STAT500 (applied statistics)"
 # Overview {-}
 
 This is the handbook for STAT500.  Details of the course structure,
-including assessment and timetables, may be found on AUTonline.  The
+including assessment and timetables, may be found online.  The
 whole course is based around R and RStudio which may be downloaded
 from
 
@@ -30,20 +30,13 @@ and
 
 [https://www.rstudio.com/]
 
-On AUTonline, clicking
-
-`content system -> institution -> learn -> maths`
-
-takes you to a number of mathematical resources, including a wide
-range of instructional videos prepared for AUT students.  Details will
-be disseminated on Blackboard (AUTonline).
 
 This manual is distributed under the GNU GPL and is available at
 
 [https://github.com/RobinHankin/stat500](https://github.com/RobinHankin/stat500)
 
 Please feel free to send corrections, bug reports, fanmail, etc to the
-issues page.
+issues page:
 
 [https://github.com/RobinHankin/stat500/issues](https://github.com/RobinHankin/stat500/issues)
 
