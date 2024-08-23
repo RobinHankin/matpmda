@@ -1,5 +1,5 @@
 ---
-title: "stat500 lab, week 8, confidence intervals"
+title: "MATPMDA lab, week 8, confidence intervals"
 output: html_document
 ---
 

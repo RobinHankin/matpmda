@@ -1,5 +1,5 @@
 ---
-title: "stat500 lab, week 3, binomial distribution"
+title: "MATPMDA lab, week 3, binomial distribution"
 output: html_document
 ---
 

@@ -1,5 +1,5 @@
 ---
-title: "stat500 lab, week 2, probability"
+title: "MATPMDA lab, week 2, probability"
 output: html_document
 ---
 

@@ -78,7 +78,7 @@
 %\definecolor{typocol}{gray}{0}  %white
 
 \newcommand{\courseName}[0]{Applied Statistics}
-\newcommand{\courseCode}[0]{STAT500}
+\newcommand{\courseCode}[0]{MATPMDA}
 
 \begin{document}
 \SweaveOpts{concordance=TRUE}
@@ -371,7 +371,7 @@ A sample of 100 snapper from the Hauraki Gulf were measured and it was found tha
 \end{enumerate}
 
 
-\item Download the file \codett{STAT500\_week02\_lab\_birthdays.csv} from Blackboard.  This dataset contains the number of live births in NZ by day between 1980 and 2013.
+\item Download the file \codett{MATPMDA\_week02\_lab\_birthdays.csv} from Blackboard.  This dataset contains the number of live births in NZ by day between 1980 and 2013.
 \tutorNotes{Some students may require guidance about how to work with this dataset.}
 
 
@@ -441,7 +441,7 @@ They all occur between 22nd September and 4th October.
 
 
 
-\item Download the data \codett{STAT500\_week02\_global.csv} from Blackboard. This datasets contains a range of information about countries. 
+\item Download the data \codett{MATPMDA\_week02\_global.csv} from Blackboard. This datasets contains a range of information about countries. 
 
 \begin{enumerate}
 \item Open the file in Excel and look at the data. Notice that there are a lot of missing values.

@@ -1,5 +1,5 @@
 ---
-title: "stat500 lab, week 5, estimation"
+title: "MATPMDA lab, week 5, estimation"
 output:
   word_document: default
   html_document: default

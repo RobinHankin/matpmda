@@ -1,5 +1,5 @@
 ---
-title: "stat500 lab, week 9, regression"
+title: "MATPMDA lab, week 9, regression"
 output: html_document
 ---
 

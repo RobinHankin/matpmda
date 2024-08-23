@@ -1,5 +1,5 @@
 ---
-title: "stat500 lab, week 6, hypothesis testing"
+title: "MATPMDA lab, week 6, hypothesis testing"
 output:
   pdf_document: default
   html_document: default

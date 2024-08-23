@@ -1,5 +1,5 @@
 ---
-title: "stat500 lab, week 10, ANOVA"
+title: "MATPMDA lab, week 10, ANOVA"
 output: html_document
 ---
 

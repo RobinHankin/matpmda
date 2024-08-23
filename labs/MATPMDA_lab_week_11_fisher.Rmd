@@ -1,5 +1,5 @@
 ---
-title: "stat500 lab, week 11, Fisher's exact test"
+title: "MATPMDA lab, week 11, Fisher's exact test"
 output: html_document
 ---
 

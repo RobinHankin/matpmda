@@ -1,5 +1,5 @@
 ---
-title: "STAT500: lab handout for week 2"
+title: "MATPMDA: lab handout for week 2"
 output: html_document
 ---
 

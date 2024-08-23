@@ -101,7 +101,7 @@ baselinestretch=1}
 %\newcommand{\todo}[1]{\textcolor{red}{#1}}
 
 \newcommand{\courseName}[0]{Applied Statistics}
-\newcommand{\courseCode}[0]{STAT500}
+\newcommand{\courseCode}[0]{MATPMDA}
 
 \begin{document}
 \hrule 

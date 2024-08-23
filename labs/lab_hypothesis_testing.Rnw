@@ -99,7 +99,7 @@ baselinestretch=1}
 %\definecolor{typocol}{gray}{0}  %white
 
 \newcommand{\courseName}[0]{Applied Statistics}
-\newcommand{\courseCode}[0]{STAT500}
+\newcommand{\courseCode}[0]{MATPMDA}
 
 \begin{document}
 \SweaveOpts{concordance=TRUE}
