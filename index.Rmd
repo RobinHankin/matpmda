@@ -1,5 +1,5 @@
 --- 
-#title: "Course outline: STAT500"
+#title: "Course outline: MATPMDA"
 author: "Robin Hankin"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
@@ -8,8 +8,7 @@ documentclass: book
 bibliography: [book.bib]
 biblio-style: apalike
 link-citations: yes
-github-repo: RobinHankin/STAT500
-description: "This is the course manual for STAT500 (applied statistics)"
+description: "This is the course manual for MATPMDA (applied statistics)"
 ---
 
 
@@ -19,10 +18,9 @@ description: "This is the course manual for STAT500 (applied statistics)"
 
 # Overview {-}
 
-This is the handbook for STAT500.  Details of the course structure,
-including assessment and timetables, may be found online.  The
-whole course is based around R and RStudio which may be downloaded
-from
+This is the handbook for `MATPMDA`.  Details of the course structure,
+including assessment and timetables, may be found online.  The whole
+course is based around R and RStudio which may be downloaded from
 
 [https://cran.r-project.org/]
 
@@ -33,12 +31,12 @@ and
 
 This manual is distributed under the GNU GPL and is available at
 
-[https://github.com/RobinHankin/stat500](https://github.com/RobinHankin/stat500)
+[https://github.com/RobinHankin/matpmda](https://github.com/RobinHankin/matpmda
 
 Please feel free to send corrections, bug reports, fanmail, etc to the
 issues page:
 
-[https://github.com/RobinHankin/stat500/issues](https://github.com/RobinHankin/stat500/issues)
+[https://github.com/RobinHankin/matpmda/issues](https://github.com/RobinHankin/matpmda/issues)
 
 
 \includegraphics{ornamental20}
