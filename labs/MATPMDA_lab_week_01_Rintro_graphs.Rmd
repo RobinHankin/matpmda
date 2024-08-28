@@ -1,6 +1,6 @@
 ---
 title: "MATPMDA: lab handout for week 1"
-output: pdf_document
+output: html_document
 ---
 
 ```{r setup, include=FALSE}
@@ -123,12 +123,38 @@ Going back to the first example, imagine you made a typo (and this is an easy mi
 1000/.7
 ```
 
-
 Does this answer make sense?  Will each person get \$1428.57?!  Now if
 you have an idea of the rough size of any answer, you can catch this
 error straight away (the technical term is _recovery_).  But if you do
 not have an estimate, errors like this can creep in, making any
 analysis meaningless.
+
+
+# Verify verify verify
+
+It is very easy to make mistakes in mathematical work.  This means
+that it is important to check your work as you go along.  That way you
+can find your mistakes and correct them before they get serious.
+
+For example, the result of dividing \$1000 by 7 was \$142.86, to the
+nearest cent.  We can check this by multiplying our value by 7 and
+hope that we get to \$1000:
+
+```{r}
+142.86 * 7
+```
+
+Not exactly right, but very close.  The slight difference is caused by
+our rounding the value to two decimal places.  Consider the
+$\sqrt{60}$ calculation above.  The answer given by R was about `7.745`.
+This value will have a square of 60 if everything is correct:
+
+```{r}
+7.745^2
+```
+
+Again, very close to the expected value. 
+
 
 # Large numbers and small numbers
 
