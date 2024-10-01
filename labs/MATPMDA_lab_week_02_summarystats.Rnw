@@ -84,10 +84,7 @@
 \SweaveOpts{concordance=TRUE}
 \hrule 
 \begin{center}
-Auckland University of Technology\\
-School of Engineering, Computer and Mathematical Sciences\\
 \courseCode \; \courseName \\
-Semester 1 2016\\[2mm]
 \textbf{Lab Week 2}\\
 \ifthenelse{\boolean{printanswers}}{\textcolor{solcol}{Outline Solutions}}{}
 \ifthenelse{\boolean{printtutornotes}}{\textcolor{tutorcol}{ \& Tutor Notes}}{}
