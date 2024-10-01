@@ -368,8 +368,10 @@ A sample of 100 snapper from the Hauraki Gulf were measured and it was found tha
 \end{enumerate}
 
 
-\item Download the file \codett{MATPMDA\_week02\_lab\_birthdays.csv} from Blackboard.  This dataset contains the number of live births in NZ by day between 1980 and 2013.
-\tutorNotes{Some students may require guidance about how to work with this dataset.}
+\item Download the file \codett{MATPMDA\_week02\_lab\_birthdays.csv}
+  from canvas.  This dataset contains the number of live births in NZ
+  by day between 1980 and 2013.  \tutorNotes{Some students may require
+    guidance about how to work with this dataset.}
 
 
 
