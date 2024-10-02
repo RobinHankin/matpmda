@@ -101,7 +101,7 @@ might ask them to toss the coin 5 times.  To do this, we need to
 change the second argument from 1 to 5:
     
 ```{r}
-rbinom(100,5,0.5)
+rbinom(200,5,0.5)
 ```
 
 The R output now shows the number of successes (heads) that each
