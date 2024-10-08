@@ -10,8 +10,6 @@ knitr::opts_chunk$set(include = FALSE) # change to TRUE when rendering solutions
 ```
 
 
-\newcommand{\bling}{XXXxxxXXxX}
-
 This tutorial focusses on the binomial distribution.  This tutorial
 builds on chapter 3 of the course manual.
 
@@ -164,7 +162,7 @@ dbinom(5, 10, 0.25)
 ```
 
 * The pass mark for this test is to score 6 or more correct answers.
-  What is the probability that our student passess the exam?
+  What is the probability that our student passes the exam?
 
 ```{r}
 sum(dbinom(6:10,10,1/4))
@@ -174,3 +172,21 @@ pbinom(5,10,1/4,lower.tail=FALSE)
 ```{asis}
 A little under 2\%
 ```
+
+
+### Question
+
+(harder) Look at the help page for `rbinom` and see that it documents four functions: `dbinom()`, `pbinom()`, `qbinom()` and `rbinom()`.  Function `pbinom()` is the _cumulative probability density function, which gives $P(X\leq x)$.  Thus:
+
+```{r}
+n <- 10
+r <- 6
+p <- 1/3
+sum(dbinom(0:6,10,1/3))
+pbinom(6,10,1/3)
+```
+
+Above we see the same answer from both methods.
+
+* Assess the accuracy and speed of the two methods.
+* (harder) Try and figure out what `qbinom()` does.  Hint: the first argument, named `p` in the documentation, is the probability returned by `pbinom()`.  Try and plot this function and explain any sudden jumps.
