@@ -21,7 +21,7 @@ variables used and the extent of the data.
 
 Methods and results  (40 marks)
 
-A good portfolio will include:
+A good portfolio will include all of the following:
 
 * A range of data visualisations (histogram, scattergraph, etc)
 * t-test
