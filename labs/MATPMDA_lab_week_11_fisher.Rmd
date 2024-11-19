@@ -19,11 +19,11 @@ year, and 15 subjects are found to have higher bone density.  Of these
 15 subjects, 12 were given calcium.  We may represent the data in R as
 follows:
 
-
+ 
 
 ```{r,include=TRUE}
-M <- matrix(c(12,3,5,14),2,2)
-dimnames(M) <- list(increased=c(T,F),given=c("calcium","placebo"))
+M <- matrix(c(12,3,5,14),2,2,byrow=TRUE)
+dimnames(M) <- list(given=c("calcium","placebo"), increased=c(T,F) )
 M
 ```
 
