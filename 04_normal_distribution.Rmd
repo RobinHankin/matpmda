@@ -1,6 +1,16 @@
 # The Normal Distribution
 
 
+```{block2, type='youtube'}
+<https://www.youtube.com/watch?v=2I30Ju4we10&list=PL018X5Hlr4RkgE65Pg93TFY-32KCVpW84&index=6>
+```
+
+```{block2, type='youtube'}
+<https://www.youtube.com/watch?v=TVd2p-L5e7g&list=PL018X5Hlr4RkgE65Pg93TFY-32KCVpW84&index=7>
+```
+
+
+
 In this chapter we are going to look at a continuous distribution
 called the Normal, or Gaussian, distribution.  The Normal distribution
 has many applications and occurs throughout science, medicine, and

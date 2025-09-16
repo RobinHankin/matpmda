@@ -77,3 +77,4 @@ repetitions given.  p-values misinterpreted.  Regression analysis
 presented with no scattergraph.  Conclusions weak or unjustified.
 Conversation shows little familiarity with dataset or structure of
 portfolio; and flawed understanding of statistical analysis presented.
+1

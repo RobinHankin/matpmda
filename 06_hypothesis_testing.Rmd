@@ -1,5 +1,13 @@
 # Hypothesis Testing
 
+```{block2, type='wikipedia'}
+<https://en.wikipedia.org/wiki/Statistical_hypothesis_testing>
+```
+
+```{block2, type='youtube'}
+<https://www.youtube.com/watch?v=yc_SKWZwPBw&list=PL018X5Hlr4RkgE65Pg93TFY-32KCVpW84&index=3>
+```
+
 As we discussed earlier, we often want to use a sample to make
 inferences about the population from which the sample was drawn.  The
 following notation is commonly used when referring to samples and

@@ -9,6 +9,21 @@ This week we will be discussing the binomial distribution, which has
 many and varied applications throughout statistics.
 
 
+```{block2, type='wikipedia'}
+<https://en.wikipedia.org/wiki/Binomial_distribution>
+```
+
+```{block2, type='youtube'}
+<https://www.youtube.com/watch?v=4q9zDgIm1H4&list=PL018X5Hlr4RkgE65Pg93TFY-32KCVpW84&t=0s&index=2>
+```
+
+```{block2, type='youtube'}
+<https://www.youtube.com/watch?v=JfYPwu3qWmk&list=PL018X5Hlr4RkgE65Pg93TFY-32KCVpW84&index=2>
+```
+
+
+
+
 ## Bernoulli trials 
 
 A *Bernoulli trial* is the simplest random variable: it amounts to an
