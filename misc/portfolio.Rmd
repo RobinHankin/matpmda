@@ -1,0 +1,153 @@
+---
+title: "My Daily Productivity Dataset"
+author: "Your Name"
+date: "`r format(Sys.Date(), '%B %Y')`"
+output: pdf_document
+---
+
+## Introduction
+
+
+Over a period of thirty consecutive days, I recorded several aspects
+of my daily routine to explore how coffee consumption and sleep might
+influence my productivity. Each evening, I noted how many cups of
+coffee I had consumed before noon, how many hours I had slept the
+previous night, my self-rated morning mood, whether I considered the
+day productive, and how many tasks I had completed. This dataset
+reflects genuine features of my everyday life and captures factors
+that I believe affect my ability to work effectively. Understanding
+these relationships is personally meaningful because productivity,
+sleep, and caffeine intake are recurring themes in my daily routine.
+
+Below are the first few rows of the dataset:
+
+```{r setup, include=TRUE, message=FALSE}
+# Read the dataset
+df <- read.table("dataset.txt", header = TRUE, sep = "\t")
+
+# Display first few rows
+head(df)
+```
+
+
+Before applying statistical tests, I explored the data visually to understand its structure.
+
+
+```{r}
+# Histogram of tasks completed
+hist(df$tasks_completed, 
+     main = "Distribution of Tasks Completed", 
+     xlab = "Tasks Completed", 
+     col = "lightblue", border = "white")
+
+# Scatterplot of coffee vs tasks
+plot(df$cups_coffee, df$tasks_completed,
+     pch = 19, col = "darkblue",
+     xlab = "Cups of Coffee", 
+     ylab = "Tasks Completed",
+     main = "Tasks vs Coffee Consumption")
+abline(lm(tasks_completed ~ cups_coffee, data = df), col = "black", lwd = 2)
+```
+
+## Student's t-test
+
+I used a t-test to compare the mean number of tasks completed on days
+I considered "productive" versus "non-productive".
+
+Null hypothesis ($H_0$): The mean number of tasks completed is the
+same on productive and non-productive days.  Alternative hypothesis
+($H_1$): The mean number of tasks completed differs between productive
+and non-productive days.
+
+```{r}
+t_test_result <- t.test(tasks_completed ~ productive_day, data = df)
+t_test_result
+```
+
+Interpretation: The p-value indicates whether there is a statistically
+significant difference in average task completion between the two
+types of days.  If $p < 0.05$, I reject $H_0$, suggesting that my
+perception of productivity corresponds to a real difference in work
+output.
+
+
+# Linear regression
+
+Next, I examined whether coffee consumption predicts the number of
+tasks completed.
+
+Model: tasks_completed ~ cups_coffee
+
+$H_0$: The slope = 0 (no linear relationship).\\
+$H_1$: The slope not = 0.
+
+
+```{r}
+fit <- lm(tasks_completed ~ cups_coffee, data = df)
+summary(fit)
+
+# Extract slope p-value and labels
+p_value <- summary(fit)$coefficients[2, 4]
+sig_label <- ifelse(p_value < 0.05,
+                    paste0("Slope significant (p = ", signif(p_value, 3), ")"),
+                    paste0("Slope not significant (p = ", signif(p_value, 3), ")"))
+eq_label <- paste0("Tasks = ", round(coef(fit)[1], 2), " + ",
+                   round(coef(fit)[2], 2), " x Coffee")
+
+# Plot
+plot(df$cups_coffee, df$tasks_completed,
+     pch = 19, col = "blue",
+     xlab = "Cups of Coffee",
+     ylab = "Tasks Completed",
+     main = "Linear Regression: Tasks vs Coffee")
+abline(fit, col = "black", lwd = 2)
+usr <- par("usr")
+text(x = usr[1] + 0.5, y = usr[4] - 0.5, labels = eq_label, adj = c(0,1), cex = 0.9)
+text(x = usr[2] - 0.5, y = usr[3] + 0.5, labels = sig_label, adj = c(1,0), cex = 0.9)
+```
+
+Interpretation: The regression output shows how each additional cup of
+coffee is associated with an increase in the number of tasks
+completed.  The p-value for the slope quantifies whether this
+association is statistically significant.
+
+
+## Fisher’s Exact Test
+
+To investigate whether high coffee consumption is associated with
+perceived productivity, I created a binary variable indicating whether
+I drank three or more cups of coffee.
+
+$H_0$: Coffee consumption level and productivity perception are independent.\\
+$H_1$: Coffee consumption level and productivity perception are associated.
+
+
+```{r}
+df$high_coffee <- ifelse(df$cups_coffee >= 3, "High", "Low")
+table_summary <- table(df$high_coffee, df$productive_day)
+table_summary
+fisher_result <- fisher.test(table_summary)
+fisher_result
+```
+
+Interpretation: If the p-value is below 0.05, I reject $H_0$,
+suggesting that days with high coffee consumption tend to coincide
+with days I consider productive.
+
+
+# Conclusions
+
+This small self-collected dataset offered an engaging way to apply
+statistical methods to my own life. The t-test confirmed that I
+genuinely complete more tasks on days I perceive as productive. The
+linear regression indicated a positive relationship between coffee
+intake and task completion, although the residual variation suggests
+that other factors—such as sleep or workload—also play an important
+role. The Fisher's exact test suggested a modest association between
+high coffee intake and productivity perception.
+
+Collecting and analysing my own data made statistical reasoning feel
+concrete and relevant. I was surprised that the coffee–productivity
+link, while statistically significant, was not as strong as I had
+expected. This exercise reinforced the value of evidence-based
+thinking, even in the small decisions of daily life.
