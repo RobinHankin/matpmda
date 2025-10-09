@@ -112,7 +112,7 @@ completed.  The p-value for the slope quantifies whether this
 association is statistically significant.
 
 
-## Fisher’s Exact Test
+## Fisher's Exact Test
 
 To investigate whether high coffee consumption is associated with
 perceived productivity, I created a binary variable indicating whether
@@ -130,9 +130,6 @@ fisher_result <- fisher.test(table_summary)
 fisher_result
 ```
 
-Interpretation: If the p-value is below 0.05, I reject $H_0$,
-suggesting that days with high coffee consumption tend to coincide
-with days I consider productive.
 
 
 # Conclusions
@@ -142,12 +139,12 @@ statistical methods to my own life. The t-test confirmed that I
 genuinely complete more tasks on days I perceive as productive. The
 linear regression indicated a positive relationship between coffee
 intake and task completion, although the residual variation suggests
-that other factors—such as sleep or workload—also play an important
+that other factors---such as sleep or workload---also play an important
 role. The Fisher's exact test suggested a modest association between
 high coffee intake and productivity perception.
 
 Collecting and analysing my own data made statistical reasoning feel
-concrete and relevant. I was surprised that the coffee–productivity
+concrete and relevant. I was surprised that the coffee-productivity
 link, while statistically significant, was not as strong as I had
 expected. This exercise reinforced the value of evidence-based
 thinking, even in the small decisions of daily life.
