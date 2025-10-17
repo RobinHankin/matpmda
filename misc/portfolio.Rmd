@@ -1,6 +1,6 @@
 ---
 title: "My Daily Productivity Dataset"
-author: "Your Name"
+author: "N. O. Body"
 date: "`r format(Sys.Date(), '%B %Y')`"
 output: pdf_document
 ---
