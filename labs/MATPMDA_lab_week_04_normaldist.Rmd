@@ -186,7 +186,7 @@ pnorm(40, mu, sd)
 ```
 
 
-## Question
+### Question
 
 The following dataset shows length in cm of petals of a particular
 iris species.  Give a 95\% confidence interval for the mean length.
@@ -212,9 +212,11 @@ x <- c(
 qnorm(c(0.025,0.975),mean(x),sd(x)/sqrt(length(x)))
 ```
 
-## Question
+### Question
 
-If we have observations from a Gaussian distribution with unknown mean and standard deviation equal to 3, how many observations do we need to reduce the standard error to 0.1?
+If we have observations from a Gaussian distribution with unknown mean
+and standard deviation equal to 3, how many observations do we need to
+reduce the standard error to 0.1?
 
 ```{r}
 (3/0.1)^2
