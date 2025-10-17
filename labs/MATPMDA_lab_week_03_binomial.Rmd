@@ -119,18 +119,18 @@ sd(rbinom(1e6, n, p))    # numerical simulation of sd
 ### Question
 
 We take a fair coin (that is, one with probability $p$ of landing
-heads = 0.5) and toss it $n=1000$ times.  
+heads = 0.5) and toss it $n=100$ times.
 
-* Plot the probability of observing a total of $r=400,401,\ldots, 600$
+* Plot the probability of observing a total of $r=40,41,\ldots, 60$
 heads.
 
 ```{r}
-x <- 400:600
-plot(x,dbinom(x,1000,1/2))
+x <- 40:60
+plot(x,dbinom(x,100,1/2))
 ```
 
 * Repeat the simulation experiment in the previous question using
-different values of $p$.  
+different values of $p$.
 
 ```{r}
 f <- function(p){dbinom(0:1000,1000,p)}
