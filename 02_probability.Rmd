@@ -336,7 +336,9 @@ Question: Are events $A$ and $B$ independent?
 
 Answer: independent events are characterised by $p(A\cap B)=p(A)p(B)$.
 
-We have $p(A\cap B)=\frac{5}{36}$ but $p(A)p(B)=\frac{1}{3}\times\frac{5}{18}=\frac{5}{56}$ so the events are not independent.
+We have $p(A\cap B)=\frac{5}{36}$ but
+$p(A)p(B)=\frac{1}{3}\times\frac{5}{18}=\frac{5}{54}$ so the events
+are not independent.
 
 ### Example question 4
 
