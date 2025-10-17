@@ -327,28 +327,6 @@ barplot(gears)
 Modify your code in the previous question to add labels on the $x$ and $y$ axes and a title.
 
 
-## Stem and Leaf Plots
-
-A stem and leaf plot is a useful way to visualise moderate sized data
-sets, use the `stem()` function:
-
-```{r}
-stem(mtcars$hp)  #recall $ can be used to access the column called hp
-```
-
-We see that most of the vehicles have a horsepower of between 50 and
-200.  There are a small number of cars with a horsepower of more than
-200.
-
-
-The size of the categories can be adjusted using the `scale`
-parameter.  The default value is 1.  Try different values and see what
-the impact is on the graph.
-
-```{r}
-stem(mtcars[,"hp"], scale=1)
-```
-
 
 # Histograms
 
