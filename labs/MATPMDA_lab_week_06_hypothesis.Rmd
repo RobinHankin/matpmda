@@ -87,7 +87,8 @@ x <- c(-0.67, -0.03, 0.37, 1.87, 0.35, -0.47, 0.92, 0.95, 0.55, 0.16,
 mean(x)
 ```
 
-* Calculate the standard error for this dataset, using the known population standard deviation $\sigma=0.6$
+* Calculate the standard error for this dataset, using the known
+  population standard deviation $\sigma=0.8$
 
 ```{r}
 sigma <- 0.6
@@ -97,7 +98,8 @@ SEM <- sigma/sqrt(n)
 SEM
 ```
 
-* State a sensible null and alternative hypothesis to be used in this situation, in words and in mathematical symbols.
+* State a sensible null and alternative hypothesis to be used in this
+  situation, in words and in mathematical symbols.
 
 ```{asis}
 $H_0\colon \mu = 0$\\
@@ -241,7 +243,8 @@ SEM <- sd(huron)/sqrt(length(huron))
 SEM
 ```
 
-*  State the precise definition of p-value and state what ``more extreme'' means in this context
+*  State the precise definition of p-value and state what ``more
+   extreme'' means in this context
 
 ```{asis}
 
