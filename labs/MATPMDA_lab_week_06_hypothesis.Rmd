@@ -1,8 +1,7 @@
 ---
 title: "MATPMDA lab, week 6, hypothesis testing"
 output:
-  pdf_document: default
-  html_document: default
+  html_document
 ---
 
 ```{r setup, include=FALSE}
@@ -15,9 +14,31 @@ knitr::opts_chunk$set(include = FALSE) # change to TRUE when rendering solutions
 ### Question
 
 To test a null hypothesis $H_0\colon \mu=\mu_0$ for a population that
-is $N(\mu, \sigma^2)$, it is usual to use the test statistic $Z =
-\frac{\bar{X} - \mu_0}{\sigma/\sqrt{n}}$ where $\bar{X}$ is mean of a
-random sample of size $n$ from the population.
+is $N(\mu, \sigma^2)$, it is usual to apply a transform so that we are
+dealing with an observation that has a standard Gaussian, $N(0,1)$.
+We know that
+
+$$\overline{x}\sim N\left(\mu_0,\frac{\sigma}{\sqrt{n}}\right)$$
+
+And we have been using R function `pnorm()` to calculate tail areas,
+with something like
+
+```
+1 - pnorm(obs, mu_0, SEM)
+```
+
+where `obs` is the observation, `mu_0` is the hypothesised mean, and
+`SEM` the standard error of the mean.  However, it is more convenient
+to use a so-called "Z test".  If the null is true, we can say that
+$\overline{x}-\mu_0\sim N\left(0,\frac{\sigma}{\sqrt{n}}\right)$ and
+thus $\frac{\overline{x}-\mu_0}{\sigma/\sqrt{n}}\sim N(0,1)$.  We call
+this quantity $Z$, and use it as a test statistic:
+
+$$
+Z = \frac{\overline{x}-\mu_0}{\sigma/\sqrt{n}}
+$$
+
+Again, if the null is true, we have $Z\sim N(0,1)$.
 
 * Find the interval of $Z$ values that is the critical region (or
 rejection region) for $\alpha=0.05$ (one-sided test).
@@ -36,8 +57,6 @@ Therefore the critical region is the interval $(-\infty, -1.645)$.
 qnorm(0.01)
 ```
 
-* Now instead assume that the alternative hypothesis is $H_1\colon \mu
-  \neq \mu_0$.  This is a two-sided test.
 
 ```{r}
 alpha <- 0.05
@@ -54,7 +73,7 @@ Therefore the critical region is the interval $(-\infty, -1.96) \cup(1.96, \inft
 An army office is interested in the horizontal distance from the target
 of a set of rifle shots, measured in centimetres.  It is known from
 previous studies that the standard deviation of the horizontal
-distance is 0.6 centimeters.
+distance is 0.8 centimeters.
 
 ```{r,include=TRUE}
 x <- c(-0.67, -0.03, 0.37, 1.87, 0.35, -0.47, 0.92, 0.95, 0.55, 0.16,
@@ -90,6 +109,13 @@ $H_0\colon$ the rifle shots have a mean horizontal distance of zero\\
 $H_1\colon$ the rifle shots do not have a mean horizontal distance of zero
 ```
 
+* State the precise definition of $p$-value, and explain what "more
+  extreme" means in this context.
+
+```{asis}
+The probability, if the null is true, of obtaining the observation or an observation more extreme
+```
+
 * Compute the test statistic, i.e. $Z = \frac{\bar{X}-\mu_0}{\sigma/\sqrt{n}}$
 
 ```{r}
@@ -98,9 +124,10 @@ z <- (mean(x)-mu0)/SEM
 z
 ```
 
-* Using a significance level of 5\%, identify the critical region.
+
 
 ```{asis}
+* Using a significance level of 5\%, identify the critical region.
 
 This is a two-tailed test, so the critical region is values of the
 test statistic which are greater than $c$ or less than $-c$.  In this
@@ -149,7 +176,9 @@ therefore the result of the hypothesis test is significant.  We may
 reject the null hypothesis and infer that the rifle is indeed biased.
 ```
 
-* Compute a 95\% confidence interval for the mean horizontal deviation of the rifle shots.
+* (optional: confidence intervals not yet covered). Compute a 95\%
+  confidence interval for the mean horizontal deviation of the rifle
+  shots.
 
 ```{r}
 qnorm(c(0.025, 0.975), mean(x), sd=SEM)
@@ -163,85 +192,7 @@ We are 95\% confident that the true mean $\mu$ is within the interval
 $\mu_0=0$.
 ```
 
-### Question
-
-Regardless of age, about 20\% of American adults participate in
-fitness activities (the criterion was activity taking place at least
-twice a week).  A random sample of 100 adults over 40 years old found
-15 who exercised at least twice a week.  Is this evidence of a decline
-in participation after age 40?  We will use $\alpha = 0.05$.
-
-* State the null and alternative hypotheses.
-
-```{asis}
-$H_0\colon \pi=0.2$\\
-$H_0\colon\pi <0.2$
-```
-
-* Using the normal approximation for the binomial, compute the test
-  statistic $z$. Recall that $z = \frac{\hat{p} -
-  \pi_0}{\sqrt{\frac{\pi_0(1-\pi_0)}{n}}}$
-
-```{r}
-x <- 15
-n <- 100
-phat <- x/n
-pi0 <- 0.2   # null
-z <- (phat - pi0)/(sqrt(pi0*(1-pi0)/n))
-z
-```
-
-```{asis}
-Observe that the mean and variance are calculated using the  *true*
-value of $p$, not the estimate $\hat{p}=r/n$.  What would you do if
-your information about $p$ came purely from observing $r$ successes
-out of $n$ trials?
-```
-
-* Compute the critical region for this test, stating whether and why
-  you are using a one-sided or two-sided test.
-
-
-```{r}
-qnorm(0.05, 0, 1)
-```
-
-```{asis} 
-The difference betwen the t test and the Z
-test is the use of the estimated standard deviation $\hat{\sigma}$
-rather than the true value $\sigma$ in the denominator.  By far the
-hardest part of deriving the t distribution is proving that the sample
-mean and the sample variance are independent
-```
-
-* Is the test statistic in the critical region? What conclusion can we draw?
-
-```{asis}
-No, the test statistic is not in the critical
-region. Therefore we fail to reject the null hypothesis.  There is
-insufficient evidence to conclude that the percentage of adults over
-40 who participate in fitness activities twice a week is less than
-20\%.  There is no evidence that the percentage of adults over 40 who
-participate in fitness activities twice a week is less than 20\%.
-```
-
-* Use R to compute the p-value for the test statistic $z$.
-
-```{r}
-pnorm(z, 0, 1)
-```
-
-```{asis}
-The p-value is greater than the significance level of 5\%, therefore we fail to reject $H_0$.
-```
-
-* Use R to compute the exact p-value using `dbinom()`.
-
-```{r}
-sum(dbinom(0:15,100, 0.2))
-```
-
-### Question
+## Question
 
 The following dataset shows the level of lake Huron over 98 years:
 
@@ -300,7 +251,7 @@ means ``the sample mean of the dataset is higher than the observed
 sample mean of 579''
 ```
 
-* Calculate the p-value and interpret
+* Calculate the p-value using a Z-test and interpret
 
 ```{r}
 pnorm(mean(huron),mean=579.3,sd=sd(huron)/sqrt(length(huron)))
@@ -311,7 +262,8 @@ pnorm(mean(huron),mean=579.3,sd=sd(huron)/sqrt(length(huron)))
 $p<0.05$ so there is evidence that the level has increased
 ```
 
-* A historian suggests that the later observations are flawed.  Perform a similar analysis on the first 70 observations.
+* A historian suggests that the later observations are flawed.
+  Perform a similar analysis on the first 70 observations.
 
 ```{r}
 huron_older <- huron[1:70]
@@ -321,3 +273,116 @@ pnorm(mean(huron_older),mean=579.3,sd=sd(huron_older)/sqrt(length(huron_older)))
 ```{asis}
 No evidence!
 ```
+
+* Use R's `t.test()` instead and compare.
+
+```{r}
+t.test(huron, mu=579.3)
+```
+
+
+### Question
+
+Consider the following dataset for five patients, A-E, showing
+strength measurements before and after a training period.  We expect
+the training to increase the strength of the patients.
+
+```{r, include=TRUE}
+before <- c(A=24.2, B=30.4, C=32.7, D=19.9, E=25.1)
+after  <- c(A=25.5, B=31.2, C=32.9, D=20.4, E=25.6)
+```
+
+* State a sensible hypothesis
+* Are we considering a one-sided or two-sided test?
+* State the precise definition of $p$-value and explain what "more
+  extreme" means in this context
+*  perform a Student t-test and interpret.
+
+
+
+
+### Question
+
+Regardless of age, about 20\% of American adults participate in
+fitness activities (the criterion was activity taking place at least
+twice a week).  A random sample of 100 adults over 40 years old found
+15 who exercised at least twice a week.  Is this evidence of a decline
+in participation after age 40?  We will use $\alpha = 0.05$.
+
+* State the null and alternative hypotheses.
+
+```{asis}
+$H_0\colon \pi=0.2$\\
+$H_0\colon\pi <0.2$
+```
+
+* You will recall that a binomial distribution is approximately normal
+  if $n$ is large, and that if $X\sim\operatorname{Bin}(n,p)$ then,
+  approximately, $X$ is normal with $X\sim N(np,\sqrt{np(1-p)})$.
+  Using this normal approximation for the binomial, compute the test
+  statistic $Z$. Recall that $Z = \frac{\hat{p} -
+  \pi_0}{\sqrt{\frac{\pi_0(1-\pi_0)}{n}}}$ where $\pi_0$ is the
+  hypothesised probability of success [e.g. for a coin-tossing
+  experiment we would have $\pi_0=1/2$].
+
+```{r}
+x <- 15
+n <- 100
+phat <- x/n
+pi0 <- 0.2   # null
+z <- (phat - pi0)/(sqrt(pi0*(1-pi0)/n))
+z
+```
+
+```{asis}
+Observe that the mean and variance are calculated using the  *true*
+value of $p$, not the estimate $\hat{p}=r/n$.  What would you do if
+your information about $p$ came purely from observing $r$ successes
+out of $n$ trials?
+```
+
+
+```{asis}
+* Compute the critical region for this test, stating whether and why
+  you are using a one-sided or two-sided test.
+```
+
+```{r}
+qnorm(0.05, 0, 1)
+```
+
+```{asis} 
+The difference betwen the t test and the Z
+test is the use of the estimated standard deviation $\hat{\sigma}$
+rather than the true value $\sigma$ in the denominator.  By far the
+hardest part of deriving the t distribution is proving that the sample
+mean and the sample variance are independent
+```
+
+```{asis}
+* Is the test statistic in the critical region? What conclusion can we draw?
+
+No, the test statistic is not in the critical
+region. Therefore we fail to reject the null hypothesis.  There is
+insufficient evidence to conclude that the percentage of adults over
+40 who participate in fitness activities twice a week is less than
+20\%.  There is no evidence that the percentage of adults over 40 who
+participate in fitness activities twice a week is less than 20\%.
+```
+
+* Use R to compute the p-value for the test statistic $z$.
+
+```{r}
+pnorm(z, 0, 1)
+```
+
+```{asis}
+The p-value is greater than the significance level of 5\%, therefore we fail to reject $H_0$.
+```
+
+* Use R to compute the exact p-value using `dbinom()`.
+
+```{r}
+sum(dbinom(0:15,100, 0.2))
+```
+
