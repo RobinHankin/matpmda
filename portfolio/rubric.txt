@@ -26,9 +26,7 @@ Methods and results
 A good portfolio will include all of the following:
 
 * A range of data visualisations (histogram, scattergraph, etc)
-* t-test
-* Linear regression
-* Fisher's exact test
+* Tests covered by the course material
 
 For the statistical tests, the test should be appropriate to the
 aspect of the dataset considered.  State your null and alternative
