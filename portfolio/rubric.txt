@@ -25,8 +25,9 @@ Methods and results
 
 A good portfolio will include all of the following:
 
-* A range of data visualisations (histogram, scattergraph, etc)
-* Tests covered by the course material
+* One or two data visualisations (histogram, scattergraph, etc) to get
+  a feel for the data.
+* Statistical tests covered by the course material
 
 For the statistical tests, the test should be appropriate to the
 aspect of the dataset considered.  State your null and alternative
@@ -82,6 +83,5 @@ Distinction: The chosen dataset is simultaneously amenable to
   Conclusions clear, incisive, and supported by the text.
   Conversation reveals in-depth familiarity with dataset,
   visualisations and statistical analysis used.  For a high
-  distinction: succinct and apposite critical evaluation of the
-  techniques used and/or relevant foundational issues [e.g. the
-  frequentist paradigm itself]
+  distinction: succinct and apposite critical engagement with the
+  techniques used.
