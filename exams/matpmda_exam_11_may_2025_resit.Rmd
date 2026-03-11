@@ -1,0 +1,217 @@
+---
+title: "matpmda_exam_11_may_2026.Rmd"
+author: "NAME AND STUDENT ID GO HERE"
+date: "2025-05-12"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+This exam has FIVE questions.  Answer them all.  Each will be marked
+according to the common marking scheme and your overall mark will be
+the arithmetic mean of the five marks.
+
+
+# Question 1
+
+A sports scientist collects strength data from two groups of students.
+The first group is a group of athletes who might be expected to be
+strong, and the second group is a control group of nonathletic
+students.  The first group has strength ratings of:
+
+```
+c(135.6, 140.7, 133, 140.4, 127.4, 133.3, 128.8, 144.1)
+```
+
+And the second group has strength ratings of:
+
+```
+c(115.1, 125.4, 122, 116.2, 123.3, 126.6)
+```
+
+Is there evidence that the first group is actually stronger than the second?
+
+* State a sensible null hypothesis
+* State the precise definition of p-value and explain
+     what “more extreme” means in this context
+* Is a one-sided or two-sided test needed? justify
+* Perform a student t-test using R and interpret
+
+
+
+***Answer here***
+
+Null: both groups have identical mean stengths.
+
+P-value: "the probability, if the null is true, of obtaining the
+observation or an observation more extreme".  Here, the observation is
+the difference in mean strengths and "more extreme" means a larger
+difference than observed.
+
+One-sided, athletes known to be stronger
+
+```{r}
+x <- c(135.6, 140.7, 133, 140.4, 127.4, 133.3, 128.8, 144.1)
+y <- c(115.1, 125.4, 122, 116.2, 123.3, 126.6)
+t.test(x,y,alternative="greater")
+```
+
+small pvalue indicates strong evidence that the athletes are indeed
+stronger.
+
+# Question 2
+
+Random variable X is drawn from a normal distribution with mean 1.1
+and standard deviation 2.
+
+* Calculate the probability of X being less than -0.5
+* What is the probability of X lying between -0.8 and 0.46?
+* Verify your answers to parts (a) and (b) above using numerical sampling.
+* (Harder) Random variable Y is independent of X and drawn from the
+  same distribution.  Estimate the probability that $X^2 + XY$ is less
+  than or equal to 1.5.
+
+***Answer here***
+
+
+```{r}
+pnorm(-0.5, 1.1, 2)
+diff(pnorm(0.46, -0.8), 1.1, 2)
+x <- rnorm(1e6, 1.1, 2)
+table(x < -0.5)/1e6
+table( (x > -0.8) & (x < 0.46))/1e6
+y <- rnorm(1e6, 1.1, 2)
+table(x^2 + x*y <= 1.5)
+```
+
+# Question 3
+
+It is known that seeds from a particular type of plant germinate with
+a probability 0.2.  An environmental scientist visits a location,
+suspected of having seeds that are less likely to germinate than
+averate.  She samples 325 seeds from this species and finds that 55
+germinate.
+
+* State a sensible null hypothesis.
+* Under the null, what is the expected number of germinations?
+* State the precise definition of pvalue and say what "more extreme" means in this context.
+* Calculate a p-value for the observation of 55 germinations.  Interpret your finding.
+* (harder) Using these figures (and the formula $Z = (x-\mu)/\sigma$,
+  what is the Z-score for the observation?  Use pnorm() to calculate a
+  pvalue under the normal approximation.
+
+***Answer here***
+
+Null: this location has the same probability of a seed germinating as
+anywhere else.
+
+```{r}
+0.2*325
+```
+
+P-value: "the probability, if the null is true, of obtaining the
+observation or an observation more extreme".  Here, the observation is
+55 and more extreme means less than this.
+
+```{r}
+sum(dbinom(0:55,325,0.2))
+```
+
+pvalue exceeds 0.05, no evidence.
+
+```{r}
+pnorm(55, 325*0.2, sqrt(325*0.2*0.8))
+```
+
+
+
+# Question 4
+
+A Students are expected to have higher grades if they spend more time
+studying.  An educational theorist collects data on 17 students and the
+number of hours they spend studying is:
+
+```{r}
+hours <-
+c(20.3, 18.6, 19.5, 20.3, 18.7, 21.1, 19, 22.4, 18.6, 18.2, 20.9,
+18.8, 19.1, 22.7, 19.1, 20.2, 19.6)
+hours
+```
+
+Their grade average is:
+
+```{r}
+grades <-
+c(7.7, 6.7, 9.6, 10, 9, 10.9, 8.8, 9.2, 7.8, 6.1, 10.4, 9.9,
+8.4, 9.5, 8.3, 7.6, 10.2)
+grades
+```
+
+Is there evidence that students who spend more hours studying score higher grades?
+
+* State a sensible null hypothesis
+* State the precise definition of p-value and explain what “more extreme” means in this context
+* Is a one-sided or two-sided test needed? justify
+* Perform a linear regression using R and interpret
+
+***Answer here***
+
+Null: no relation between study hours and grades.
+
+P-value: "the probability, if the null is true, of obtaining the
+observation or an observation more extreme".  Here, the observation is
+the fitted slope and more extreme means a larger value.
+
+
+```{r}
+hours <-
+c(20.3, 18.6, 19.5, 20.3, 18.7, 21.1, 19, 22.4, 18.6, 18.2, 20.9,
+18.8, 19.1, 22.7, 19.1, 20.2, 19.6)
+grades <-
+c(7.7, 6.7, 9.6, 10, 9, 10.9, 8.8, 9.2, 7.8, 6.1, 10.4, 9.9,
+8.4, 9.5, 8.3, 7.6, 10.2)
+plot(grades~hours)
+fit <- lm(grades~hours)
+summary(fit)
+abline(fit)
+```
+
+
+# Question 5
+
+A scientist is investigating whether two species of snails have
+different responses to moisture.  He takes 5 snails of type A and 7 of
+type B and allows them to move freely in a two-chambered enclosure,
+with one half being dry and the other being wet.  He finds that 4
+snails, of which three are of type A, prefer the dry part of the
+container.
+
+* State a sensible null hypothesis
+* State the precise definition of p-value and explain what “more extreme” means in this context
+* Is a one-sided or two-sided test needed? justify
+* Using `fisher.test()`, or otherwise, assess your null and interpret.
+
+
+
+***Answer here***
+
+Null: both types of snail have equal responses to wet/dry conditions.
+
+P-value: "the probability, if the null is true, of obtaining the
+observation or an observation more extreme".  Here the observation is
+one snail of type B in the dry part of the enclosure and more extreme
+would be a smaller probability under the null.
+
+two-sided, no direction known.
+
+```{r}
+M <- matrix(c(2,3,6,1),2,2)
+dimnames(M) <- list(condition=c("wet","dry"), species=c("A","B"))
+M
+fisher.test(M)
+```
+
+Not significant.
+

@@ -1,0 +1,104 @@
+---
+title: "matpmda_exam_14_may_2025.Rmd"
+author: "NAME AND STUDENT ID GO HERE"
+date: "2025-05-12"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+# Question 1
+
+A sports scientist collects strength data from two groups of students. The first group is a
+group of athletes who might be expected to be strong, and the second group is a control
+group of nonathletic students.
+The first group has strength ratings of:
+
+```
+c(135.6, 140.7, 133, 140.4, 127.4, 133.3, 128.8, 144.1)
+```
+
+And the second group has strength ratings of:
+
+```
+c(115.1, 125.4, 122, 116.2, 123.3, 126.6)
+```
+
+Is there evidence that the first group is actually stronger than the second?
+
+* State a sensible null hypothesis
+* State the precise definition of p-value and explain what “more extreme” means in this
+context
+* Is a one-sided or two-sided test needed? justify
+* Perform a student t-test using R and interpret
+
+
+***Answer here***
+
+
+# Question 2
+
+Random variable X is drawn from a normal distribution with mean -1.23 and standard deviation 2.05.
+
+* Calculate the probability of X being less than -3.65.
+* What is the probability of X exceeding -2.01?
+* What is the probability of X lying between -0.8 and 0.46?
+* Verify your answers to parts (a) and (b) above using numerical sampling.
+* (Harder) verify your answers to part (c) above using numerical sampling.
+
+
+***Answer here***
+
+
+# Question 3
+
+Concrete specimens are assessed using a certain standardized test involving stressing the
+specimen in a rig. The concrete either breaks (fails), or does not break (passes the test;
+succeeds). It is known that the probability of passing the test is 0.202.
+A material scientist claims that painting the concrete with a particular paint increases the
+success rate. She takes 325 samples, paints them, and finds that 73 pass.
+(a) 
+
+* State a sensible null hypothesis.
+*  Under the null, what is the expected number of successes?
+*  State the precise definition of pvalue and say what "more extreme" means in this context.
+* Calculate a p-value for the observation of 73 successes. Interpret your finding.
+* Using these figures (and the formula $Z = (x-\mu)/\sigma$, what is the Z-score for the observation?  Use pnorm() to calculate a pvalue under the normal approximation.
+
+***Answer here***
+
+
+# Question 4
+
+Students are expected to have higher grades if they spend more time studying. An educational theorist collects data on 17 students and the number of hours they spend studying
+is:
+
+```{r}
+hours <-
+c(20.3, 18.6, 19.5, 20.3, 18.7, 21.1, 19, 22.4, 18.6, 18.2, 20.9,
+18.8, 19.1, 22.7, 19.1, 20.2, 19.6)
+hours
+```
+
+
+Their grade average is:
+
+```{r}
+grades <-
+c(7.7, 6.7, 9.6, 10, 9, 10.9, 8.8, 9.2, 7.8, 6.1, 10.4, 9.9,
+8.4, 9.5, 8.3, 7.6, 10.2)
+grades
+```
+
+Is there evidence that students who spend more hours studying score higher grades?
+
+* State a sensible null hypothesis
+* State the precise definition of p-value and explain what “more extreme” means in this context
+* Is a one-sided or two-sided test needed? justify
+* Perform a linear regression using R and interpret
+
+***Answer here***
+
