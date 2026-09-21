@@ -178,7 +178,7 @@ It is possible to plot this table in R; see figure
   \@ref(fig:binomialplot).  Remember that you may type `?plot` at
   the R prompt to get help.
 
-```{r binomialplot,fig.cap="Tabulated observations from the binomial distribution", echo=FALSE,message=FALSE,warning=FALSE}
+```{r binomialplot,fig.cap="Tabulated observations from the binomial distribution", out.width='100%',echo=FALSE,message=FALSE,warning=FALSE}
 plot(table(x))
 ```
 
