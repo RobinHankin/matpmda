@@ -70,17 +70,18 @@ Pass: dataset meets brief.  Analyses correct but given in unclear or
   lack impact.  Conversation shows some familiarity with dataset and
   analyses used.
 
-Merit: Analyses correct.  Only occasional lapses in application of
-  statistical tests.  Submission includes consistent interpretations.
+Merit: Statistical methods correctly executed with only occasional
+  minor lapses.  Submission includes consistent interpretations.
   Nulls motivated well and correctly stated.  Visualisations
-  informative.  Repeated analyses minimal.  Interpretation clear and
-  correct.
+  informative.  Demonstrates good discipline in tool selection, with
+  minimal repeated analyses.  Interpretation clear and correct.
 
 Distinction: The chosen dataset is simultaneously amenable to
   analysis, and exhibits imaginative interpretation of the phrase
   "day-to-day life".  A structured, engaging sequence of
-  visualisations, and correctly applied statistical analyses.
-  Conclusions clear, incisive, and supported by the text.
+  visualisations, and correctly applied statistical analyses.  Work
+  leaves no scope for further substantive application of module
+  techniques.  Conclusions clear, incisive, and supported by the text.
   Conversation reveals in-depth familiarity with dataset,
   visualisations and statistical analysis used.  For a high
   distinction: succinct and apposite critical engagement with the
