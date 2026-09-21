@@ -415,7 +415,7 @@ for a Bin(30,0.4) distribution.  We can plot the density of the
 binomial distribution with size 30 and probability 0.4 using the
 `dbinom()` function directly:
 
-```{r binplot,fig.cap="The binomial distribution", echo=FALSE,message=FALSE,warning=FALSE}
+```{r binplot,fig.cap="The binomial distribution", out.width='100%',echo=FALSE,message=FALSE,warning=FALSE}
 plot(0:30,dbinom(0:30,30,0.4),type='h')
 ```
 

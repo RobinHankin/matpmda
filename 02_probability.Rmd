@@ -107,7 +107,7 @@ We are going to need a little set theory; see figure \@ref(fig:venn)
 which defines set intersection, set union, set complement and
 symmetric difference.  
 
-```{r venn, fig.cap='Two sets, $A$ and $B$ on a Venn diagram together with red areas marking set union ($A\\cup B$), set intersection ($A\\cap B$), complement of A ($\\overline{A}$) and symmetric difference ($A\\Delta B$)', echo=FALSE, message=FALSE, warning=FALSE}
+```{r venn, fig.cap='Two sets, $A$ and $B$ on a Venn diagram together with red areas marking set union ($A\\cup B$), set intersection ($A\\cap B$), complement of A ($\\overline{A}$) and symmetric difference ($A\\Delta B$)', out.width='100%',echo=FALSE, message=FALSE, warning=FALSE}
 knitr::include_graphics("intersection_union.pdf")
 ```
 
@@ -355,7 +355,7 @@ the pass rate for the physics course is 70\%.  We also know that 50\%
 of students pass both physics and statistics.  This is shown in the
 form of a Venn diagram in figure \@ref(fig:statisticsphysics).
 
-```{r statisticsphysics,fig.cap="Pass rates for statistics and physics.  The areas of the regions are accurately presented", echo=FALSE,message=FALSE,warning=FALSE}
+```{r statisticsphysics,fig.cap="Pass rates for statistics and physics.  The areas of the regions are accurately presented", out.width='100%',echo=FALSE,message=FALSE,warning=FALSE}
 library("VennDiagram")
 venn.plot <- draw.pairwise.venn(60, 70, 50, c("statistics", "physics"))
 grid.draw(venn.plot)
@@ -424,7 +424,7 @@ seen in figure \@ref(fig:tree).  This defines event $D$ as a randomly
 chosen person has the disease, and Event $E$ as that person has a
 positive test.
 
-```{r tree, out.width="6in",fig.cap='A tree diagram showing diagnosis of a disease', echo=FALSE, message=FALSE, warning=FALSE}
+```{r tree, out.width="6in",fig.cap='A tree diagram showing diagnosis of a disease', out.width='100%', echo=FALSE, message=FALSE, warning=FALSE}
 knitr::include_graphics("tree_diagram.pdf")
 ```
 

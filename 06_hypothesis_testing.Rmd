@@ -145,7 +145,7 @@ Figure \@ref(fig:criticalregion) shows the concept diagramatically.
 We can see that, if the null is true, the probability of the test
 statistic falling in to the rejection region is 0.05, or 5\%.
 
-```{r criticalregion,fig.cap="The critical region shown in red", echo=FALSE,message=FALSE,warning=FALSE}
+```{r criticalregion,fig.cap="The critical region shown in red", out.width='100%',echo=FALSE,message=FALSE,warning=FALSE}
 x <- seq(from=-4,to=4,len=100)
 plot(x,dnorm(x),type="n",main="The critical region",xlab="sample mean",ylab="null")
 xx <- seq(from=qnorm(0.95),to=4,len=100)
@@ -183,7 +183,7 @@ and the third is called a *two-tailed test*.  These are shown in
 figures \@ref(fig:onesidedpvalue) and \@ref(fig:twosidedpvalue).  We will
 see examples of both types of test soon.
 
-```{r onesidedpvalue,fig.cap="pvalue for a one-sided test", echo=FALSE,message=FALSE,warning=FALSE}
+```{r onesidedpvalue,fig.cap="pvalue for a one-sided test", out.width='100%',echo=FALSE,message=FALSE,warning=FALSE}
 x <- seq(from=-4,to=4,by=0.001)
 plot(x, dnorm(x),type="l", ylab="Density", xlab="", xaxt="n",main="One-sided test")
 jj <- x[x>qnorm(0.95)]
@@ -193,7 +193,7 @@ text(qnorm(0.95),0.1,"observation",pos=4)
 legend("topleft",col=c("red","black"),lwd=c(11,1),legend=c("p-value","Null distribution"))
 ```
 
-```{r twosidedpvalue,fig.cap="pvalue for a two-sided test", echo=FALSE,message=FALSE,warning=FALSE}
+```{r twosidedpvalue,fig.cap="pvalue for a two-sided test", out.width='100%',echo=FALSE,message=FALSE,warning=FALSE}
 x <- seq(from=-4,to=4,by=0.001)
 plot(x, dnorm(x),type="l", ylab="Density", xlab="", xaxt="n",main="Two-sided test")
 jj <- x[x>qnorm(0.975)]

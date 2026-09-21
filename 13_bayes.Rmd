@@ -43,7 +43,7 @@ expected to declare themselves as either "Bayesians" or
 philosophy.  My estimate would be that 30\% of statisticians are
 Bayesians.
 
-```{r venn13, fig.cap='Two sets with functions defined on them', echo=FALSE, message=FALSE, warning=FALSE}
+```{r venn13, fig.cap='Two sets with functions defined on them', out.width='100%',echo=FALSE, message=FALSE, warning=FALSE}
 knitr::include_graphics("intersection_union.pdf")
 ```
 

@@ -93,7 +93,7 @@ reject any $\mu$ in the range
 
 (just invert the formula for $Z$ using algebra).
 
-```{r confidenceconcept,fig.cap="Conceptual diagram of confidence interval", echo=FALSE}
+```{r confidenceconcept,fig.cap="Conceptual diagram of confidence interval", out.width='100%',echo=FALSE}
 x <- seq(from=-4,to=4,len=100)
 plot(x,dnorm(x),type="l")
 xp <- qnorm(0.975)
@@ -171,7 +171,7 @@ probably contains the true parameter, although the correct definition
 (viz, the set of points $x$ for which $H_0\colon\mu=x$ would not be
 rejected) is problematic.
 
-```{r confidencefreq,fig.cap="Repeated confidence intervals with intervals missing the true value shown in red", echo=FALSE}
+```{r confidencefreq,fig.cap="Repeated confidence intervals with intervals missing the true value shown in red", out.width='100%',echo=FALSE}
 set.seed(1)
 par(lend=1)
 f <- function(x){t.test(x)$conf.int}

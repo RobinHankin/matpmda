@@ -46,7 +46,7 @@ our life very much easier when using $T$ as a test statistic:
       with a single function.  All we have to do is interpret the
       $p$-value that R gives us.
 
-```{r studenttees, fig.cap="The Gaussian distribution and a Student t-distribution for comparison: the two are very similar", echo=FALSE,message=FALSE,warning=FALSE}
+```{r studenttees, fig.cap="The Gaussian distribution and a Student t-distribution for comparison: the two are very similar", out.width='100%',echo=FALSE,message=FALSE,warning=FALSE}
 x <- seq(from=-4,to=4,len=1000)
 plot(x,dnorm(x),type="l",lwd=6,ylab="probability density")
 points(x,dt(x,df=4),type="l",lwd=1,col='red')

@@ -25,7 +25,7 @@ showing the mean value as the maximum of the curve, and defining the
 standard deviation to be the distance from the mean to the steepest
 point.  The standard deviation is a measure of the "width" of a distribution.
 
-```{r annotatednorm1,fig.cap="The normal (Gaussian) distribution showing mean and standard deviation.", echo=FALSE,message=FALSE,warning=FALSE}
+```{r annotatednorm1,fig.cap="The normal (Gaussian) distribution showing mean and standard deviation.", out.width='100%',echo=FALSE,message=FALSE,warning=FALSE}
 x <- seq(from=-4,to=4,len=1000)
 plot(x,dnorm(x),type="l",lwd=6,main="Gaussian distribution")
 abline(v=0,lwd=3)
@@ -42,7 +42,7 @@ Figure \@ref(fig:manynorm) shows some normal distributions with
 varying mean values (the curve moves left and right) and widths (the
 curve becomes wider or narrower).
 
-```{r manynorm,fig.cap="A selection of normal (Gaussian) distributions with different means and standard deviations.  See how the mean value shifts the distribution to the left or the right, and the standard deviation makes the distribution wider or narrower", echo=FALSE,message=FALSE,warning=FALSE}
+```{r manynorm,fig.cap="A selection of normal (Gaussian) distributions with different means and standard deviations.  See how the mean value shifts the distribution to the left or the right, and the standard deviation makes the distribution wider or narrower", out.width='100%',echo=FALSE,message=FALSE,warning=FALSE}
 x <- seq(from = -4,to=4,len=100)
 plot(x,dnorm(x),lwd=3,type='l',col='black',ylim=c(0,1))
 grid()
@@ -140,7 +140,7 @@ Basic facts:
 * To compute $P(X \leq x)$ find the area to the left of $x$.
 * Because $X$ is a continuous random variable, $P(X=x)=0$.  That is, the probability of $X$ being exactly equal to any particular value is zero.
 
-```{r annotatednorm2,fig.cap="The normal (Gaussian) distribution showing mean and standard deviation.", echo=FALSE,message=FALSE,warning=FALSE}
+```{r annotatednorm2,fig.cap="The normal (Gaussian) distribution showing mean and standard deviation.", out.width='100%',echo=FALSE,message=FALSE,warning=FALSE}
 mu  <-  0
 sigma <- 1
 x = seq(from=-4, to=4, by=0.001)
@@ -343,7 +343,7 @@ This distribution is plotted in Figure \@ref(fig:binomialnormalplot)
 from which we can see that this binomial distribution is very closely
 approximated by a normal distribution.
 
-```{r binomialnormalplot,fig.cap="A histogram showing the distribution of the bin(100,0.3)", echo=TRUE,message=FALSE,warning=FALSE}
+```{r binomialnormalplot,fig.cap="A histogram showing the distribution of the bin(100,0.3)", out.width='100%',echo=TRUE,message=FALSE,warning=FALSE}
 plot(0:100,dbinom(0:100,100,0.3),type='h')
 ```
 
