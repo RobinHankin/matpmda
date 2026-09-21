@@ -60,7 +60,7 @@ We can simulate a series of Bernoulli variables using the
 following command shows how to simulate 100 trials with probability
 0.5:
     
-```{r}
+```{r rbinom100}
 rbinom(100,1,0.5)
 ```
 
@@ -73,7 +73,7 @@ of success).  See how about half the trials are successes.
 
 We can do the same thing again:
 
-```{r}
+```{r rbinomagain}
 rbinom(100,1,0.5)
 ```
 
@@ -81,14 +81,14 @@ See how the results are different because R is providing random
 numbers.  We can vary the probability of success by changing the third
 argument:
     
-```{r}
+```{r rbinomtenpercent}
 rbinom(100,1,0.1)
 ```
 
 See how there are much fewer successes because the probability of
 success is now only 0.1, or 10\%.  We can make the probability higher:
 
-```{r}
+```{r rbinom90percent}
 rbinom(100,1,0.9)
 ```
 
@@ -96,7 +96,7 @@ And now most of the trials are successes. As stated above, the first
 argument is the number of trials, and we can play with this by
 changing it to, say, 200:
 
-```{r}
+```{r rbinomhalf}
 rbinom(200,1,0.5)
 ```
 
@@ -115,7 +115,7 @@ undergraduates to toss the coin more than once each.  For example, we
 might ask them to toss the coin 5 times.  To do this, we need to
 change the second argument from 1 to 5:
     
-```{r}
+```{r rbinomfive}
 rbinom(200,5,0.5)
 ```
 
@@ -135,7 +135,7 @@ the undergraduates a biased coin with a 90\% probability of landing
 heads.  To simulate this, we need to change the third argument to 0.9,
 or 90\%:
     
-```{r}
+```{r rbinom5ninety}
 rbinom(100,5,0.9)
 ```
 
@@ -149,7 +149,7 @@ It is possible to make a table of the results using the `table()`
 function in R.  To simulate 100 students each tossing a coin 5 times
 with probability of heads = 0.5, we can use the following:
 
-```{r}
+```{r rbinomtab}
 set.seed(0)
 x <- (rbinom(100,5,0.5))
 table(x)
@@ -163,7 +163,7 @@ of 100 students, 2 scored 0 heads out of 5 tosses, 11 scored 1 head,
 
 We can try the same thing with a larger number of students:
 
-```{r}
+```{r rbinomthousand}
 x <- rbinom(1000,5,0.5)
 table(x)
 ```
@@ -233,7 +233,7 @@ which means a probability of a little over 30\%.  We can calculate
 this more simply using the `dbinom()` function:
     
     
-```{r}
+```{r dbinom25}
 dbinom(2,5,0.3)
 ```
     
@@ -263,7 +263,7 @@ probability $p=0.3$ of success.
 
 Then we get:
     
-```{r}
+```{r dbinombyhand}
 factorial(5)/(factorial(0)*factorial(5)) * 0.3^0 * (1-0.3)^(5-0) +
 factorial(5)/(factorial(1)*factorial(4)) * 0.3^1 * (1-0.3)^(5-1) +
 factorial(5)/(factorial(2)*factorial(3)) * 0.3^2 * (1-0.3)^(5-2)
@@ -271,19 +271,19 @@ factorial(5)/(factorial(2)*factorial(3)) * 0.3^2 * (1-0.3)^(5-2)
 
 This is equivalent to 
 
-```{r}
+```{r dbinombyhandsum}
 dbinom(0,5,0.3) + dbinom(1,5,0.3) + dbinom(2,5,0.3)
 ```
 
 These three probabilities can be computed in one line:
 
-```{r}
+```{r dbinomoneline}
 dbinom(0:2,5,0.3)
 ```
 
 We can add these three probabilities to obtain the same answer as above
 
-```{r}
+```{r dbinomaddthem}
 sum(dbinom(0:2,5,0.3))
 ```
 
@@ -291,7 +291,7 @@ sum(dbinom(0:2,5,0.3))
 Or, more simply:
     
     
-```{r}
+```{r dbinomsimply}
 pbinom(2,5,0.3)
 ```
     
@@ -320,7 +320,7 @@ and $p=0.3$.
 
 Then we can use the four functions in turn:
 
-```{r}
+```{r dprqbinom}
 dbinom(5,10,0.3)   # probability that we observe r=5 successes
 pbinom(4,10,0.3)   # probability that we observe r<=4 successes
 rbinom(20,10,0.3)  # 20 random observations from Bin(10,0.3)
@@ -334,7 +334,7 @@ random sampling.  We will take one million observations (that is, one
 million undergraduates, each tossing a coin 5 times) and recording the
 number of heads for each undergraduate:
 
-```{r}
+```{r rbinomverify}
 table(rbinom(1000000,5,0.3))
 ```
 
@@ -345,19 +345,19 @@ of 0.3087 (the slight difference is caused by random variation).
 
 We can see all the probabilities in one line using the colon construction:
   
-```{r}
+```{r rbinomverifyoneline}
 dbinom(0:5,5,0.3)
 ```
 
 and we should check that these probabilities add to one:
   
-```{r}
+```{r rbinomverifysum}
 sum(dbinom(0:5,5,0.3))
 ```
 
 Using this, we can check any binomial distribution:
 
-```{r}
+```{r rbinomcheck}
 sum(dbinom(0:115,115,0.324324))
 ```
 
@@ -385,7 +385,7 @@ formulas give a mean of $7\times 0.3=2.1$ and a standard deviation of
 $\sqrt{7\times 0.3\times 0.7}\simeq 1.21$.  Compare these with the
 values obtained from numerical sampling:
 
-```{r}
+```{r rbinomcomparemean}
 mean(rbinom(1e6,7,0.3))
 var(rbinom(1e6,7,0.3))
 ```
@@ -400,14 +400,14 @@ of the distribution is 5), but there is no reason why we cannot use
 more.  We can try, for example, 10 trials:
 
 
-```{r}
+```{r rbinommoretrials}
 rbinom(100,10,0.4)
 ```
 
 this would be Bin(10,0.4).  We could try higher numbers, say 30:
 
     
-```{r}
+```{r rbinomhigher}
 rbinom(100,30,0.4)
 ```
 
@@ -426,28 +426,28 @@ the probability of obtaining 15,16,17,\ldots successes using the
 `dbinom()` command:
 
 
-```{r}
+```{r dbinom1530}
 dbinom(15:30,30,0.4)
 ```
 
 Rather than adding these up with a calculator we can use R to do the addition:
     
     
-```{r}
+```{r dbinomfourty}
 sum(dbinom(15:30,30,0.4))
 ```
 
 Giving us an answer of about 17.5\%.  We can also use the cdf command
 directly. Notice that $P(X \geq 15) = 1 - P(X \leq 14)$.
 
-```{r}
+```{r pbinomoneminus}
 1-pbinom(14,30,0.4)
 ```
 
 
 We can verify this numerically:
     
-```{r}
+```{r rbinompbinomcheck}
 sum(rbinom(1e6,30,0.4) >= 15)/1e6
 ```
 
@@ -471,13 +471,13 @@ Question:  What is the probability that exactly 5 are female?
 
 Solution:
 
-```{r}
+```{r dbinomFemale}
 dbinom(5,10,0.3)
 ```
 
 Question: What is the probability that 6 or fewer fish are female?
  
-```{r}
+```{r dbinomfish}
 pbinom(6,10,0.3)
 ```
 What is the probability that at least one fish of each gender is caught?
@@ -485,7 +485,7 @@ What is the probability that at least one fish of each gender is caught?
 We need $P(1 \leq X \leq 9) = 1 - P(X = 0) - P(X = 10) = 0.972$.
 
 
-```{r}
+```{r dbinomgenderfish}
 sum(dbinom(1:9,10,0.3))
 1-dbinom(0, 10, 0.3)-dbinom(10, 10, 0.3)
 ```
@@ -497,14 +497,14 @@ $E[X] = np = 10 \times 0.3 = 3$
 
 $\text{Std}[X] = \sqrt{np(1-p)} = \sqrt{10 \times 0.3 \times 0.7} = 1.449138$
 
-```{r}
+```{r dbinommmean}
 10*0.3
 10*0.3*(1-0.3)
 ```
 
 Numerically verify the answers to the questions above.
 
-```{r}
+```{r rbinomexp}
 #P(X = 5)
 sum(rbinom(1e6,10,0.3)==5)/1e6
 
