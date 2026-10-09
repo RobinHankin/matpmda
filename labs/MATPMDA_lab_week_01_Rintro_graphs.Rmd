@@ -15,7 +15,7 @@ getting used to the R interface and use it to accomplish simple tasks.
 
 Use the labs in conjunction with the course handbook, and other
 resources such as videos and screencasts which are available on
-Blackboard under the "resources" tab.
+Canvas.
 
 
 # Using R as a calculator
