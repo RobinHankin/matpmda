@@ -368,7 +368,7 @@ Given what is known about the beetles (i.e. their maximum length is 1cm), we sho
 
 
 
-\item Load the household savings data (on Blackboard)
+\item Load the household savings data (on canvas)
 
 \begin{enumerate}
 \item Load the data

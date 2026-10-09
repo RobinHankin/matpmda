@@ -155,7 +155,7 @@ beetles above this length.
 
 ### Question
 
-* Load the household savings data (on Blackboard, file `HouseholdSavingsSurvey.csv'):
+* Load the household savings data (on Canvas, file `HouseholdSavingsSurvey.csv'):
 
 ```{r,include=TRUE}
 d <- read.csv("HouseholdSavingsSurvey.csv", head=TRUE)
