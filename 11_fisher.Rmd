@@ -6,7 +6,7 @@ might survey some students and end up with a dataset like the
 following:
 
 
-```{r}
+```{r definelefthandedmatrix}
 a <- matrix(c(5,2,6,14),2,2,byrow=TRUE)   # define matrix 
 dimnames(a) <- list(gender=c("M","F"),lefthanded=c(T,F))  # display only
 a
@@ -79,7 +79,7 @@ greater than the observation of 5; and we know that the number of left
 handed males (=white balls drawn) cannot be larger than 7.  We can get
 a visual impression easily, using R:
 
-```{r}
+```{r plotdhyper}
 x <- 0:7  # define x-axis
 plot(x,dhyper(x,7,20,11),type='h',lwd=4,col=c(rep("black",5),rep("red",3))) 
 legend("topright",lwd=4, col=c("black","red"),legend=c("regular points","more extreme"))
@@ -87,7 +87,7 @@ legend("topright",lwd=4, col=c("black","red"),legend=c("regular points","more ex
 
 Fortunately, R can deal with all this with the `fisher.test()` function:
 
-```{r}
+```{r dofisher}
 fisher.test(a, alternative="greater")
 ```
 
@@ -121,7 +121,7 @@ the old treatment and the bottom row corresponding to the new
 treatment.  The first column corresponds to cured patients and the
 second column corresponds to non-cured patients.
 
-```{r}
+```{r anothermatrix}
 M <- matrix(c(2,5,4,2),2,2)
 M
 ```
@@ -132,7 +132,7 @@ but not part of the learning objectives of the course and you will not
 be tested on it.  It is just cosmetic.
 
 
-```{r}
+```{r setdimnames}
 dimnames(M) <- list(treatment=c("new","old"),cured=c(TRUE,FALSE))
 M
 ```
@@ -145,7 +145,7 @@ p(\mathrm{cure}|\mathrm{new}\,\mathrm{treatment}) = p(\mathrm{cure})$.
 We need a $p$-value for this null:
 
 
-```{r}
+```{r dofisheragain}
 fisher.test(M,alternative="less")
 ```
 
