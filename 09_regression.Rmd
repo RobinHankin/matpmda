@@ -96,10 +96,12 @@ for(i in seq_len(nrow(mtcars))){
 
 Consider the two figures below:
 
-```{r twoplots,fig.cap="two plots with different strengths of association",out.width='100%',echo=FALSE}
+```{r twoplots, fig.cap="two plots with different strengths of association",out.width='100%',echo=FALSE}
 x <- 1:100
-plot(x,x+rnorm(100)*7,ylab="y")
-plot(x,x+rnorm(100)*30,ylab="y")
+par(mfrow = c(2, 1))
+par(mar = c(2, 2, 1, 1))
+plot(x, x+rnorm(100)*7, ylab="y")
+plot(x, x+rnorm(100)*30, ylab="y")
 ```
 
 It is clear that the lower scattergraph is "weaker" in some sense, and
