@@ -47,7 +47,7 @@ Bayesians.
 knitr::include_graphics("intersection_union.pdf")
 ```
 
-In figure \@ref(fig:venn) we see four set diagrams. Top left, set
+In figure \@ref(fig:venn13) we see four set diagrams. Top left, set
 union $A\cup B$; top right; set intersection $A\cap B$; lower left,
 the complement of $A$, $\overline{A}$, that is, everything not in $A$;
 lower right, symmetric difference $A\triangle B$.  Think of A and B
