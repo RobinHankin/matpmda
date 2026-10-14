@@ -15,7 +15,7 @@
 Suppose I poll a class of 40 students and ask each one for their
 favourite colour out of red, green, blue, and yellow.  My observations are:
 
-```{r}
+```{r definecolourobs}
 o <- c(red=8, green=10, blue=17, yellow= 5)
 o
 ```
@@ -28,7 +28,7 @@ p_\mathrm{yellow}=\frac{1}{4}$, where $p_\mathrm{colour}$ is the
 probability of a student choosing that colour.  If the null is true,
 we would expect to observe 10 students choosing each colour:
 
-```{r}
+```{r definecolourexp}
 e <- c(red=10, green=10, blue=10, yellow= 10)
 e
 ```
@@ -51,13 +51,13 @@ B=\sum_i\frac{\left(e_i-o_i\right)^2}{e_i}
 where $o_i$ is the $i^\mathrm{th}$ observation and $e_i$ is the
 $i^\mathrm{th}$ expectation.  This is easy to calculate:
 
-```{r}
+```{r calcchisquarecol}
 (8-10)^2/10 + (10-10)^2/10 + (17-10)^2/10 + (5-10)^2/10
 ```
 
 but of course there is an easier way:
 
-```{r}
+```{r calcbadnesscol}
 B <- sum((o-e)^2/e)
 B
 ```
