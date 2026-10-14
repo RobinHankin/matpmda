@@ -90,11 +90,12 @@ distribution of $B$ if the null is true.
 The $\chi^2$ distribution does not have parameters in the same way
 that the Gaussian distribution has $\mu$ and $\sigma$.  But it does
 have "degrees of freedom" which is a strictly positive integer usually
-written as a subscript: $\chi^2_n$.  The degrees of freedom varies
-from problem to problem but is easy to calculate.  The R idiom below
-shows some chi-square distributions.
+written as a subscript: if the degrees of freedom is $n$, we write
+$\chi^2_n$.  The degrees of freedom varies from problem to problem but
+is easy to calculate.  The R idiom below shows some chi-square
+distributions.
 
-```{r}
+```{r plotsomechisquareds}
 x <- seq(from=0,to=20,len=1000)  # values for horizontal axis
 plot(1:10,1:10,type='n',xlim=c(0,10),ylim=c(0,0.5),xlab='x',ylab='PDF',
   main='chi-squared distribution')  # setup plot axes and title
@@ -118,7 +119,7 @@ the number of cells is that knowing three cells is enough to calculate
 the fourth, because we know how many students are in the class.
 
 
-```{r}
+```{r plotbadness}
 x <- seq(from=0,to=12,len=1000)  # set up x-axis
 plot(x,dchisq(x,df=3),type='l',lwd=2,main="Pearson's chi square test")  # setup axes
 B <- 7.8  # value of Badness from above
@@ -134,7 +135,7 @@ observation more extreme.  In this case, the observation is $B=7.8$
 and its null distribution is $\chi^2_3$.  Calculating the $p$-value is
 straightforward:
 
-```{r}
+```{r usepchisq}
 pchisq(7.8,df=3,lower.tail=FALSE)
 ```
 
@@ -147,7 +148,7 @@ of freedom.  Here I demonstrate that this is true.  We can generate
 synthetic observations using the `sample()` function:
 
 
-```{r}
+```{r numverchisq}
 sample(1:4,40,replace=T)  # census of the class
 tabulate(sample(1:4,40,replace=TRUE))  # how many students prefer each colour
 
@@ -156,7 +157,7 @@ tabulate(sample(1:4,40,replace=TRUE))  # how many students prefer each colour
 (we identify red=1, green=2, etc).  We can calculate B for such
 synthetic data:
 
-```{r}
+```{r makesynthetic}
 o <- tabulate(sample(1:4,40,replace=TRUE))  # synthetic observations
 e <- 10                                  # expectation under the null
 B <- sum((o-e)^2/e)                      # Badness-of-fit
@@ -165,7 +166,7 @@ B
 
 And I assert that $B$ is drawn from $\chi^2_3$.  This is straightforward to verify in R:
 
-```{r}
+```{r isBchisquare}
 f <- function(...){  # define single-use function f()
    o <- tabulate(sample(1:4,40,replace=TRUE))  # synthetic observations
    e <- 10  # expectations
@@ -185,7 +186,7 @@ different null.  Suppose we give 100 students a coin and tell them to
 toss it 4 times.  We can then ask each student to write down the
 number of heads they get.   First, our observations:
 
-```{r}
+```{r defobs}
 o <-c("0"=5, "1"=27, "2" = 47, "3"=15, "4"=6)  # this is a named vector
 o
 ```
@@ -193,7 +194,7 @@ o
 The expectations are a little harder.  Our null is that the number of
 heads is $\operatorname{Bin}(4,1/2)$, and we have 100 observations, so our expectations are given by
 
-```{r}
+```{r defexp}
 e <- 100*dbinom(0:4,4,1/2)
 e
 ```
@@ -201,7 +202,7 @@ e
 (note that the expected values are not necessarily integer-valued).
 Now the badness of fit:
 
-```{r}
+```{r findbad}
 B <- sum((o-e)^2/e)
 B
 ```
@@ -209,7 +210,7 @@ B
 And the $p$-value is
 
 
-```{r}
+```{r quantifybad}
 pchisq(B,df=4,lower.tail=FALSE)
 ```
 
@@ -225,8 +226,8 @@ of his kids.  We count how many photos have 0,1,2,3 children in them
 and observe the following dataset:
 
 
-```{r}
-( o <- c("0"=7,"1"=3,"2"=4,"3"=9))
+```{r childrendef}
+(o <- c("0"=7,"1"=3,"2"=4,"3"=9))
 ```
 
 We might hypothesize that the number of children in each photo is
@@ -234,25 +235,25 @@ binomial $\operatorname{Bin}(3,p)$ but we do not know the value of
 $p$.  To estimate $p$, we figure out how many photos of the three
 children there are and divide by how many there could possibly be:
 
-```{r}
+```{r howmanyphotos}
 phat <- (0*7 + 1*3 + 2*4 + 3*9)/(3*(7+3+4+9))
 ```
 
 or
 
-```{r}
+```{r expphotoprob}
 (phat <- sum((0:3)*o)/(3*sum(o)))
 ```
 
 Armed with this, we can calculate expectations:
 
-```{r}
+```{r expphotonum}
 (e <- 23*dbinom(0:3,3,phat))
 ```
 
 and the $p$-value is easy to calculate
 
-```{r}
+```{r photopval}
 pval <- pchisq(sum((o-e)^2/e),df=2,lower.tail=FALSE)
 pval
 ```
@@ -285,7 +286,7 @@ number of goals scored by Manchester City Football club in the
 
 The dataset is
 
-```{r}
+```{r chisqforpoisson}
 manC <-
     c(2,4,3,1,4,3,0,1,1,4,1,2,2,
       1,2,2,2,3,0,2,0,2,4,2,2,0,
@@ -300,7 +301,7 @@ a football match, each one of which would have a small probability of
 scoring a goal.  The first step would be to tabulate the data:
 
 
-```{r}
+```{r obstable}
 o <- table(manC)    #'o' for 'observations'
 o
 ```
@@ -310,7 +311,7 @@ matches with 2 goals, and so on.  Now we need to calculate an
 expectation to compare these observations against.  The mean number of
 goals is:
 
-```{r}
+```{r meangoals}
 mean(manC)
 ```
 
@@ -320,32 +321,32 @@ $\lambda=2.026$.  We will classify games as having 0,1,2,3,4, or $\geq
 5$ goals (this device prevents expected numbers being too small for
 the Chi square test to operate).  The probabilities of 0-4 goals is
 
-```{r}
+```{r showpoisgoals}
 dpois(0:4, lambda=mean(manC))
 ```
 
 Then the probability of scoring 5 goals will be the remaining probability, viz
 
-```{r}
+```{r fiveormoregoals}
 1-sum(dpois(0:4, lambda=mean(manC)))
 ```
 
 So the probabilities of $0,1,2,3,4,\geq5$ goals is
 
-```{r}
+```{r normalizegoals}
 probs <- c(dpois(0:4, lambda=mean(manC)), ppois(4,lambda=mean(manC),lower.tail=FALSE))
 probs
 ```
 
 check:
 
-```{r}
+```{r checkgoalprob}
 sum(probs)
 ```
 
 Then the expected number of games with $0,1,2,3,4,\geq 5$ goals is:
 
-```{r}
+```{r expectedgoalscalc}
 e <- length(manC)*probs
 e
 ```
@@ -353,7 +354,7 @@ e
 Thus we expect to see about 5 games with zero goals, 10 with one goal,
 etc.  The chi-square test is straightforward:
 
-```{r}
+```{r goalschisquare}
 B <- sum((o-e)^2/e)
 pchisq(B,df=4,lower.tail=FALSE)
 ```
