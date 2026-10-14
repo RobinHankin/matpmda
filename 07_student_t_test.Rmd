@@ -238,24 +238,21 @@ means, but the two sets of measurements have a natural pairing.  For
 example, we may be interested in the fitness level of patients before
 and after a regime of exercise.  Since each patient is measured twice,
 the two samples are not independent.  In this situation it is
-appropriate to consider a *paired test*
+appropriate to consider a *paired test*:
 
 
-```{r, echo=FALSE}
+```{r definepatients, echo=FALSE}
 patients <- data.frame(patient = LETTERS[1:7],
 before=c(24.2, 30.4, 32.7, 19.8, 25.1, 24.9, 22.2),
 after =c(25.5, 31.2, 32.9, 20.4, 25.6, 24.7, 22.9))
-```
-
-```{r,echo=TRUE}
-knitr::kable(patients,booktabs=TRUE,caption="patients before and after exercise")
+patients
 ```
 
 Then we can use R to perform a $t$-test on the null that the fitness
 level before is equal to the fitness level after:
 
 ```{r}
-t.test(patients$before,patients$after,alternative="less",paired=TRUE)
+t.test(patients$before, patients$after, alternative="less", paired=TRUE)
 ```
 
 Note that we have used the dollar construction to extract the
