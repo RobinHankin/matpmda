@@ -71,7 +71,7 @@ A particular type of apple is known to have a mean mass of 100g.  A
 sample of these apples is taken from a tree and measured.  The mass of
 the sampled apples is:
 
-```{r}
+```{r defineapples}
 apples <- c(95, 104, 101, 100, 99, 102, 98, 94, 94, 93)
 ```
 
@@ -86,8 +86,8 @@ are lighter or heavier than average.
 
 * step 3.  Conduct the $t$-test:
 
-```{r}
-t.test(apples,mu=100)
+```{r ttestapples}
+t.test(apples, mu=100)
 ```
 
 * step 4.  Interpret.  We see that the $p$-value is 0.133, or about
@@ -96,7 +96,7 @@ t.test(apples,mu=100)
 
 *Note* the mean mass of apples in the sample is:
 
-```{r}
+```{r meanapples}
 mean(apples)
 ```
 
@@ -111,7 +111,7 @@ recent increasses to acidic rain from polluting industries nearby. The
 acidity levels of the lake have been tested 12 times over the past
 year with the following results:
 
-```{r}
+```{r defineacid}
 acid <- c(6.1, 6.4, 5.8, 5.8, 6.6, 5.3, 6.8, 6.4, 6.9, 5.8, 5.5, 6.3)
 ```
 
@@ -126,7 +126,7 @@ acid <- c(6.1, 6.4, 5.8, 5.8, 6.6, 5.3, 6.8, 6.4, 6.9, 5.8, 5.5, 6.3)
 we expect a fall in pH levels, we use a one-sided test.
 * step 3.  Conduct the $t$-test in R:
 
-```{r}
+```{r ttestacid}
 t.test(acid,mu=6.5,alternative="less")
 ```
 
@@ -184,14 +184,14 @@ of time the cold lasted was then recorded.
 
 At the end of this experiment, the following data was collected:
 
-```{r}
+```{r definevitCplac}
 vitC <- c(5.5, 6, 7, 6, 7.5, 6, 7.5, 5.5, 7, 6.5)
 plac <- c(6.5, 6, 8.5, 7, 6.5, 8, 7.5, 6.5, 7.5, 6, 8.5, 7.0)
 ```
 
 We can calculate the sample means:
 
-```{r}
+```{r showmeanCplac}
 mean(vitC)
 mean(plac)
 ```
@@ -211,8 +211,8 @@ H_0\colon\mu_P = \mu_C
 and our test statistic is the difference in sample means,
 $\overline{x_P}-\overline{x_C}$.
 
-```{r}
-mean(vitC)-mean(plac)
+```{r diffmeanCplac}
+mean(vitC) - mean(plac)
 ```
 
 The $p$-value, is the probability if the null is true (i.e. placebo is
@@ -222,8 +222,8 @@ days or longer).  Note that we should perform a one-tailed test
 because we expect vitamin C to clear up colds faster than the placebo,
 not slower.
 
-```{r}
-t.test(vitC,plac,alternative="less")
+```{r ttestCplac}
+t.test(vitC, plac, alternative="less")
 ```
 
 The $p$ value is 0.036, which is less than 0.05.  This means we can
@@ -240,7 +240,6 @@ and after a regime of exercise.  Since each patient is measured twice,
 the two samples are not independent.  In this situation it is
 appropriate to consider a *paired test*:
 
-
 ```{r definepatients, echo=FALSE}
 patients <- data.frame(patient = LETTERS[1:7],
 before=c(24.2, 30.4, 32.7, 19.8, 25.1, 24.9, 22.2),
@@ -251,7 +250,7 @@ patients
 Then we can use R to perform a $t$-test on the null that the fitness
 level before is equal to the fitness level after:
 
-```{r}
+```{r ttestpatients}
 t.test(patients$before, patients$after, alternative="less", paired=TRUE)
 ```
 
