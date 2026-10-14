@@ -10,7 +10,7 @@ fuel efficiency (miles per gallon, `mpg`), number of cylinders,
 and so on.
 
 
-```{r}
+```{r headcars}
 head(mtcars)
 ``` 
 
@@ -18,7 +18,7 @@ We might wonder if there is a relationship between fuel efficiency
 (`mpg`) and the car's weight (`wt`).  The first step would be
 to plot a scattergraph:
 
-```{r}
+```{r effregg}
 plot(mpg~wt,data=mtcars,main="Efficiency as a function of car weight")
 ```
 
@@ -53,7 +53,7 @@ requires matrix algebra) but fortunately it is possible to
 estimate $A, B$  using the `lm()` function built in to R:
 
 
-```{r}
+```{r anothercarreg}
 lm(mpg~wt,data=mtcars)
 ```
 
@@ -148,7 +148,7 @@ association between the variabfferent correlation coefficients.
 To find the $p$-value for a linear regression we need to use the
 `summary()` command:
 
-```{r}
+```{r summaryregressioncars}
 summary(lm(mpg~wt,data=mtcars))
 ```
 
@@ -233,7 +233,7 @@ where the $\beta_0,\ldots,\beta_n$ are the coefficients and
 $x_1,\ldots, x_n$ the independent variables.  Estimating these
 coefficients is straightforward in R:
 
-```{r}
+```{r summmultivariatecars}
 summary(lm(mpg~wt+disp,data=mtcars))
 ```
 
