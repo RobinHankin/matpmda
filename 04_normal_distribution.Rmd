@@ -83,7 +83,7 @@ where
 
 *  $x$ is the horizontal distance on the graph, the x-axis or _independent_ variable}
 *  $\exp(\cdot)$ is the exponential function, sometimes written $e^x$.
-*  $\pi=3.1416\ldots$ is the ratio of a circle's diameter to its radius
+*  $\pi=3.1416\ldots$ is the ratio of a circle's circumference to its radius
 *  $\sigma$ is the standard deviation; $\sigma^2$ is the square of the standard deviation, or the variance
 *  $\mu$ is the mean of the distribution
 
