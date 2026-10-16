@@ -88,6 +88,14 @@ $H_0\colon\mu_1=\mu_2$
 $H_1: \mu_1 \neq \mu_2$
 ```
 
+* State the precise definition of p-value and state what "more extreme" means in this context
+
+```{asis}
+pvalue is the probability, if the null is true, of obtaining the observation or an observation more extreme".
+The observation is the difference of sample means, $\overline{x}_\mbox{baz} - \overline{x}_\mbox{bob}$.
+In this case "more extreme" means further away from zero.
+```
+
 * Is a paired or unpaired test indicated?
 ```{asis}
 Unpaired: there is no natural pairing between the datasets
