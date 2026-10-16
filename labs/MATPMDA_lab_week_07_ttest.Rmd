@@ -81,7 +81,7 @@ faster or slower than Bob.
 * State a sensible null hypotheses.
 
 ```{asis}
-Let $\mu_1$ denote Baz's mean time and $\mu_2$ denote Bob's mean time.\\
+Let $\mu_1$ denote Baz's mean time and $\mu_2$ denote Bob's mean time.
 
 $H_0\colon\mu_1=\mu_2$
 
