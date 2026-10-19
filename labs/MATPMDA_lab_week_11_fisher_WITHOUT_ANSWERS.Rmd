@@ -1,0 +1,156 @@
+---
+title: "MATPMDA lab, week 11, Fisher's exact test"
+output: html_document
+---
+
+
+(in the following, replace `2+2` with the correct response)
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(include = TRUE) # change to TRUE when rendering solutions; this changes
+                                      # the default visibility (which is overridden by explicitly
+                                      # setting  include=TRUE in chunk options)
+```
+
+### Question
+
+A Medical researcher is investigating whether calcium supplements
+increase bone density.  He takes a sample of 34 subjects, of whom 15
+are given calcium and 19 a placebo (a "placebo" is a dummy pill that
+has no medical effect).  The researcher tests the subjects after a
+year, and 15 subjects are found to have higher bone density.  Of these
+15 subjects, 12 were given calcium.  We may represent the data in R as
+follows:
+
+ 
+```{r,include=TRUE}
+M <- matrix(c(12,3,5,14),2,2,byrow=TRUE)
+dimnames(M) <- list(given=c("calcium","placebo"), increased=c(T,F) )
+M
+```
+
+* State a sensible null hypothesis
+
+```{r}
+2+2
+```
+
+* State the precise definition of pvalue.  State what "more extreme" means in this context.
+
+```{r}
+2+2
+```
+
+* One-sided or two?  Justify
+
+```{r}
+2+2
+```
+
+* Perform a Fisher test and interpret
+
+
+```{r}
+2+2
+```
+
+* (harder) Suppose only 11 of the 15 given calcium exhibited an
+  improvement.  Does your conclusion change?
+  
+```{r}
+2+2
+```
+
+### Question
+
+An engineering competition for undergraduate students challenges
+entrants to construct a bridge with given materials.  
+A total of 30 students enter the competition, of whom 10 are from AUT
+and 20 from UoA.  Each student's bridge is tested, and 13 bridges pass
+the test and 17 fail.  Of the 10 AUT students, 7 of them build bridges
+that pass the test.  We may represent the data in R as follows:
+
+
+```{r,include=TRUE}
+2+2
+```
+
+* State a sensible null hypothesis
+
+```{r}
+2+2
+```
+
+* State the precise definition of pvalue.  State what "more extreme" means in this context.
+
+```{r}
+2+2
+```
+
+* One-sided or two?  Justify
+
+```{r}
+2+2
+```
+
+
+
+* Perform a Fisher test and interpret
+
+
+```{r}
+2+2
+```
+
+
+* (harder) Suppose that one of the AUT students whose bridge failed
+the test is allowed to submit another bridge which passes (perhaps the
+first test was unfair in some way).  Do your conclusions change?
+  
+```{r}
+2+2
+```
+
+### Question
+
+A certain lady claims to be able to detect whether milk is added first
+or last to her tea.  She is given 8 cups of tea of which 4 have had
+milk added first and 4 milk second.  Of the 4 with milk first, she
+identifies 3 correctly, and of the 4 with milk added second, also
+identifies 3 correctly.  We may represent this as follows:
+
+
+```{r,include=TRUE}
+2+2
+```
+
+* State a sensible null hypothesis
+
+```{r}
+2+2
+```
+
+* State the precise definition of pvalue.  State what "more extreme" means in this context.
+
+```{r}
+2+2
+```
+
+* One-sided or two?  Justify
+
+```{r}
+2+2
+```
+
+* Perform a Fisher test and interpret
+
+
+```{r}
+2+2
+```
+
+* (harder) Suppose she got all 8 cups correct.  Would your conclusion change?
+  
+```{r}
+2+2
+```

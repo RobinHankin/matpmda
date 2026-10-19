@@ -1,0 +1,144 @@
+---
+title: "MATPMDA lab, week 10, ANOVA"
+output: html_document
+---
+
+(In the following, replace `2+2` with the correct response)
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(include = TRUE) # change to TRUE when rendering solutions; this changes
+                                      # the default visibility (which is overridden by explicitly
+                                      # setting  include=TRUE in chunk options)
+```
+
+### Question
+
+Consider the following dataset:
+
+```{r,include=TRUE}
+
+dd  <- data.frame(
+  HairColour = structure(c(3, 3, 3, 3, 3, 1, 1, 1, 1, 1, 4, 4, 4, 
+                           4, 4, 2, 2, 2, 2, 2), 
+                           .Label = c("DarkBlond", "DarkBrunette", 
+                           "LightBlond", "LightBrunette"), class = "factor"),
+  Pain = c(62, 60, 71, 55, 48, 63, 57, 52, 41, 43, 
+           42, 50, 41, 37, 45, 32, 39, 51, 30, 35)
+)
+head(dd,3)
+tail(dd,3)
+```
+This dataset shows pain sensitivity as a function of hair colour.
+
+* plot the dataset
+
+
+```{r}
+2+2
+```
+
+* State a sensible null hypothesis
+
+
+```{r}
+2+2
+```
+
+* Perform an ANOVA analysis and interpret
+
+```{r}
+2+2
+```
+
+### Question
+
+The `npk` dataset is built into R.  To access it, type `npk` on the command line:
+
+```{r,include=TRUE}
+head(npk)
+```
+
+* Plot the data by block; use `boxplot()`.
+
+```{r}
+2+2
+```
+
+* From the graph, say whether there appears to be any evidence
+  that yield depends on block.
+
+```{r}
+2+2
+```
+
+* Use ANOVA to assess whether the yield is a function of the block, and interpret.
+
+
+```{r}
+2+2
+```
+
+
+### Question
+
+The _OrchardSprays_ dataset is built into R and refers to
+effectiveness of different insecticide treatments on orchard trees;
+read the R help page.
+
+* Plot the decrease as a function of treatment.
+
+```{r}
+2+2
+```
+
+* Say whether it seems that the treatments have different effectiveness
+
+```{r}
+2+2
+```
+
+* State a null hypothesis
+
+```{r}
+2+2
+```
+
+
+*  use ANOVA to assess whether the treatment affects the behaviour of bees.  
+
+```{r}
+2+2
+```
+
+* Interpret your findings
+
+
+### Question
+
+Look at the _warpbreaks_ dataset, which is about wool loom
+performance, and read the helppage by typing `?warpbreaks` on the
+command line.
+
+```{r,include=TRUE}
+head(warpbreaks,3)
+tail(warpbreaks,3)
+```
+
+* Plot breaks as a function of wool type
+
+```{r}
+2+2
+```
+
+* State a sensible null
+
+
+* Assess the dataset using `aov()`
+
+```{r}
+2+2
+```
+
+* Interpret your findings
+

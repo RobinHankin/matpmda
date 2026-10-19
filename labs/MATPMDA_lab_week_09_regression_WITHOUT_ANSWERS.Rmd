@@ -1,0 +1,142 @@
+---
+title: "MATPMDA lab, week 9, regression"
+output: html_document
+---
+
+(in the following replace `2+2` with the correct response)
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(include = FALSE) # change to TRUE when rendering solutions; this changes
+                                      # the default visibility (which is overridden by explicitly
+                                      # setting  include=TRUE in chunk options)
+```
+
+# remember to include a scattergraph with any regression analysis
+
+# no scattergraph = no course credit
+
+
+
+### Question
+
+A computer scientist in Auckland has a large number of computers in
+his laboratory and suspects that more failures occur when the
+temperature outside is higher.
+
+The dataset is as follows:
+
+```{r,include=TRUE}
+temp <- c(16.1, 18.2, 16.5, 14.1, 15.2, 17.2, 17.9, 17.5, 16.8, 14.3)
+fail <- c(9.90, 9.21, 10.01, 8.22, 9.33, 8.89, 9.58, 10.97, 10.38, 8.96)
+```
+
+The first dataset is the temperature in Auckland in Centigrade, the
+second is the percentage of computers that have a failure.
+
+* Construct a scatterplot of the data and describe the relationship that you observe.
+
+```{r}
+2+2
+```
+
+* Using `lm()`, perform a linear regression and interpret
+
+```{r}
+2+2
+```
+
+* Interpret your findings in a way that a computer scientist with
+a flaky air conditioning plant, who is not a statistician, could
+understand. 
+
+
+### Question
+
+
+The following R commands define two datasets:
+
+```{r,include=TRUE}
+length <- c(0.111, 6.061, 0.171, 0.228, 0.802, 0.039, 0.64, 0.238, 0.603, 0.337)
+conc <- c(0.093, 0.102, 0.087, 0.085, 0.015, 0.107, 0.044, 0.08, 0.026, 0.073)
+```
+
+Here, `length` is the length of a beetle measured in centimeters, and
+`conc` is the concentration of a certain hormone found in a tissue
+sample.  The researchers are studying whether there is a relationship
+between the size of the beetle and the concentration of hormone
+present.  The beetles are a small species and are known to always be
+under 1cm in length.
+
+[helpful hint: commands such as `plot(conc~length)` and might be
+helpful here; to remove a single observation use a command like
+`plot(conc[-2]~length[-2])`, which will remove the second observation
+(ie observation number 2)]
+
+* Plot the data and describe the relationship you observe.
+
+```{r}
+2+2
+```
+
+
+```{r}
+2+2
+```
+
+
+* Perform the appropriate regression analysis.  Report the p-value and
+  interpret the output.
+
+```{r}
+2+2
+```
+
+*  Write the regression equation and use it to predict the level of
+   hormone for a beetle measuring 0.5cm in length.
+
+
+```{r}
+2+2
+```
+
+* Interpret the slope of the regression model.
+
+
+### Question
+
+* Load the household savings data (on Canvas, file `HouseholdSavingsSurvey.csv'):
+
+```{r,include=TRUE}
+d <- read.csv("HouseholdSavingsSurvey.csv", head=TRUE)
+head(d)
+```
+
+* Policy makers are interested in whether there is a relationship
+between age and income level.  Construct a scatter plot of these two
+variables.
+
+```{r}
+2+2
+```
+
+
+* Describe the relationship between these two variables.
+
+
+* Compute the correlation coefficient $r$ using the command 
+
+```{r}
+2+2
+```
+
+* Perform linear regression to assess the impact of age on income.
+
+```{r}
+2+2
+```
+
+* What is the regression equation?
+
+
+* Interpret the value of the intercept. Does this make sense?
+
