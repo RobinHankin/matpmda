@@ -191,7 +191,7 @@ hist(Nile)
 
 ```{asis}
 looks reasonably normal
-````
+```
 
 * Estimate the standard error of the mean
 
