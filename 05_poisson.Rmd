@@ -75,7 +75,7 @@ our limiting case is the value of the product $np$.  The probability
 mass function of the Poisson is
 
 \begin{equation}
-P{X=n}=e^{-\lambda}\frac{\lambda^n}{n!},\qquad n=0,1,2,\ldots
+P(X=n)=e^{-\lambda}\frac{\lambda^n}{n!},\qquad n=0,1,2,\ldots
 \end{equation}
 
 where $\lambda>0$ is the parameter of the distribution.
