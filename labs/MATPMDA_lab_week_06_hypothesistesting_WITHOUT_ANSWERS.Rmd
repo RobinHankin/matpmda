@@ -1,0 +1,245 @@
+---
+title: "MATPMDA lab, week 6, hypothesis testing"
+output:
+  html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(include = FALSE) # change to TRUE when rendering solutions; this changes
+                                      # the default visibility (which is overridden by explicitly
+                                      # setting  include=TRUE in chunk options)
+```
+
+
+### Question
+
+To test a null hypothesis $H_0\colon \mu=\mu_0$ for a population that
+is $N(\mu, \sigma^2)$, it is usual to apply a transform so that we are
+dealing with an observation that has a standard Gaussian, $N(0,1)$.
+We know that
+
+$$\overline{x}\sim N\left(\mu_0,\frac{\sigma}{\sqrt{n}}\right)$$
+
+And we have been using R function `pnorm()` to calculate tail areas,
+with something like
+
+`1 - pnorm(obs, mu_0, SEM)`
+
+where `obs` is the observation, `mu_0` is the hypothesised mean, and
+`SEM` the standard error of the mean.  However, it is more convenient
+to use a so-called "Z test".  If the null is true, we can say that
+$\overline{x}-\mu_0\sim N\left(0,\frac{\sigma}{\sqrt{n}}\right)$ and
+thus $\frac{\overline{x}-\mu_0}{\sigma/\sqrt{n}}\sim N(0,1)$.  We call
+this quantity $Z$, and use it as a test statistic:
+
+$$
+Z = \frac{\overline{x}-\mu_0}{\sigma/\sqrt{n}}
+$$
+
+Again, if the null is true, we have $Z\sim N(0,1)$.
+
+* Find the interval of $Z$ values that is the critical region (or
+rejection region) for $\alpha=0.05$ (one-sided test).
+
+```{r}
+2+2
+```
+
+
+* Find the critcial region for $\alpha=0.01$
+
+```{r}
+2+2
+```
+
+
+```{r}
+2+2
+```
+
+### Question
+
+An army office is interested in the horizontal distance from the target
+of a set of rifle shots, measured in centimetres.  It is known from
+previous studies that the standard deviation of the horizontal
+distance is 0.8 centimeters.
+
+```{r,include=TRUE}
+x <- c(-0.67, -0.03, 0.37, 1.87, 0.35, -0.47, 0.92, 0.95, 0.55, 0.16,
+0.47, -0.44, 0.2, 0.11, 1.91, 1.06, -0.49, -0.93, 1.78, -0.31,
+1.28, 0.26, 0.18, -0.26, 0.7, -0.37, -0.73, -1, 0.4, 1.03)
+```
+
+* Calculate the sample mean for this dataset.
+
+```{r}
+2+2
+```
+
+* Calculate the standard error for this dataset, using the known
+  population standard deviation $\sigma=0.8$
+
+```{r}
+2+2
+```
+
+* State a sensible null and alternative hypothesis to be used in this
+  situation, in words and in mathematical symbols.
+
+* State the precise definition of $p$-value, and explain what "more
+  extreme" means in this context.
+
+* Compute the test statistic, i.e. $Z = \frac{\bar{X}-\mu_0}{\sigma/\sqrt{n}}$
+
+```{r}
+2+2
+```
+
+
+
+```{r}
+2+2
+```
+
+* Is the test statistic within the critical region? What conclusion can we draw?
+
+* Assess the evidence provided by the data calculating a p-value.  NB:
+  a typical exam question will ask you to state the precise definition
+  of p-value and explain what "more extreme" means in this context.
+
+```{r}
+2+2
+```
+* (optional: confidence intervals not yet covered). Compute a 95\%
+  confidence interval for the mean horizontal deviation of the rifle
+  shots.
+
+```{r}
+2+2
+```
+
+## Question
+
+The following dataset shows the level of lake Huron over 98 years:
+
+```{r,include=TRUE}
+huron <- 
+c(580.92, 581.86, 580.97, 580.8, 579.79, 580.39, 580.42, 580.82, 
+581.4, 581.32, 581.44, 581.68, 581.17, 580.53, 580.01, 579.91, 
+579.14, 579.16, 579.55, 579.67, 578.44, 578.24, 579.1, 579.09, 
+579.35, 578.82, 579.32, 579.01, 579, 579.8, 579.83, 579.72, 579.89, 
+580.01, 579.37, 578.69, 580.33, 578.67, 579.55, 578.92, 578.09, 
+579.37, 580.13, 580.14, 579.51, 579.24, 578.66, 578.86, 578.05, 
+577.79, 576.75, 576.75, 577.82, 578.64, 580.58, 579.48, 577.38, 
+576.9, 576.94, 576.24, 576.84, 576.85, 576.9, 577.79, 578.18, 
+577.51, 577.23, 578.42, 579.61, 579.05, 579.26, 579.22, 579.38, 
+579.1, 577.95, 578.12, 579.75, 580.85, 580.41, 579.96, 579.61, 
+578.76, 578.18, 577.21, 577.13, 579.1, 578.25, 577.91, 576.89, 
+575.96, 578.4, 577.68, 578.38, 578.52, 579.74, 579.31, 579.89, 
+579.96)
+```
+
+Climate scientists are looking for evidence that global climate change has increased the level of the lake.
+Historically, the level of the lake has been 579.3cm.
+
+* State a sensible null and alternative hypothesis.
+
+* Calculate the sample mean of the dataset
+
+```{r}
+2+2
+```
+
+* Calculate the standard error of the mean
+
+```{r}
+2+2
+```
+
+*  State the precise definition of p-value and state what ``more
+   extreme'' means in this context
+
+* Calculate the p-value using a Z-test and interpret
+
+```{r}
+2+2
+```
+
+
+* A historian suggests that the later observations are flawed.
+  Perform a similar analysis on the first 70 observations.
+
+```{r}
+2+2
+```
+
+* Use R's `t.test()` instead and compare.
+
+```{r}
+2+2
+```
+
+
+### Question
+
+Consider the following dataset for five patients, A-E, showing
+strength measurements before and after a training period.  We expect
+the training to increase the strength of the patients.
+
+```{r, include=TRUE}
+before <- c(A=24.2, B=30.4, C=32.7, D=19.9, E=25.1)
+after  <- c(A=25.5, B=31.2, C=32.9, D=20.4, E=25.6)
+```
+
+* State a sensible hypothesis
+* Are we considering a one-sided or two-sided test?
+* State the precise definition of $p$-value and explain what "more
+  extreme" means in this context
+*  perform a Student t-test and interpret.
+
+
+### Question
+
+Regardless of age, about 20\% of American adults participate in
+fitness activities (the criterion was activity taking place at least
+twice a week).  A random sample of 100 adults over 40 years old found
+15 who exercised at least twice a week.  Is this evidence of a decline
+in participation after age 40?  We will use $\alpha = 0.05$.
+
+* State the null and alternative hypotheses.
+
+* You will recall that a binomial distribution is approximately normal
+  if $n$ is large, and that if $X\sim\operatorname{Bin}(n,p)$ then,
+  approximately, $X$ is normal with $X\sim N(np,\sqrt{np(1-p)})$.
+  Using this normal approximation for the binomial, compute the test
+  statistic $Z$. Recall that $Z = \frac{\hat{p} -
+  \pi_0}{\sqrt{\frac{\pi_0(1-\pi_0)}{n}}}$ where $\pi_0$ is the
+  hypothesised probability of success [e.g. for a coin-tossing
+  experiment we would have $\pi_0=1/2$].
+
+```{r}
+2+2
+```
+
+* Compute the critical region for this test, stating whether and why
+  you are using a one-sided or two-sided test.
+
+```{r}
+2+2
+```
+
+* Is the test statistic in the critical region? What conclusion can we draw?
+
+* Use R to compute the p-value for the test statistic $z$.
+
+```{r}
+2+2
+```
+
+
+* Use R to compute the exact p-value using `dbinom()`.
+
+```{r}
+2+2
+```
+

@@ -5,7 +5,7 @@ output:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(include = FALSE) # change to TRUE when rendering solutions; this changes
+knitr::opts_chunk$set(include = TRUE) # change to TRUE when rendering solutions; this changes
                                       # the default visibility (which is overridden by explicitly
                                       # setting  include=TRUE in chunk options)
 ```
@@ -23,9 +23,7 @@ $$\overline{x}\sim N\left(\mu_0,\frac{\sigma}{\sqrt{n}}\right)$$
 And we have been using R function `pnorm()` to calculate tail areas,
 with something like
 
-```
-1 - pnorm(obs, mu_0, SEM)
-```
+`1 - pnorm(obs, mu_0, SEM)`
 
 where `obs` is the observation, `mu_0` is the hypothesised mean, and
 `SEM` the standard error of the mean.  However, it is more convenient
