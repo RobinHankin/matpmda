@@ -346,11 +346,6 @@ hist(mtcars[,"hp"],  xlab="gross horsepower",
    in the 1974 Motor Trend Magazine ", ylim=c(0, 12), xlim=c(0, 400))
 ```
 
-Compare the number of cars in each ``bin'' in your histogram with the
-stem and leaf plot above (scale=1). Do you notice anything odd?
-
-\begin{solution}[3cm]
-
 
 # Boxplots 
 
