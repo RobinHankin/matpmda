@@ -280,17 +280,11 @@ hist(mtcars$mpg)
 This produces a rather plain histogram.  R provides ways to make the
 histogram more colourful, and we can use constructions such as
 `hist(mtcars$mpg,col="red")`.  See the help page (`?hist`) for
-details.  We can produce a slightly more informative, but simpler,
-presentation, using the `stem()` function:
-
-
-```{r}
-stem(mtcars$mpg)
-```
+details.
 
 
 Distributions can have different shapes, and one way to quantify this
-is to calculate the *skew*:
+is to use the *skew*:
 
 ```{r, echo=FALSE,warning=FALSE,message=FALSE,error=FALSE}
 par(mfrow=c(1,3))
