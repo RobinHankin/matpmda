@@ -1,0 +1,110 @@
+---
+title: "MATPMDA lab, week 7, Student t-test"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(include = TRUE) # change to TRUE when rendering solutions; this changes
+                                      # the default visibility (which is overridden by explicitly
+                                      # setting  include=TRUE in chunk options)
+```
+### Question
+
+Thirteen babies are born in a maternity ward. Their lengths in centimetres are
+
+
+```{r,include=TRUE}
+babies <- c(49, 50, 45, 51, 47, 49, 48, 54, 53, 55, 45, 50, 48)
+```
+
+Over long previous experience the mean length at birth at this
+hospital has been 50cm. Does this sample suggest that this mean has
+changed?  Use a t-test to assess the evidence, with a 5\% level of
+significance.
+
+* Specify a null hypothesis $H_0$ and the alternative hypothesis $H_1$. 
+
+
+* state the precise definition of $p$-value and explain what "more extreme" means in this context
+
+
+
+
+* Use `t.test()` to assess the claim.
+
+```{r}
+2+2
+```
+
+* Interpret the results
+	
+
+  
+### Question
+
+* Baz decides to train himself as a life-saver and as part of his
+fitness campaign he has to race against another swimmer, Bob.  The
+times for swimming 100m are as follows:
+
+```{r,include=TRUE}
+baz <- c(14.2, 14.4, 12.3, 14.3, 12.6, 13.9, 12.1, 11.9, 15.2, 12.3)
+bob <- c(13.7, 14.9, 13.6, 17.5, 13.9, 13.5)
+```
+
+We seek to determine whether there is a significant difference between
+the two swimmers.  You may assume that the t-test is appropriate.
+
+* Is a one-sided or two-sided test appropriate?   Justify your answer
+
+
+
+* State a sensible null hypothesis.
+
+
+* State the precise definition of p-value and state what "more extreme" means in this context
+
+* Is a paired or unpaired test indicated?
+
+* What is the mean time for the two datasets?
+
+```{r}
+2+2
+```
+
+* Perform a t-test, and indicate whether there is a significant
+difference at the 5\% level between the two swimmers.
+
+```{r}
+2+2
+```
+
+* Interpret the result of the t-test in a way that Baz and Bob
+(who are not statisticians) could understand.
+
+### Question
+
+A physics student measures the speed of light in a laboratory.  His results are as follows:
+
+```{r,include=TRUE}
+x <- c(299792459.1, 299792457.87, 299792457.59, 299792459.6, 299792457.74, 
+299792460.08, 299792459.27)
+```
+
+
+(Note: all figures in meters per second; if you type
+`options(digits=14)` on the commandline, you will see more the
+significant figure on the output).  The true value of the speed of
+light is known to be 299792458 exactly.  The student's professor says
+that the equipment generally gives readings that are too high.
+
+* State a sensible null hypothesis for this situation and an alternative
+
+* State the precise definition of p-value and state what the
+observation is, and what ``more extreme'' means in this context
+
+* Conduct a t test and interpret.
+
+
+```{r}
+2+2
+```

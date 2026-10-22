@@ -25,8 +25,8 @@ significance.
 * Specify a null hypothesis $H_0$ and the alternative hypothesis $H_1$. 
 
 ```{asis}
-The null hypothesis would be that the mean length of babies born in
-this maternity ward is 50\,cm exactly.
+***ANSWER*** The null hypothesis would be that the mean length of babies born in
+this maternity ward is 50cm exactly.
 
 (The null hypothesis is that the effect is absent, no difference,
 nothing going on.)
@@ -36,6 +36,7 @@ nothing going on.)
 
 
 ```{asis}
+***ANSWER***
 The p-value is the probability, if the null is true, of
 obtaining the observation (in this case, the sample mean) or an
 observation more extreme.  Here, "more extreme" means "further away
@@ -51,6 +52,7 @@ t.test(babies, mu=50, alternative="two.sided")
 * Interpret the results
 	
 ```{asis}
+***ANSWER***
 The p-value exceeds the significance level of 5\%, therefore we fail
 to reject the null hypothesis.  We conclude that the data are
 consistent with a mean length at birth of 50\,cm.  There is no
@@ -73,6 +75,7 @@ the two swimmers.  You may assume that the t-test is appropriate.
 
 * Is a one-sided or two-sided test appropriate?   Justify your answer
 ```{asis}
+***ANSWER***
 A two-sided test is appropriate because the situation is symmetric
 between the swimmers.  We have no reason to expect Baz to be
 faster or slower than Bob.
@@ -81,6 +84,8 @@ faster or slower than Bob.
 * State a sensible null hypotheses.
 
 ```{asis}
+***ANSWER***
+
 Let $\mu_1$ denote Baz's mean time and $\mu_2$ denote Bob's mean time.
 
 $H_0\colon\mu_1=\mu_2$
@@ -91,13 +96,18 @@ $H_1: \mu_1 \neq \mu_2$
 * State the precise definition of p-value and state what "more extreme" means in this context
 
 ```{asis}
+***ANSWER***
+
 pvalue is the probability, if the null is true, of obtaining the observation or an observation more extreme".
 The observation is the difference of sample means, $\overline{x}_\mbox{baz} - \overline{x}_\mbox{bob}$.
 In this case "more extreme" means further away from zero.
 ```
 
 * Is a paired or unpaired test indicated?
+
 ```{asis}
+***ANSWER***
+
 Unpaired: there is no natural pairing between the datasets
 
 Furthermore, the sample sizes are different, which means we cannot do a paired test.
@@ -120,6 +130,8 @@ t.test(baz,bob,alternative="two.sided")
 (who are not statisticians) could understand.
 
 ```{asis}
+***ANSWER***
+
 The p-value exceeds 5\% therefore there is not enough evidence to establish a difference between the swimmers.
 ```
 
@@ -142,6 +154,8 @@ that the equipment generally gives readings that are too high.
 * State a sensible null hypothesis for this situation and an alternative
 
 ```{asis}
+***ANSWER***
+
 Null: the  mean value of all the student's readings is the true
 speed of light exactly, namely 299792458.
 
@@ -161,6 +175,8 @@ it is to precisely state exactly what ensemble you are dealing with.
 observation is, and what ``more extreme'' means in this context
 
 ```{asis}
+***ANSWER***
+
 The pvalue is the probability, if the null is true, of obtaining
 the observation or a value more extreme.  Here, the observation is
 the sample mean of 299792458.75.  In this context, "more
@@ -178,6 +194,8 @@ t.test(x, mu=299792458,alternative="greater")
 ```
 
 ```{asis}
+***ANSWER***
+
 The p-value is less than 5\% so the test is significant and we may
 reject the null.  There is evidence that the equipment is
 over-reading.
