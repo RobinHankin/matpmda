@@ -214,7 +214,7 @@ literature:
 {n\choose r} p^r\left(1-p\right)^{n-r}
 \]
 
-where $n\choose r$ is pronounced ``n choose r'' and
+where $n\choose r$ is pronounced "$n$ choose $r$" and
 means $\frac{n!}{r!(n-r)!}$.
 
 
