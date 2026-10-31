@@ -1,3 +1,8 @@
+```{r, label=setoptions, echo=FALSE, include=FALSE}
+options(width = 60)
+```
+
+
 # Getting started {#introduction}
 
 
