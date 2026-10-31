@@ -153,14 +153,17 @@ Above we see that the Poisson distribution has a characteristic shape,
 slightly left skewed.  The Poisson distribution is approximately
 Gaussian for large values of $\lambda$, with
 $\operatorname{Pois}(\lambda)$ being close to a Gaussian with mean
-$\lambda$ and standard deviation $\sqrt{\lambda}$.
+$\lambda$ and standard deviation $\sqrt{\lambda}$; that is,
+$N(\lambda,\sqrt{\lambda})$.
 
 
 ```{r plotpois100}
 x <- 0:100
-plot(x, dpois(x, 50), type='h', lwd=2,
-    main = 'Poisson distribution, lambda=50')
+plot(x, dpois(x, 49), type='h', lwd=2,
+    main = 'Poisson distribution, lambda=49')
 ```
 
 Above we see a probability plot for a Poisson distribution with
-$\lambda=50$, showing a distribution that is close to a Gaussian.
+$\lambda=49.  The mean of this will be $49$ and the standard deviation
+will be $\sqrt{49}=7$.  We see a distribution that is close to a
+Gaussian, specifically $N(49,7)$
