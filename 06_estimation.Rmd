@@ -4,12 +4,13 @@ Earlier in the course we considered the idea of taking a random sample
 from a population.  Often we want to use our sample to gain information
 about the population. We will extend that idea in this chapter.
 
-If $X_1, X_2, \ldots, X_n$ are independent random variables having a
+If $x_1, x_2, \ldots, x_n$ are independent random variables having a
 common probability distribution, then they form a *sample* from that
-distribution.  We have discussed computing some *sample statistics*
-sample, such as the sample mean and sample variance.  But observe
-carefully that the sample statistics differ from sample to sample,
-even if the underlying distribution is unchanged:
+distribution.  We have discussed computing some *sample statistics*,
+such as the sample mean and sample variance.  Recall that the sample
+mean $\overline{x}=(x_1+\cdots +x_n)/n$ is the mean value of our
+sample. But observe carefully that these sample statistics differ from
+sample to sample, even if the underlying distribution is unchanged:
 
 ```{r}
 mean(rnorm(10))
@@ -17,13 +18,14 @@ mean(rnorm(10))
 mean(rnorm(10))
 ```
 
-In the above, observe that the standard Gaussian has a mean of exactly
-zero, but the sample mean (the average of 10 random observations) has
-random variability.
+In the above, we are taking samples of size 10 from a standard
+Gaussian distribution $N(0,1)$.  This has a mean of exactly zero, but
+we see that the sample mean (the average of 10 random observations)
+shows some variability as it differs from sample to sample.
 
-## Sample Statistics vs Population Parameters
+## Sample statistics vs population parameters
 
-Suppose we have observations $x_1,x_2,\ldots x_n$ drawn from a
+Suppose we have observations $x_1,x_2,\ldots, x_n$ drawn from a
 Gaussian distribution $N(\mu,\sigma)$.  We would like to determine the
 value of $\mu$ and $\sigma$ from the observations.  We can calculate
 the sample mean of the observations, usually denoted $\overline{x}$
@@ -31,7 +33,7 @@ but this does not allow us to pin down the value of $\mu$ exactly,
 because we have random variability which is adding noise.
 
 
-## The Sampling distribution
+## The sampling distribution
 
 As we saw above, each time we sample from the Normal distribution
 using `rnorm(10)` we get a different sample mean, even the though
@@ -41,17 +43,19 @@ useful for repeating a command a certain number of times.  For
 example, we can draw 5 samples of size 10 from $N(7,1)$:
 
 ```{r}
-xbar <- replicate(5, mean(rnorm(10,mean=7)))
+xbar <- replicate(5, mean(rnorm(10, mean=7)))
 xbar
 ```
 
-Above, see how the population mean is 7 but the sample mean varies
-randomly, sometimes overestimating and sometimes underestimating.  In
+Above, see how the population mean is 7 [because argument `mean=7` is
+passed to `rnorm()`], but the sample mean varies randomly, sometimes
+overestimating and sometimes underestimating the correct value.  In
 practice, of course, we only have a single sample and we will not know
 whether the sample mean is an overestimate or an underestimate.
 
 ```{r}
-hist(replicate(1e5, mean(rnorm(10,mean=7))),main="sample mean of 10 observations")
+hist(replicate(1e5, mean(rnorm(10,mean=7))),
+main="sample mean of 10 observations")
 ```
 
 It turns out that the sample mean of $n$ independent observations
@@ -121,7 +125,7 @@ mean(kiwi)
 So the estimate of the mean weight of a kiwi bird is about 0.96kg.
 But how accurate is this estimate?  The true mean might be 0.93kg or
 1.01kg or some other value.  To find the error in this estimate we use
-the standard erro of the mean, given by the formula $\sigma/\sqrt{n}$;
+the standard error of the mean, given by the formula $\sigma/\sqrt{n}$;
 here $n=30$ is the number of observations, and $\sigma$ is given by
 the `sd()` function, which estimates the standard deviation:
 
@@ -142,22 +146,21 @@ uncertainty of our estimate, caused by random variability.
 To give a confidence interval we can use `qnorm()`:
 
 ```{r}
-lower_limit <- qnorm(0.025,mean(kiwi),SEM)
-upper_limit <- qnorm(0.975,mean(kiwi),SEM)
-c(lower_limit,upper_limit)
+lower_limit <- qnorm(0.025, mean(kiwi), SEM)
+upper_limit <- qnorm(0.975, mean(kiwi), SEM)
+c(lower_limit, upper_limit)
 ```
 
 This is equivalent to a 95\% confidence interval (see chapter 8 for a
-formal definition of confidence interval; *interval* is a range of
-real numbers with a specified lower and upper limits).  It means that
-we can be 95\% confident that the true population mean $\mu$ is in the
-range from 0.61kg to 1.32kg.
+formal definition of confidence interval; an "interval" is a range
+of real numbers with specified lower and upper limits).  It means
+that we can be 95\% confident that the true population mean $\mu$ is
+in the range from 0.61kg to 1.32kg.
 
 It is possible to use 99\% instead of 95\%:
 
-
 ```{r}
-qnorm(c(0.005,0.995),mean(kiwi),SEM)
+qnorm(c(0.005,0.995), mean(kiwi), SEM)
 ```
 
 but observe how the interval becomes wider, as the lower limit has
