@@ -147,11 +147,11 @@ R includes a large number of builtin datasets, and we will use the
 `cars` dataset first.
 
 ```{r}
-data(mtcars)
-mtcars
+data(mtcars)  # loads the data into the current R session
+head(mtcars)  # extracts the first six lines 
 ```
 
-In the above, the dataset `mtcars` is a dataset of cars taken from
+In the above, `mtcars` is a dataset of cars taken from
 the 1974 Motor Trend magazine; to get more information, type
 `?mtcars` at the R command prompt which will fire up R's help
 system.  See how each row corresponds to a car and each column
