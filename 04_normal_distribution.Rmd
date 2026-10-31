@@ -54,7 +54,7 @@ legend("topright",lwd=3,col=c("black","red","blue","green"),
 ```
 
 
-## Properties of the Normal Distribution
+## Properties of the normal distribution
 
 Suppose $X$ is a Normally distributed random variable with mean $\mu$
 and standard deviation $\sigma$.  Recall that the variance is the
@@ -70,7 +70,7 @@ root of the variance.  We can write
 (note that notation is sometimes ambiguous and the second argument
 might refer to standard deviation or variance).
 
-## The Density Function of the Normal Distribution
+## The density function of the normal distribution
 
 The *probability density function* (abbreviated "PDF") of the Normal
 distribution is given by
@@ -87,7 +87,7 @@ where
 *  $\sigma$ is the standard deviation; $\sigma^2$ is the square of the standard deviation, or the variance
 *  $\mu$ is the mean of the distribution
 
-## The standard Normal Distribution
+## The standard normal distribution
 
 The standard Normal distribution has $\sigma=1$ and $\mu=0$ so the
 density becomes
@@ -108,7 +108,7 @@ about the standard Normal distribution:
 * It is infinitely wide because $e^x=0$ can never happen; the curve does not touch the x axis.
 
 
-## Relationship between Normal and Standard Normal
+## Relationship between normal and standard normal
 
 Suppose $X \sim N(\mu, \sigma^2)$ and $Z \sim N(0,1)$.
 
@@ -131,7 +131,7 @@ for the standard Normal distribution and convert their $X$ to a $Z$ as
 shown above.
 
  
-## Probability and the Normal Distribution
+## Probability and the normal distribution
 
 Basic facts: 
 
@@ -159,7 +159,7 @@ for(i in -4:4){
 }
 ```
 
-## Four R Functions for the Normal distribution
+## Four R Functions for the normal distribution
 
 There are four functions in R that are useful for understanding the Normal distribution.  These are:
 
@@ -170,7 +170,7 @@ There are four functions in R that are useful for understanding the Normal distr
 
 You can get help on these at the R prompt by typing `?dnorm`
 
-###  Random samples from the Normal: `rnorm()`
+###  Random samples from the normal: `rnorm()`
 
 The R system can furnish random variables easily.  You can get random
 samples from a Normal distribution using `rnorm()`
@@ -234,6 +234,7 @@ plot(x,dnorm(x),main="Density function of the standard normal distribution")
 
 
 ## The cumulative distribution function, `pnorm()`
+
 If $X\sim N(0,1)$, we quite often need to find the probability that
 $X$ is less than a particular value, as in the figure below:
 
@@ -334,7 +335,7 @@ plot(p,qnorm(p))
 ```
 
 
-## The normal distribution and the Binomial Distribution
+## The normal distribution and the binomial distribution
 
 The Normal distribution is closely related to the Binomial
 distribution (see previous week).  Consider again the Binomial

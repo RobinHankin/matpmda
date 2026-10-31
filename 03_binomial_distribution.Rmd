@@ -108,7 +108,7 @@ write down whether it is raining or not for each of 200 days; we might
 catch 200 birds and write down whether the bird is male or female, and
 so on.
 
-## Multiple Bernoulli Trials: Binomial Distribution
+## Multiple Bernoulli trials: the binomial distribution
 
 It is possible to be a bit more efficient and tell the 200
 undergraduates to toss the coin more than once each.  For example, we
@@ -239,7 +239,7 @@ dbinom(2,5,0.3)
     
 which gives the same answer.
 
-## Cumulative Distribution Function
+## Cumulative distribution function
 
 Sometimes we will want to compute the probability that a binomial
 random variable is less than or equal to some value. To do this we can
@@ -363,7 +363,7 @@ sum(dbinom(0:115,115,0.324324))
 
 as expected.
 
-## Expected Value and Variance
+## Expected value and variance
 
 You will recall the discussion about variance and standard deviation
 from  week 2.  The Binomial distribution has probability mass function
