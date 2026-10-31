@@ -1,4 +1,4 @@
-# The Poisson distribution {#poisson}
+ The Poisson distribution {#poisson}
 
 ```{block2, type='wikipedia'}
 <https://en.wikipedia.org/wiki/Poisson_distribution>
@@ -89,31 +89,55 @@ reference.  First of all, we will sample from the distribution:
 
 
 ```{r userpois}
-rpois(40,lambda=4.5)
+rpois(40, lambda=4.5)
 ```
 
 See how random observations from the Poisson are non-negative
-integers.  We can verify that the probabilities of the Poisson add up
-to 1:
+integers.  The probabily of observing a particular outcome is given by
+`dpois()`:
+
+
+```{r showdpois}
+dpois(0:5, lambda = 4.5)
+```
+
+Thus if $X\sim\operatorname{Pois(4.5)}$, then we see above that
+$\operatorname{Prob}(X=0)$ is about $0.011$ and
+$\operatorname{Prob}(X=1)$ is about $0.05$.  We can easily verify that
+the probabilities of the Poisson add up to 1:
 
 ```{r sumdpois}
-sum(dpois(0:100,lambda=4.5))
+sum(dpois(0:100, lambda=4.5))
 ```
 
 (mathematically, the above will be slightly less than 1 because we are
-not including numbers over 100; but the difference will be small).
-The mean of the Poisson distribution is known to be $\lambda$ (this is
-inherited from the binomial), and we can verify this numerically:
+not including numbers over 100; but the difference will be small).  If
+$X\sim\operatorname{Pois}(\lambda)$, then the mean of $X$ is known to
+be $\lambda$ (this is inherited from the binomial), and we can verify
+this numerically:
 
 ```{r meanpois3}
-mean(rpois(1e6,lambda=4.5))
-mean(rpois(1e6,lambda=4.5))
-mean(rpois(1e6,lambda=4.5))
+mean(rpois(1e6, lambda=4.5))
+mean(rpois(1e6, lambda=4.5))
+mean(rpois(1e6, lambda=4.5))
 ```
 
 In the above, see how the sample mean is very close to the value of
 $\lambda=4.5$; the small differences are due to random variability.
+If $X\sim\operatorname{Pois}(\lambda)$, then the variance of $X$ is
+known to be $\lambda$ (this is also inherited from the binomial).
+This means that the standard deviation of $X$ is $\sqrt{\lambda}$ and
+this too is easy to verify numerically:
 
+```{r sdpois3}
+sd(rpois(1e6, lambda=4.5))
+```
+
+Compare the above with the theoretical value:
+
+```{r showtheoreticalsd}
+sqrt(4.5)
+```
 
 ## Some examples
 
@@ -121,19 +145,22 @@ Here we plot a couple of histograms of Poisson distributions.
 
 ```{r plotpois010}
 x <- 0:10
-plot(x,dpois(x,3.2),type='h',lwd=2,main='Poisson distribution, lambda=2')
+plot(x, dpois(x, 3.2), type='h', lwd=2,
+    main = 'Poisson distribution, lambda=2')
 ```
 
-The Poisson distribution has a characteristic shape, slightly left
-skewed.
+Above we see that the Poisson distribution has a characteristic shape,
+slightly left skewed.  The Poisson distribution is approximately
+Gaussian for large values of $\lambda$, with
+$\operatorname{Pois}(\lambda)$ being close to a Gaussian with mean
+$\lambda$ and standard deviation $\sqrt{\lambda}$.
 
 
 ```{r plotpois100}
 x <- 0:100
-plot(x,dpois(x,50),type='h',lwd=2,main='Poisson distribution, lambda=50')
+plot(x, dpois(x, 50), type='h', lwd=2,
+    main = 'Poisson distribution, lambda=50')
 ```
 
-The Poisson distribution is approximately Gaussian for large values of
-$\lambda$, with $\operatorname{Pois}(\lambda)$ being close to a
-Gaussian with mean $\lambda$ and standard deviation $\sqrt{\lambda}$.
-
+Above we see a probability plot for a Poisson distribution with
+$\lambda=50$, showing a distribution that is close to a Gaussian.
