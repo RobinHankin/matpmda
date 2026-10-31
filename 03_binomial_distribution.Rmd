@@ -315,8 +315,8 @@ mostly all four will be present and documented together).
 
 ### Example 
 
-Consider Bin(10,0.3), that is the binomial distribution with $n=10$
-and $p=0.3$.
+Consider $\operatorname{Bin}(10,0.3)$, that is the binomial
+distribution with $n=10$ and $p=0.3$.
 
 Then we can use the four functions in turn:
 
@@ -330,38 +330,44 @@ qbinom(0.99,10,0.3) # 99th percentile of Bin(10,0.3)
 ## Numerical verification
 
 It is always a good idea to try and verify theoretical results using
-random sampling.  We will take one million observations (that is, one
-million undergraduates, each tossing a coin 5 times) and recording the
-number of heads for each undergraduate:
+random sampling.  As a simple example, we will consider
+$X\sim\operatorname{Bin}(5,0.3)$ and calculate $P(X=2)$ two different
+ways.
 
-```{r rbinomverify}
-table(rbinom(1000000,5,0.3))
+The mathematical way would be to use `dbinom()`:
+
+```{r, label=usedbinomforbin53}
+dbinom(2, 5, 0.3)
 ```
 
+To verify this numerically, we use random sampling.  We will take one
+million observations (that is, one million undergraduates, each
+tossing a coin 5 times) and recording the number of heads for each
+undergraduate:
+
+```{r rbinomverify}
+table(rbinom(1000000, 5, 0.3))
+```
 
 So, out of a million observations we have exactly 309666 students with
 two heads, a proportion of 0.309666, not too far from the exact value
-of 0.3087 (the slight difference is caused by random variation).
+of 0.3087 given by `dbinom()` (the slight difference is caused by
+random variation).
 
-We can see all the probabilities in one line using the colon construction:
+There are further numerical consistency checks that are generally a
+good aid to understanding.  We can see all the probabilities in one
+line using the colon construction:
   
 ```{r rbinomverifyoneline}
-dbinom(0:5,5,0.3)
+dbinom(0:5, 5, 0.3)
 ```
 
-and we should check that these probabilities add to one:
-  
+These probabilities should add to one, and this is easy to check using
+`sum()`:
+
 ```{r rbinomverifysum}
-sum(dbinom(0:5,5,0.3))
+sum(dbinom(0:5, 5, 0.3))
 ```
-
-Using this, we can check any binomial distribution:
-
-```{r rbinomcheck}
-sum(dbinom(0:115,115,0.324324))
-```
-
-as expected.
 
 ## Expected value and variance
 
