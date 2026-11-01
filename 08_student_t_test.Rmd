@@ -14,10 +14,15 @@ happens if we have only a small amount of data.
 
 Let $x_1, x_2, \ldots, x_n$ be a sample from a normal distribution
 with an unknown mean $\mu$ and unknown variance $\sigma^2$.  Suppose
-we want to test if the mean $\mu$ is equal to some value $\mu_0$, that
-is $\mu=\mu_0$ against the alternative that $\mu\neq\mu_0$.  Since we
+we want to test whether the mean $\mu$ is equal to some value $\mu_0$.
+This would correspond to a null hypothesis that $\mu$ is equal to
+$\mu_0$, and we would write $H_0\colon\mu=\mu_0$.  The alternative,
+$H_A$, would be that $\mu$ is not equal to $\mu_0$ and we would write
+$H_A\colon\mu\neq\mu_0$.
+
+Since we
 are testing to see if the mean is equal to some value $\mu_0$, it
-makes sense to use the sample mean $\bar{x}$.  Then, if $\bar{x}$ is a
+makes sense to calculate the sample mean $\bar{x}$.  Then, if $\bar{x}$ is a
 "long way away" from $\mu_0$, we would reject $H_0$.  We would like to
 compute $Z=\frac{\bar{X}-\mu}{\sigma/\sqrt{n}}$ as before, but this is
 not possible because we do not know the true value of $\sigma$.  We
