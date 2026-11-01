@@ -87,18 +87,18 @@ balls drawn from the urn (= the number of left handed males) which is
 
 Recall the definition of p-value: "the probability, if the null is
 true, of obtaining the observation or an observation more extreme".
-In this case (if we use a one-sided test), "more extreme" means
-greater than the observation of 5; and we know that the number of left
-handed males (=white balls drawn) cannot be larger than 7.  We can get
-a visual impression easily, using R:
+In this case "more extreme" means "has a probability less than that of
+the observation".  We can get a visual impression easily, using R:
 
 ```{r plotdhyper}
 x <- 0:7  # define x-axis
 plot(x, dhyper(x,7,20,11),
-    type='h', lwd=4, col=c(rep("black",5),rep("red",3))) 
+    type='h', lwd=4,
+    col = c("red", rep("black",4), rep("red",3)))
 legend("topright",
     lwd=4, col=c("black","red"),
     legend=c("regular points","more extreme"))
+    abline(h = dhyper(5,7,20,11))
 ```
 
 Above, we use R command `dhyper()` to calculate the probabilities; the
@@ -106,17 +106,26 @@ arguments to `dhyper()` are `x = 0:7` for the number of left-handed
 males [drawn white balls], 7 for the number of males [number of white
 balls in the urn], 20 for number of females [black balls in the urn],
 and 11 for number of left-handers [number of balls drawn from the
-urn].
+urn].  The red bars show more extreme observations as their
+probability is less than that of the observation.  The $p$-value is
+simply the sum of the red bars, corresponding to observations 0 (on
+the left), or 5,6,7 (on the right):
 
-Fortunately, R can deal with all this with the `fisher.test()` function:
+```{r, label=fisherbyhand}
+sum(dhyper(c(0,5,6,7),7,20,11))
+```
+
+We see the $p$-value is about 0.084, exceeding 5\%, therefore not
+significant.  Fortunately, R can deal with all this with the
+`fisher.test()` function:
 
 ```{r dofisher}
-fisher.test(a, alternative="greater")
+fisher.test(a)
 ```
 
 (recall that R variable `a` was defined at the beginning of the
-chapter).  We can see from the $p$-value of about 7\% that the result
-is not significant: there is no evidence for a difference in
+chapter).  We can see from the $p$-value of about 8.4\% that the
+result is not significant: there is no evidence for a difference in
 handedness between male and female students.
 
 ## Other applications
@@ -127,53 +136,79 @@ above, but the same thinking applies to a very wide range of datasets.
 I include some examples below.  
 
 
-### Medical research: old treatment, new treatment.
+### Education: do textbooks differ?
 
-*Question* Suppose we are researching a new medical treatment and wish
-to discover whether it is better than the old one.  We take some
-patients and treat 6 with the old treatment and 8 with the new; of the
-6 patients treated with the old treatment, 2 are cured.  And of the 8
-treated with the new treatment, 5 were cured.  Is this evidence for the
-new treatment being better than the old?
+*Question* Suppose we are studying whether there is a difference
+between two textbooks, A and B.  We give students either textbook A or
+textbook B, and record whether or not they pass.  Our dataset is as
+follows:
 
-*answer*:
-
-The first step is to translate the information given into R idiom.  In
-this case we have a two-row matrix with the top row corresponding to
-the old treatment and the bottom row corresponding to the new
-treatment.  The first column corresponds to cured patients and the
-second column corresponds to non-cured patients.
-
-```{r anothermatrix}
-M <- matrix(c(2,5,4,2),2,2)
+```{r defineeducationaldataset}
+D <- data.frame(
+	textbook = c("A","A","B","A","B","A","B","B","B","A","A","A"),
+	pass     = c( T,  T,  F,  T,  F,  F,  F,  F,  F,  T,  T,  T))
+head(D)
+M <- table(D)
 M
+fisher.test(M)
 ```
 
-The above is fine but is easier to understand if we modify `M` so
-that the rows and columns are named.  The R idiom to do this is nice,
-but not part of the learning objectives of the course and you will not
-be tested on it.  It is just cosmetic.
+Above, see how we convert a dataframe into a contingency table of
+counts that may be passed to `fisher.test()` without modification.  We
+see a $p$-value of about 1.5\%, sufficient to reject the null of the
+textbooks being equal.  We infer that the textbooks are in fact
+different.
 
+## One-sided tests
 
-```{r setdimnames}
-dimnames(M) <- list(treatment=c("new","old"),cured=c(TRUE,FALSE))
+In the examples above, we did not know the "direction" of the effect.
+In the handedness example, we did not know whether boys were more
+likely or less likely to be left-handed than girls.  Similarly, in the
+educational example, we did not know whether textbook A or textbook B
+would be better.  Statistically, this corresponds to a two-sided test.
+
+Sometimes, however, we do know the direction of the effect.  Suppose
+we are investigating the effect of smoking on cancer rates and have
+the following dataset:
+
+```{r smokingdata}
+M <- matrix(c(4,1,2,14), 2, 2)
+dimnames(M) <-
+   list(status=c("smoker", "non-smoker"), cancer=c(TRUE, FALSE))
 M
+```		
+
+Above, we see that smokers are more likely to have cancer than
+non-smokers: four smokers (out of six) have cancer, while only one
+non-smoker (out of 15) has cancer.  Medically, it is known that
+smoking causes cancer.  So smoking _increases_ cancer rates:
+
+\begin{equation}
+P(\mbox{cancer}|\mbox{smoker}) > 
+P(\mbox{cancer}|\mbox{non-smoker})
+\end{equation}
+
+Above, note how we use a greater-than symbol (viz "$>$") [rather than
+a not-equal symbol "$\neq$"] because we _know_ that smokers have
+higher probability of cancer than non-smokers.  Not a lower
+probability.  Because we know that the probability is higher and not
+lower, we know the direction of the effect; and statistically, this
+indicates a one-sided test.
+
+Imagine that we had found that smoking _cures_ cancer and smokers are
+less likely to have cancer than non-smokers.  If this happened, we
+would simply reject that finding.  We might suspect that some error
+had occurred, or that the data had been tampered with.
+
+Because the direction of the effect is known, we use a one-sided test.
+To specify a one-sided test, we pass `alternative = "greater"` to
+`fisher.test()`:
+
+
+```{r fishertestonesided}
+M
+fisher.test(M, alternative="greater")
 ```
 
-In the above, the matrix `M` is unchanged but has new information
-in the rownames and columnnames.  
-
-The second step is to formulate a null: $H_0\colon
-p(\mathrm{cure}|\mathrm{new}\,\mathrm{treatment}) = p(\mathrm{cure})$.
-We need a $p$-value for this null:
-
-
-```{r dofisheragain}
-fisher.test(M,alternative="less")
-```
-
-(note the use of a one-sided test: we are testing for the new
-treatment being *better* than the old one, not *different* from it).
-The $p$-value exceeds 5\%, so this indicates that the improvement
-could easily have occurred by chance.  There is no evidence that the
-new treatment is any better than the old.
+The $p$-value is about 1.1\%; we see a significant result and can
+infer that smoking increases the probability of cancer.
