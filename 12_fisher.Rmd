@@ -210,5 +210,6 @@ M
 fisher.test(M, alternative="greater")
 ```
 
-The $p$-value is about 1.1\%; we see a significant result and can
-infer that smoking increases the probability of cancer.
+The $p$-value is about 1.1\%; we see a significant result.  The
+dataset is strong evidence that smoking increases the probability of
+cancer.
