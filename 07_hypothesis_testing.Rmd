@@ -9,9 +9,8 @@
 ```
 
 As we discussed earlier, we often want to use a sample to make
-inferences about the population from which the sample was drawn.  The
-following notation is commonly used when referring to samples and
-populations.  Here, we discuss how we can make inferences about a
+inferences about the population from which the sample was drawn.
+Here, we discuss how we can make inferences about a
 population by testing a hypothesis that we may have regarding a
 population parameter, such as a mean $\mu$ or proportion $\pi$.  We
 will begin with an overview of the hypothesis testing and then will
@@ -39,12 +38,12 @@ notation we would say
 H_0\colon\operatorname{Prob}(H)=\frac{1}{2}
 \]
 
-Since we are interested in whether the coin is biased towards heads, the alternative hypothesis is:
+Since we are interested in whether the coin is biased towards heads,
+the alternative hypothesis $H_A$ (sometimes written $H_1$) is:
 
 \[
-H_1\colon\operatorname{Prob}(H) > \frac{1}{2}
+H_A\colon\operatorname{Prob}(H) > \frac{1}{2}
 \]
-
 
 But the null does not mean that 100 tosses results in exactly 50
 heads.  We can use R to conduct a computer simulation of this
