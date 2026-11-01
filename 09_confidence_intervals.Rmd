@@ -19,7 +19,7 @@ in the remainder $1-0.05=0.95$].  Suppose we have observations `1.5,
 2.3, -0.7, 1.4, 1.2`.  We might test, in turn,
 $\mu=-3,\mu=-2,\ldots,\mu=2,\mu=3$:
 
-```{r}
+```{r, label=manyttests}
 options(digits=3)
 x <- c(1.5, 2.3, -0.7, 1.4, 1.2)
 c(
@@ -41,7 +41,7 @@ $\mu_0$ is inside the confidence interval.  Confidence intervals are
 given by `t.test()`:
 
 
-```{r}
+```{r ttestshowsconf}
 t.test(x)
 ```
 
@@ -55,14 +55,14 @@ greater than `2.519`.
 A medical scientist takes six patients and measures their heart rate.
 The data is:
 
-```{r}
+```{r heartdata}
 heart <- c(66,73,72,80,84,60)
 ```
 
 Calculate a 95\% confidence interval for this data.  The `t.test()` in
 R gives:
 
-```{r}
+```{r ttestheart}
 t.test(heart)
 ```
 
@@ -112,7 +112,7 @@ text(-xp-0.7,0.1,"2.5%")
 Suppose a government inspector buys 30 loaves of bread from a bakery
 and wants to know the mean weight of all loaves sold by that bakery.  The data is, in grams:
 
-```{r}
+```{r defineloaves}
 loaves <- c(804, 804, 800, 797, 805, 800, 810, 803, 806, 800, 801, 802, 
 800, 808, 806, 804, 810, 799, 804, 803, 805, 803, 804, 793, 808, 
 810, 801, 802, 797, 802)
@@ -122,14 +122,14 @@ loaves <- c(804, 804, 800, 797, 805, 800, 810, 803, 806, 800, 801, 802,
 
 *answer* The sample mean and standard deviation is
 
-```{r}
+```{r ttestloaves}
 mean(loaves)
 sd(loaves)
 ```
 
 and the standard error of the mean is
 
-```{r}
+```{r loavesSEM}
 SEM <- sd(loaves)/sqrt(30)
 SEM
 ```
@@ -137,13 +137,13 @@ SEM
 For a 95\% confidence interval we find the value of that has 2.5\% (=
 half of 5\%) probability to the right, that is 97.5\% to the left:
 
-```{r}
+```{r qnorm975}
 qnorm(0.975)
 ```
 
 and the 95\% confidence interval would be given by
 
-```{r}
+```{r loavesconfidence}
 c(mean(loaves) - qnorm(0.975)*SEM, mean(loaves) + qnorm(0.975)*SEM)
 ```
 
@@ -151,7 +151,7 @@ To get a 99\% confidence interval instead of the default 95\%, we have
 exactly the same construction except we need to use
 `qnorm(0.995)`:
 
-```{r}
+```{r loavesconfidence995}
 c(mean(loaves) - qnorm(0.995)*SEM, mean(loaves) + qnorm(0.995)*SEM)
 ```
 
