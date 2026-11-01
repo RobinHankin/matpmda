@@ -2,7 +2,7 @@
 
 Consider the following dataset:
 
-```{r}
+```{r definelight}
 light <-
 data.frame(experiment=
 letters[c(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,
@@ -26,8 +26,8 @@ have systematic bias?
 
 To answer this question we first plot the data:
 
-```{r}
-boxplot(speed~experiment,data=light,col="gray")
+```{r plotlight}
+boxplot(speed~experiment, data=light, col="gray")
 ```
 
 In the figure above, there is some suggestion of a difference between
@@ -44,7 +44,7 @@ experiments).  We need to calculate a $p$-value for this null, and
 this is provided by the `aov()` function ("AOV" stands for
 "Analysis of variance"):
  
-```{r} 
+```{r aovlight} 
 summary(aov(speed~experiment,data=light))
 ```
 
@@ -57,14 +57,14 @@ experiments exhibited bias.
 It is possible to use the `lm()` function, which gives us slightly
 different information:
 
-```{r}
-summary(lm(speed~experiment,data=light))
+```{r summaryaovlight}
+summary(lm(speed~experiment, data=light))
 ```
 
 The format is very similar to that of scatterplot linear regression
 but the "intercept" is experiment "a" (R puts the factors in
 alphabetic order) and the other lines give the difference between
-experiment= "a" and the other experiments "b" through "e".  The
+experiment "a" and the other experiments "b" through "e".  The
 overall $p$-value of 0.00311 is the same as in `aov()`, because it
 refers to the same null.
 
