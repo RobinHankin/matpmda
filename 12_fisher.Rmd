@@ -7,12 +7,17 @@ following:
 
 
 ```{r definelefthandedmatrix}
-a <- matrix(c(5,2,6,14),2,2,byrow=TRUE)   # define matrix 
-dimnames(a) <- list(gender=c("M","F"),lefthanded=c(T,F))  # display only
+a <- matrix(c(5,2,6,14), 2, 2, byrow=TRUE)   # define matrix 
+dimnames(a) <- list(                         # display only
+    gender     = c("M", "F"),
+    lefthanded = c(TRUE, FALSE))
 a
 ```
 
-Such a dataset is known as a *contingency table* and is surprisingly
+Above, we see 5 left-handed males, 2 right-handed males, 6 left-handed
+females, and 14 right-handed females.  Such a dataset, where
+observations are classified by two criteria [in this case, gender and
+handedness], is known as a *contingency table* and is surprisingly
 common in statistics.  I would say that over half of the statistical
 analyses I perform for clients is on contingency tables like the one
 above.
@@ -32,22 +37,30 @@ but to quantify this we need a more careful analysis.
 
 ## The hypergeometric distribution
 
+To analyse the gender-handedness problem above, we need a new
+statistical concept: the *hypergeometric distribution*.  This turns
+out to be the correct way to analyse contingency tables.  The
+hypergeometric distribution is usually introduced using the language
+of drawing black and white balls from an _urn_ (an "urn" is a sort of
+tall vase).  The connection between urns and balls, and the
+gender/handedness problem, will be clarified below.
+
 Suppose we have an urn with $m$ white and $n$ black balls, and we draw
 out $k$ balls and write down their colour.  Note carefully that we are
-drawing *without replacement*: we draw a ball from the urn and then do
-not put it back in the urn (if we were to replace the ball in the urn,
-the number of white balls would be binomial with size $k$ and
-probability $\frac{m}{m+n}$).
+drawing *without replacement*: we draw a ball from the urn, note its
+colour, and then put it to one side.  We do not put the ball back in
+to the urn (if we were to replace the ball in the urn, the number of
+white balls would be binomial with size $k$ and probability
+$\frac{m}{m+n}$).  Drawing without replacement is equivalent to
+drawing the $k$ balls simultaneously from the urn.
 
-What is the distribution of the number of white balls drawn without
-replacement?  Well, it has a particular distribution known as the
-*hypergeometric distribution*.  This is similar to the binomial
-distribution in that it is discrete, non-negative, and has a known
-maximum.  The R idiom for this distribution is `dhyper()` which
-calculates the density function; we will not need this because R
-calculates the $p$-value for us.  We can make the following mapping
-between drawing balls out of a urn and left/right male/female dataset
-as follows:
+It turns out that the the number of white balls drawn without
+replacement follows a *hypergeometric distribution*.  This is similar,
+but not identical, to the binomial distribution.
+
+To apply the hypergeometric distribution to our gender-handedness
+problem, we can make the following mapping between drawing balls out
+of a urn and observing handedness and gender as follows:
 
 * white ball $\longrightarrow$ left handed
 * black ball $\longrightarrow$ right handed
@@ -81,9 +94,19 @@ a visual impression easily, using R:
 
 ```{r plotdhyper}
 x <- 0:7  # define x-axis
-plot(x,dhyper(x,7,20,11),type='h',lwd=4,col=c(rep("black",5),rep("red",3))) 
-legend("topright",lwd=4, col=c("black","red"),legend=c("regular points","more extreme"))
+plot(x, dhyper(x,7,20,11),
+    type='h', lwd=4, col=c(rep("black",5),rep("red",3))) 
+legend("topright",
+    lwd=4, col=c("black","red"),
+    legend=c("regular points","more extreme"))
 ```
+
+Above, we use R command `dhyper()` to calculate the probabilities; the
+arguments to `dhyper()` are `x = 0:7` for the number of left-handed
+males [drawn white balls], 7 for the number of males [number of white
+balls in the urn], 20 for number of females [black balls in the urn],
+and 11 for number of left-handers [number of balls drawn from the
+urn].
 
 Fortunately, R can deal with all this with the `fisher.test()` function:
 
