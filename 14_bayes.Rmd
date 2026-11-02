@@ -3,7 +3,8 @@
 ```{block2, type='wikipedia'}
 <https://en.wikipedia.org/wiki/Bayes%27_theorem>
 ```
-\newcommand{\prob}[1]{\operatorname{\mathrm{Prob}}\left({#1}\right)}
+
+\newcommand{\prob}[1]{{\operatorname{\mathrm{P}}}{({#1})}}
 
 
 IMPORTANT:
@@ -66,21 +67,29 @@ Robin cycles to work.  Observe that this differs from $\prob{B|A}$,
 the probability of B given A, which would be the probability of
 cycling to work given that it is raining.
 
-We can see that $\prob{A|B}=\frac{\prob{A\cap B}}{\prob{B}}$, and also
-that $\prob{B|A}=\frac{\prob{B\cap A}}{\prob{A}}$.  These relations
-are called the _law of conditional probability_.  Noting that $A\cap
-B\equiv B\cap A$, and rearranging, we arrive at *Bayes's theorem*:
+The law of conditional probability gives us
+$\prob{A|B}=\frac{\prob{A\cap B}}{\prob{B}}$, and also that
+$\prob{B|A}=\frac{\prob{B\cap A}}{\prob{A}}$.
+
+\begin{align}
+\prob{A\cap B} &= \prob{B}\prob{A|B}\nonumber\\
+\prob{B\cap A} &= \prob{A}\prob{B|A}\nonumber
+\end{align}
+
+Noting that $A\cap B\equiv B\cap A$ we can equate these two
+expressions and arrive at
 
 \begin{equation}
 \frac{\mbox{$\prob{A|B}$}}{\prob{A}} = 
 \frac{\prob{B|A}}{\prob{B}}
 \end{equation}
 
-In practice, we re-write $\prob{B}$ and rearrange.  It should be clear
-that $\prob{B} = \prob{B\cap A} + \prob{B\cap\overline{A}}$.  Using
-the law of conditional probability once more, we obtain
+This is known as *Bayes's theorem*.  In practice, we re-write
+$\prob{B}$ and rearrange.  It should be clear that $\prob{B} =
+\prob{B\cap A} + \prob{B\cap\overline{A}}$.  Using the law of
+conditional probability once more, we obtain
 $\prob{B}=\prob{A}\prob{B|A} +
-\prob{\overline(A)}\prob{B|\overline{A}}$.  Rearranging:
+\prob{\overline{A}}\prob{B|\overline{A}}$.  Rearranging:
 
 \begin{equation}
 \prob{A|B} = \prob{A}\frac{
@@ -376,14 +385,15 @@ Suppose we have a sample of a radioactive source.  It is either
 substance A or substance B but we do not know which.  The hypothesis
 that it is in fact substance A is written $H_A$ and the hypothesis
 that it is in fact substance B is written $H_B$.  Our priors are
-$p(H_A)= 0.9$ and $p(H_B)=0.1$.  Our experiment is to observe the
+$\prob{H_A}= 0.9$ and $\prob{H_B}=0.1$.  Our experiment is to observe the
 number of counts on a Geiger counter.  Counts are known to be Poisson
 and substance A has $\lambda=5.4$ while substance B has $\lambda=7.7$.
 Our data is the observed number of counts which is $n=5$.  Bayes's
 theorem:
 
 \begin{equation}
-p(H_A|D) = \frac{p(H_A)p(D|H_A)}{p(H_A)p(D|H_A)+p(H_B)p(D|H_B)}
+\prob{H_A|D} =
+\frac{\prob{H_A}\prob{D|H_A}}{\prob{H_A}\prob{D|H_A} + \prob{H_B}\prob{D|H_B}}
 \end{equation}
 
 We can use R to calculate the likelihoods:
@@ -393,7 +403,7 @@ We can use R to calculate the likelihoods:
 (LB <- dpois(5, 7.7))
 ```
 
-Then Bayes gives us the posterior probability $p(H_A|D)$ as
+Then Bayes gives us the posterior probability $\prob{H_A|D}$ as
 
 ```{r papb}
 prior_A <- 0.9
@@ -402,10 +412,10 @@ posterior_A <- prior_A*LA/(prior_A*LA + prior_B*LB)
 posterior_A
 ```
 
-So in this case our prior probability $p(H_A)$ was 0.9 and our
-posterior $p(H_A|D)$ has increased to about 0.94, on account of the
-low count ($n=5$) being more consistent with $H_A$ ($\lambda=5.4$)
-than $H_B$ ($\lambda = 7.7$)
+So in this case our prior probability $\prob{H_A}$ was 0.9 and our
+posterior $\prob{H_A|D}$ has increased to about 0.94, on account of
+the low count ($n=5$) being more consistent with $H_A$ ($\lambda=5.4$)
+than $H_B$ ($\lambda = 7.7$).
 
 ### Dice
 
@@ -413,26 +423,39 @@ Men of a certain age will be familiar with different dice used in
 board games.  Suppose someone has three dice, d4,d6,d8.  In standard
 terminology, "d4" is a four-sided die in the shape of a tetrahedron
 with results $\{1,2,3,4\}$, "d6" is a cube that can give
-$\{1,2,3,4,5,6\}$, and "d8" is an octahedron with $\{1,2\ldots, 8\}$.
+$\{1,2,3,4,5,6\}$, and "d8" is an octahedron with $\{1,2,\ldots, 8\}$.
 A person takes one of these dice and throws it, obtaining a 5.  We do
 not know which of the dice they threw but we have three hypotheses to
 consider: $H_4$, $H_6$, and $H_8$.  The observation of "5" is
 informative about these via Bayes's theorem.  Suppose our priors are
-$p(H_4)=0.1, p(H_6)=0.8, p(H_8)=0.1$.  Then the likelihoods are
-$p(D|H_4)=0$ (think about it), $p(D|H_6)=\frac{1}{6}$ and
-$p(D|H_8)=\frac{1}{8}$.  Bayes gives us
+$\prob{H_4}=0.1, \prob{H_6}=0.8, \prob{H_8}=0.1$.  Then the
+likelihoods are $\prob{D|H_4}=0$ (think about it),
+$\prob{D|H_6}=\frac{1}{6}$ and $\prob{D|H_8}=\frac{1}{8}$.  Bayes
+gives us
 
-\begin{eqnarray}
-p(H_4|D) = \frac{p(H_4)p(D|H_4)}{p(H_4)p(D|H_4) + p(H_6)p(D|H_6) + p(H_8)p(D|H_8)}=\frac{0.1\cdot 0}{0.1\cdot 0 + 0.8\cdot\frac{1}{6} + 0.1\cdot\frac{1}{8}}=0\nonumber\\
-p(H_6|D) = \frac{p(H_6)p(D|H_6)}{p(H_4)p(D|H_4) + p(H_6)p(D|H_6) + p(H_8)p(D|H_8)}=\frac{0.8\cdot \frac{1}{6}}{0.1\cdot 0 + 0.8\cdot\frac{1}{6} + 0.1\cdot\frac{1}{8}}=91\%\nonumber\\
-p(H_8|D) = \frac{p(H_4)p(D|H_4)}{p(H_4)p(D|H_4) + p(H_6)p(D|H_6) + p(H_8)p(D|H_8)}=\frac{0.1\cdot \frac{1}{8}}{0.1\cdot 0 + 0.8\cdot\frac{1}{6} + 0.1\cdot\frac{1}{8}}=9\%\nonumber
-\end{eqnarray}
+\begin{equation}
+\prob{H_i|D} =
+\frac{\prob{H_i}\prob{D|H_i}
+}{
+\sum_{j\in\left\lbrace 4,6,8\right\rbrace}\prob{H_j}\prob{D|H_j}
+},\qquad i\in\left\lbrace 4,6,8\right\rbrace
+\nonumber
+\end{equation}
 
-and we that Bayes has updated the priors for our three hypotheses and
-given three posterior probabilities.
+We can substitute the various values and obtain
+
+\begin{align}
+\prob{H_4} = 0.1 &\longrightarrow \prob{H_4|D} = 0.00\nonumber\\
+\prob{H_6} = 0.8 &\longrightarrow \prob{H_6|D} = 0.91\nonumber\\
+\prob{H_8} = 0.1 &\longrightarrow \prob{H_8|D} = 0.09\nonumber\\
+\end{align}
+
+and we see that Bayes has updated the priors for our three hypotheses
+and given three posterior probabilities.  See how the posterior
+probability for $H_4$, $\prob{H_4|D}$, is zero.
 
 
-### BayesianDomestic probabilities
+### Bayesian domestic probabilities
 
 Bayesian reasoning is often applied when one's knowledge about a
 situation changes when one makes an observation of some kind.  Suppose
@@ -442,24 +465,26 @@ home or not.  I walk up my front door and find it is locked.  I say
 door."  We can apply Bayesian reasoning to this situation as follows.
 
 * Hypotheses $H_1$ and $H_2$ for her being at home and not at home
-respectively.
-* Prior probabilities $p(H_1)$ and $p(H_2)$
-* Data $D$: the door is locked
-* Likelihoods: $p(D|H_1)$ and $p(D|H_2)$ for the probabilities of the
-  data given $H_1$ and $H_2$ respectively.
+  respectively.
+* Prior probabilities $\prob{H_1}$ and $\prob{H_2}$, based on my
+  knowledge of her habits.
+* Data $D$: the door is locked.
+* Likelihoods: $\prob{D|H_1}$ and $\prob{D|H_2}$ for the probabilities
+  of the data given $H_1$ and $H_2$ respectively.
 
-Numerically I would have $p(H_1)=0.9$ and $p(H_2)=0.1$; she is home
-with a probility of about 90\% and therefore is out with a probability
-of about 10\%.  My likelihoods would be $p(D|H_1)=0.01$ [it is
-possible but unlikely that she would lock the door if she was at home]
-and $p(D|H_2)=0.95$ [she is quite reliable and if she goes out she
-will almost certainly remember to lock the door].
+Numerically I would have $\prob{H_1}=0.9$ and $\prob{H_2}=0.1$; she is
+home with a probability of about 90\% and therefore is out with a
+probability of about 10\%.  My likelihoods would be
+$\prob{D|H_1}=0.01$ [it is possible but unlikely that she would lock
+the door if she was at home] and $\prob{D|H_2}=0.95$ [she is quite
+reliable and if she goes out she will almost certainly remember to
+lock the door].
 
 Bayes's theorem tells me how my priors change on observing my data
 $D$: the door is locked:
 
 \begin{align}
-p(H_1|D) &= \frac{p(H_1)p(D|H_1)}{p(H_1)p(D|H_1) + p(H_2)p(D|H_2)}\nonumber\\
+\prob{H_1|D} &= \frac{\prob{H_1}\prob{D|H_1}}{\prob{H_1}\prob{D|H_1} + \prob{H_2}\prob{D|H_2}}\nonumber\\
 & = \frac{0.9\cdot 0.01}{0.9\cdot 0.01 + 0.1\cdot 0.95}\nonumber\\
 & = \frac{0.009}{0.009 + 0.095}\nonumber\\
 & = \frac{9}{9 + 95}\nonumber\\
@@ -467,7 +492,7 @@ p(H_1|D) &= \frac{p(H_1)p(D|H_1)}{p(H_1)p(D|H_1) + p(H_2)p(D|H_2)}\nonumber\\
 & \simeq 8.7\%\nonumber
 \end{align}
 
-So my prior $p(H_1)$ has changed from 90\% to 8.7\% posterior.  My
+So my prior $\prob{H_1}$ has changed from 90\% to 8.7\% posterior.  My
 original reasoning that "the door is locked so she must be out" is
 refined by Bayesian reasoning to "I thought she was probably in [prior
 probability 90\%] but when I saw the door was locked, my posterior
