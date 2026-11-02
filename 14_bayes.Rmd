@@ -447,7 +447,7 @@ We can substitute the various values and obtain
 \begin{align}
 \prob{H_4} = 0.1 &\longrightarrow \prob{H_4|D} = 0.00\nonumber\\
 \prob{H_6} = 0.8 &\longrightarrow \prob{H_6|D} = 0.91\nonumber\\
-\prob{H_8} = 0.1 &\longrightarrow \prob{H_8|D} = 0.09\nonumber\\
+\prob{H_8} = 0.1 &\longrightarrow \prob{H_8|D} = 0.09\nonumber
 \end{align}
 
 and we see that Bayes has updated the priors for our three hypotheses
