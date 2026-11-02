@@ -23,10 +23,12 @@ o
 ("o" for "observation").  Thus 8 students chose red, 10 chose green,
 etc.  Is there any evidence that there is a systematic bias towards
 some colours?  Well, the first step is to formulate a null hypothesis
-$H_0\colon p_\mathrm{red} = p_\mathrm{green} = p_\mathrm{blue} =
-p_\mathrm{yellow}=\frac{1}{4}$, where $p_\mathrm{colour}$ is the
-probability of a student choosing that colour.  If the null is true,
-we would expect to observe 10 students choosing each colour:
+which states that all colours are equally likely, and the students
+choose randomly.  We write $H_0\colon p_\mathrm{red} =
+p_\mathrm{green} = p_\mathrm{blue} = p_\mathrm{yellow}=\frac{1}{4}$,
+where $p_\mathrm{colour}$ is the probability of a student choosing
+that colour.  If the null is true, we would expect to observe 10
+students choosing each colour:
 
 ```{r definecolourexp}
 e <- c(red=10, green=10, blue=10, yellow= 10)
@@ -129,17 +131,22 @@ polygon(c(jj,rev(jj)),c(jj*0,dchisq(rev(jj),df=3)),col='gray',border=NA)  #shade
 text(7.8,0.1,"observed B",pos=2)  
 ```
 
-In the above figure, the p-value is shown in gray: it is the
+In the above figure, the $p$-value is shown in gray: it is the
 probability, if the null is true, of obtaining the observation or an
 observation more extreme.  In this case, the observation is $B=7.8$
 and its null distribution is $\chi^2_3$.  Calculating the $p$-value is
 straightforward:
 
 ```{r usepchisq}
-pchisq(7.8,df=3,lower.tail=FALSE)
+pchisq(7.8, df=3, lower.tail=FALSE)
 ```
 
 just short of the 5\% critical value, so we fail to reject the null.
+We interpret this in the same way as any other $p$-value $\geqslant
+0.05$: the observations are consistent with the null.  As far as we
+can tell from the sample, the students appear to choose a colour
+randomly, with all colours having the same probability of being
+chosen.
 
 ## Numerical verification
 
@@ -147,20 +154,22 @@ Above, I stated that $B$ has a chi-square distribution with 3 degrees
 of freedom.  Here I demonstrate that this is true.  We can generate
 synthetic observations using the `sample()` function:
 
-
 ```{r numverchisq}
-sample(1:4,40,replace=T)  # census of the class
-tabulate(sample(1:4,40,replace=TRUE))  # how many students prefer each colour
-
+sample(1:4, 40, replace=TRUE)  # census of the class
 ```
 
-(we identify red=1, green=2, etc).  We can calculate B for such
-synthetic data:
+(we identify red=1, green=2, etc).  Now tabulate the results:
+
+```{r tabulatesample}
+tabulate(sample(1:4, 40, replace=TRUE))  # how many students prefer each colour
+```
+
+We can calculate the badness $B$ for such synthetic data:
 
 ```{r makesynthetic}
-o <- tabulate(sample(1:4,40,replace=TRUE))  # synthetic observations
-e <- 10                                  # expectation under the null
-B <- sum((o-e)^2/e)                      # Badness-of-fit
+o <- tabulate(sample(1:4, 40, replace=TRUE))  # synthetic observations
+e <- 10                                       # expectation under the null
+B <- sum((o-e)^2/e)                           # Badness-of-fit
 B
 ```
 
@@ -179,23 +188,29 @@ points(x,n*dchisq(x,df=3),type='l',lwd=6)  # plot chi-squared, df=3 points
 ```
 
 
+Above we see a histogram, in red, of the values of $B$ and in black
+the PDF of $\chi^2_3$.  We see that the two are in close agreement.
+
 ## Another example
 
 Here I will give an example along the same lines as above but with a
 different null.  Suppose we give 100 students a coin and tell them to
 toss it 4 times.  We can then ask each student to write down the
-number of heads they get.   First, our observations:
+number of heads they get.  First, our observations:
 
 ```{r defobs}
 o <-c("0"=5, "1"=27, "2" = 47, "3"=15, "4"=6)  # this is a named vector
 o
 ```
 
-The expectations are a little harder.  Our null is that the number of
-heads is $\operatorname{Bin}(4,1/2)$, and we have 100 observations, so our expectations are given by
+Above, we see that five students obtained zero heads, 27 students
+obtained one head, and so on.  The expectations are a little harder
+than before.  Here, our null is that the number of heads is
+$\operatorname{Bin}(4,1/2)$, and we have 100 observations, so our
+expectations are given by
 
 ```{r defexp}
-e <- 100*dbinom(0:4,4,1/2)
+e <- 100*dbinom(0:4, 4, 1/2)
 e
 ```
 
@@ -209,13 +224,11 @@ B
 
 And the $p$-value is
 
-
 ```{r quantifybad}
-pchisq(B,df=4,lower.tail=FALSE)
+pchisq(B, df=5-1, lower.tail=FALSE)
 ```
 
 So the p-value exceeds 5\% and the result is not significant.
-
 
 ## Pearson chi-square test with estimated parameters
 
@@ -230,16 +243,19 @@ and observe the following dataset:
 (o <- c("0"=7,"1"=3,"2"=4,"3"=9))
 ```
 
-We might hypothesize that the number of children in each photo is
-binomial $\operatorname{Bin}(3,p)$ but we do not know the value of
-$p$.  To estimate $p$, we figure out how many photos of the three
-children there are and divide by how many there could possibly be:
+Thus in the album we see seven photographs with zero children in them,
+three photos with one child in them, four with two children, and nine
+with all three children nn them.  We might hypothesize that the number
+of children in each photo is binomial $\operatorname{Bin}(3,p)$ but we
+do not know the value of $p$.  To estimate $p$, we figure out how many
+photos of the three children there are and divide by how many there
+could possibly be:
 
 ```{r howmanyphotos}
 phat <- (0*7 + 1*3 + 2*4 + 3*9)/(3*(7+3+4+9))
 ```
 
-or
+or, equivalently but more elegantly:
 
 ```{r expphotoprob}
 (phat <- sum((0:3)*o)/(3*sum(o)))
@@ -248,25 +264,33 @@ or
 Armed with this, we can calculate expectations:
 
 ```{r expphotonum}
-(e <- 23*dbinom(0:3,3,phat))
+(e <- 23*dbinom(0:3, 3, phat))
+```
+
+Badness of fit $B$ is then
+
+```{r photobadness}
+B <- sum((o-e)^2/e)
+B
 ```
 
 and the $p$-value is easy to calculate
 
 ```{r photopval}
-pval <- pchisq(sum((o-e)^2/e),df=2,lower.tail=FALSE)
+pval <- pchisq(B, df=2, lower.tail=FALSE)
 pval
 ```
 
-showing that we may reject the null: we have strong evidence that the
-number of children in a photo is not binomially distributed.
+(the `df=2` argument is discussed below).  The small $p$-value shows
+that we may reject the null: we have strong evidence that the number
+of children in a photo is not binomially distributed.
 
 ###  Note on number of degrees of freedom
 
-In the photo example above, note that the number of degrees of freedom
-is 2, not 3 as might be expected.  This is because we have to subtract
-an additional degree of freedom to compensate for the fact that
-`phat` was calculated from the data.  Because `phat` is a
+In the photo example above, the number of degrees of freedom was 2,
+not 3 as might be expected.  This is because we have to subtract an
+additional degree of freedom to compensate for the fact that `phat`
+was not known, but estimated from the data.  Because `phat` is a
 single parameter, this corresponds to a single degree of freedom which
 has to be subtracted from the `pchisq()` calculation.  Some more
 sophisticated tests involve distributions with multiple parameters;
@@ -317,24 +341,28 @@ mean(manC)
 
 that is, a little over two goals per match.  We can model the number
 of goals scored in each match as a Poisson distribution with
-$\lambda=2.026$.  We will classify games as having 0,1,2,3,4, or $\geq
-5$ goals (this device prevents expected numbers being too small for
-the Chi square test to operate).  The probabilities of 0-4 goals is
+$\lambda=2.026$.  We will classify games as having 0,1,2,3,4, or
+$\geqslant 5$ goals (this device prevents expected numbers being too
+small for the Chi square test to operate).  The probabilities of 0-4
+goals is
 
 ```{r showpoisgoals}
-dpois(0:4, lambda=mean(manC))
+prob_0_to_4 <- dpois(0:4, lambda=mean(manC))
+prob_0_to_4 
 ```
 
-Then the probability of scoring 5 goals will be the remaining probability, viz
+Then the probability of scoring 5 or more goals will be the remaining
+probability, viz
 
 ```{r fiveormoregoals}
-1-sum(dpois(0:4, lambda=mean(manC)))
+prob_5_or_more <- 1-sum(prob_0_to_4)
+prob_5_or_more
 ```
 
-So the probabilities of $0,1,2,3,4,\geq5$ goals is
+So the probabilities of $0,1,2,3,4,\geqslant 5$ goals is
 
 ```{r normalizegoals}
-probs <- c(dpois(0:4, lambda=mean(manC)), ppois(4,lambda=mean(manC),lower.tail=FALSE))
+probs <- c(prob_0_to_4, prob_5_or_more)
 probs
 ```
 
@@ -344,7 +372,8 @@ check:
 sum(probs)
 ```
 
-Then the expected number of games with $0,1,2,3,4,\geq 5$ goals is:
+Then the expected number of games with $0,1,2,3,4,\geqslant 5$ goals
+is:
 
 ```{r expectedgoalscalc}
 e <- length(manC)*probs
@@ -356,7 +385,7 @@ etc.  The chi-square test is straightforward:
 
 ```{r goalschisquare}
 B <- sum((o-e)^2/e)
-pchisq(B,df=4,lower.tail=FALSE)
+pchisq(B, df=4, lower.tail=FALSE)
 ```
 
 and we can see that we fail to reject the null: the observations are
