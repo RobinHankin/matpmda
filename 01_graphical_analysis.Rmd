@@ -103,7 +103,7 @@ We will use R for some descriptive statistics below.
 At its simplest, R can be used as a calculator.  Fire up R or Rstudio,
 click in the console, and type some math:
 
-```{R}
+```{r twoplustwo}
 2+2
 17*33
 6/19
@@ -119,7 +119,7 @@ only way to learn!
 You can also define variables and then use that variable in another
 calculation
 
-```{r}
+```{r xis19}
 x <- 19
 x
 ```
@@ -127,7 +127,7 @@ x
 In the above, the variable `x` is assigned the value 19, and on
 the next line we print x just to check.
 
-```{r}
+```{r yxp5}
 y <- x+5
 y 
 ```
@@ -135,7 +135,7 @@ y
 There are some in-built functions (e.g. `mean()`) that can be used
 in your computations.
 
-```{r}
+```{r meanofv}
 v <- c(2,5,4,3,4,3,2,3,2,3)
 mean(v)
 ```
@@ -146,7 +146,7 @@ R can be used to prepare visual and numerical summaries of datasets.
 R includes a large number of builtin datasets, and we will use the
 `mtcars` dataset first.
 
-```{r}
+```{r mtcarsexample}
 data(mtcars)  # loads the data into the current R session
 head(mtcars)  # extracts the first six lines 
 ```
@@ -158,7 +158,7 @@ system.  See how each row corresponds to a car and each column
 corresponds to a property of that car.  We can extract a single column
 with the dollar operator:
 
-```{r}
+```{r justmpg}
 mtcars$mpg
 ```
 
@@ -198,7 +198,7 @@ It is easy to calculate the sample mean in R using the `mean()`
 function:
 
 
-```{r}
+```{r meanmpg}
 mean(mtcars$mpg)
 ```
 
@@ -208,7 +208,7 @@ The _median_ is the middle point of the observations: half the
 datapoints are larger than the median and half are smaller.
 Calculating this is easy with R function `median()`:
 
-```{r}
+```{r medianmpg}
 median(mtcars$mpg)
 ```
 
@@ -218,14 +218,14 @@ The _mode_ of the data is the observation that occurs most frequently.
 This can be problematic sometimes but in the case of the cars dataset
 we can work with the number of cylinders:
 
-```{r}
+```{r justcyl}
 mtcars$cyl
 ```
 
 It's not clear from the above which is the most common number of
 cylinders, but we can summarise the dataset using `table()`:
 
-```{r}
+```{r tableofcyl}
 table(mtcars$cyl)
 ```
 
@@ -241,7 +241,7 @@ all confined to a very narrow range, or are they widely scattered?
 
 One simple answer to this is to state the *range*:
 
-```{r}
+```{r minmaxmpg}
 x <- mtcars$mpg
 min(x)
 max(x)
@@ -256,7 +256,7 @@ distance from the mean (we will discuss this when we learn about the
 Gaussian distribution).  It is easy to calculate in R with the
 `sd()` command:
 
-```{r}
+```{r showsdofx}
 sd(x)
 ```
 
@@ -264,7 +264,7 @@ Other measures are the interquartile range, which gives the range
 within which half the data lies.  This is most easily calculated
 using the `summary()` command, which gives other information too:
 
-```{r}
+```{r showsummaryx}
 summary(x)
 ```
 
@@ -278,7 +278,7 @@ easy in R with a very wide range of functionality.  Here we will
 discuss a few techniques.  We can produce a histogram using the
 `hist()` function:
 
-```{r}
+```{r histmpg}
 hist(mtcars$mpg)
 ```
 
@@ -291,7 +291,7 @@ details.
 Distributions can have different shapes, and one way to quantify this
 is to use the *skew*:
 
-```{r, echo=FALSE,warning=FALSE,message=FALSE,error=FALSE}
+```{r, label=skewshow, echo=FALSE,warning=FALSE,message=FALSE,error=FALSE}
 par(mfrow=c(1,3))
 jj <- qchisq(0.5,df=3)
 x <- seq(from=0,to=10,len=500)
@@ -322,7 +322,7 @@ distribution, and a negatively-skewed distribution.
 It is also possible to plot one variable as a function of another, in
 terms of a scattergraph:
 
-```{r}
+```{r dispfuncofhp}
 plot(disp~hp,data=mtcars)
 ```
 
@@ -337,7 +337,7 @@ ways in which we can analyse such datasets more deeply.
 
 Boxplots are produced using the `boxplot()` command:
 
-```{r}
+```{r boxplothpcyl}
 boxplot(hp~cyl,data=mtcars)
 ```
 
