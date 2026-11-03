@@ -144,7 +144,7 @@ mean(v)
 
 R can be used to prepare visual and numerical summaries of datasets.
 R includes a large number of builtin datasets, and we will use the
-`cars` dataset first.
+`mtcars` dataset first.
 
 ```{r}
 data(mtcars)  # loads the data into the current R session
